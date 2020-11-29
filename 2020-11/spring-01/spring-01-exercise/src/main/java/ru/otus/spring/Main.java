@@ -1,8 +1,10 @@
 package ru.otus.spring;
 
+import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.otus.spring.domain.Person;
 import ru.otus.spring.domain.QuestionLine;
+import ru.otus.spring.domain.IQuestionLine;
 import ru.otus.spring.service.PersonService;
 
 import java.io.IOException;
@@ -24,11 +26,25 @@ public class Main {
         MyCSVFile myFile = context.getBean(MyCSVFile.class);
         List<QuestionLine> qList = myFile.readCSVFile();
         for (int i=0; i < qList.size(); i++) {
-            QuestionLine qLine = context.getBean(QuestionLine.class);
+            IQuestionLine qLine = context.getBean(QuestionLine.class);
             qLine = qList.get(i);
             System.out.println(qLine.getQuestionText());
         }
 
+        // Запуск юнит-теста
+        testReadCSVFile();
+    }
+
+    @Test
+    public static void testReadCSVFile()
+    {
+        MyCSVFile myFile = new MyCSVFile("Questions.csv");
+        try {
+            List<QuestionLine> qList = myFile.readCSVFile();
+            System.out.println("Успешное прохождение юнит-теста testReadCSVFile.");
+        } catch (Exception e) {
+            System.out.println("Ошибка юнит-теста testReadCSVFile. " + e.getMessage());
+        }
     }
 
 }
