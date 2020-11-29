@@ -1,6 +1,8 @@
 package ru.otus.spring.domain;
 
-public class QuestionLine {
+import ru.otus.spring.service.IQuestionLine;
+
+public class QuestionLine implements IQuestionLine {
     private final String qText;
 
     // конструктор

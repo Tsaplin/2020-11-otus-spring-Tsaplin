@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException  {
         // TODO: создайте здесь класс контекста
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("/spring-context.xml");
         PersonService service = context.getBean(PersonService.class);
