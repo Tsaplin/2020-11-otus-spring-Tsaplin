@@ -11,4 +11,8 @@
         <constructor-arg name="dao" ref="personDao"/>
     </bean>
 
+    <bean id="questionLine" class="ru.otus.spring.domain.QuestionLine">
+        <constructor-arg value="qLine"/>
+    </bean>
+
 </beans>
