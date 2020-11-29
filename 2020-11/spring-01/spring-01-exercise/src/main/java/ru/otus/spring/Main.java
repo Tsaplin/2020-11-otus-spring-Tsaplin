@@ -21,10 +21,11 @@ public class Main {
         System.out.println("name: " + ivan.getName() + " age: " + ivan.getAge());
 
         // Вывод csv-файла
-        MyCSVFile myFile = new MyCSVFile();
+        MyCSVFile myFile = context.getBean(MyCSVFile.class);
         List<QuestionLine> qList = myFile.readCSVFile();
         for (int i=0; i < qList.size(); i++) {
-            QuestionLine qLine = qList.get(i);
+            QuestionLine qLine = context.getBean(QuestionLine.class);
+            qLine = qList.get(i);
             System.out.println(qLine.getQuestionText());
         }
 

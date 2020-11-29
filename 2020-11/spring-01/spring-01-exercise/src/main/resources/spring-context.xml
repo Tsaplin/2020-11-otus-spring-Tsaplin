@@ -15,4 +15,9 @@
         <constructor-arg value="qLine"/>
     </bean>
 
+    <bean id="myCSVFile" class="ru.otus.spring.MyCSVFile">
+        <constructor-arg value="myCSVFile"/>
+    </bean>
+
+
 </beans>

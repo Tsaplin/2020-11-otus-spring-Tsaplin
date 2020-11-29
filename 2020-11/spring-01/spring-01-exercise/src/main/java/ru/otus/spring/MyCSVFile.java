@@ -11,6 +11,12 @@ import java.util.List;
 import java.util.Scanner;
 
 public class MyCSVFile {
+    private final String fileName;
+
+    public MyCSVFile(String fName) {
+        this.fileName = fName;
+    }
+
     public List<QuestionLine> readCSVFile() throws IOException {
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
         InputStream resourceStream = loader.getResourceAsStream("Questions.csv");
