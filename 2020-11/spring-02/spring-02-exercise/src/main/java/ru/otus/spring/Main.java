@@ -10,6 +10,7 @@ import ru.otus.spring.service.PersonService;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Scanner;
 
 @ComponentScan
 public class Main {
@@ -30,13 +31,20 @@ public class Main {
         user.readUserByConsole();
 
         // Вывод csv-файла
+        Scanner scannerConsole = new Scanner(System.in);
         MyCSVFile myFile = context.getBean(MyCSVFile.class);
         List<QuestionLine> qList = myFile.readCSVFile();
+
+        IQuestionLine qLine = context.getBean(QuestionLine.class);
+        qLine.prepareCorrectAnswers(qList);
+
         for (int i=0; i < qList.size(); i++) {
-            IQuestionLine qLine = context.getBean(QuestionLine.class);
             qLine = qList.get(i);
-            System.out.println(qLine.getQuestionText());
+            System.out.print(qLine.getQuestionText());
+            qLine.setAnswerText(scannerConsole.nextLine());
         }
+        qLine.checkAnswers(qList);
+        qLine.showTestingResult(qList);
 
         // Запуск юнит-теста
         testReadCSVFile();
