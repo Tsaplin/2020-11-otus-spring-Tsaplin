@@ -2,6 +2,7 @@ package ru.otus.spring;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Service;
+import ru.otus.spring.domain.IQuestionLine;
 import ru.otus.spring.domain.QuestionLine;
 
 import java.io.BufferedReader;
@@ -25,7 +26,7 @@ public class MyCSVFile {
         this.fileName = fileName;
     }
 
-    public List<QuestionLine> readCSVFile() throws IOException {
+    public List<IQuestionLine> readCSVFile() throws IOException {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Main.class);
 
         // Получим имя файла из контекста
@@ -40,7 +41,7 @@ public class MyCSVFile {
         String line = null;
         Scanner scanner = null;
         int index = 0;
-        List<QuestionLine> qList = new ArrayList<QuestionLine>();
+        List<IQuestionLine> qList = new ArrayList<IQuestionLine>();
 
         while ((line = reader.readLine()) != null) {
             QuestionLine qLine = null;

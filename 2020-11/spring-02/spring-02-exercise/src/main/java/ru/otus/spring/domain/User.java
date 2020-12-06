@@ -1,6 +1,5 @@
 package ru.otus.spring.domain;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Service;
 import ru.otus.spring.Main;
@@ -12,7 +11,6 @@ public class User {
     private String name;
     private String surName;
 
-    @Autowired
     public User() {
     }
 

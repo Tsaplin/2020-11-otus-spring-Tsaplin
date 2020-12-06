@@ -1,19 +1,17 @@
 package ru.otus.spring.domain;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public  class QuestionLine implements IQuestionLine {
+public class QuestionLine implements IQuestionLine {
     private String qText;               // текст вопроса
     private String answerText;          // текст ответа
     private String correctAnswerText;   // текст правильного ответа
     private boolean isAnswerCorrect;    // признак, является ли данный ответ правильным
 
     // конструктор
-    @Autowired
     public QuestionLine() {
 
     }
@@ -30,7 +28,11 @@ public  class QuestionLine implements IQuestionLine {
         this.correctAnswerText = text;
     }
 
-    private void setAnswerCorrect(boolean bool) {
+    public String getCorrectAnswerText() {
+        return correctAnswerText;
+    }
+
+    public void setAnswerCorrect(boolean bool) {
         this.isAnswerCorrect = bool;
     }
 
@@ -38,14 +40,18 @@ public  class QuestionLine implements IQuestionLine {
         return qText;
     }
 
+    public String getAnswerText() {
+        return answerText;
+    }
+
     public boolean getAnswerCorrect() {
         return isAnswerCorrect;
     }
 
     // Метод подготовки правильных ответов
-    public void prepareCorrectAnswers(List<QuestionLine> qList) {
+    public void prepareCorrectAnswers(List<IQuestionLine> qList) {
         for (int i = 0; i < qList.size(); i++) {
-            QuestionLine qLine = qList.get(i);
+            IQuestionLine qLine = qList.get(i);
             String correctAnswerText = "";
             if (i == 0) {correctAnswerText = "spring";}
             else if (i == 1) {correctAnswerText = "y";}
@@ -61,11 +67,11 @@ public  class QuestionLine implements IQuestionLine {
     }
 
     // Метод проверки ответов на правильность
-    public void checkAnswers(List<QuestionLine> qList) {
+    public void checkAnswers(List<IQuestionLine> qList) {
         for (int i = 0; i < qList.size(); i++) {
-            QuestionLine qLine = qList.get(i);
+            IQuestionLine qLine = qList.get(i);
 
-            if (qLine.answerText.equals(qLine.correctAnswerText)) {
+            if (qLine.getAnswerText().equals(qLine.getCorrectAnswerText())) {
                 qLine.setAnswerCorrect(true);
             }
             else {
@@ -75,11 +81,11 @@ public  class QuestionLine implements IQuestionLine {
     }
 
     // Метод вывода рез-та тестирования
-    public void showTestingResult(List<QuestionLine> qList) {
+    public void showTestingResult(List<IQuestionLine> qList) {
         boolean isWrongAnswerExist = false;
 
         for (int i = 0; i < qList.size(); i++) {
-            QuestionLine qLine = qList.get(i);
+            IQuestionLine qLine = qList.get(i);
 
             if (!qLine.getAnswerCorrect()) {
                 isWrongAnswerExist = true;
