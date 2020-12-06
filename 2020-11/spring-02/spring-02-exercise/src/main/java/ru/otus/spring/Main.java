@@ -3,6 +3,7 @@ package ru.otus.spring;
 import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.PropertySource;
 import ru.otus.spring.domain.IQuestionLine;
 import ru.otus.spring.domain.QuestionLine;
 import ru.otus.spring.domain.User;
@@ -12,8 +13,14 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
+@PropertySource("classpath:Config.properties")
 @ComponentScan
 public class Main {
+
+    // Не потребовался на Java 1.8
+    //public static PropertySourcesPlaceholderConfigurer propertyConfig() {
+    //    return new PropertySourcesPlaceholderConfigurer();
+    //}
 
     public static void main(String[] args) throws IOException  {
         // TODO: создайте здесь класс контекста

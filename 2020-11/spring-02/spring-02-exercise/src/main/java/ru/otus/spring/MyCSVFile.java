@@ -1,5 +1,6 @@
 package ru.otus.spring;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Service;
 import ru.otus.spring.domain.IQuestionLine;
@@ -15,13 +16,9 @@ import java.util.Scanner;
 
 @Service
 public class MyCSVFile {
-    private String fileName = "Questions.csv";
+    @Value("${questionsFile.name}")
+    private String fileName; //"Questions.csv";
 
-/*
-    public MyCSVFile(String fName) {
-        this.fileName = fName;
-    }
-*/
     public void setFileName(String fileName) {
         this.fileName = fileName;
     }
