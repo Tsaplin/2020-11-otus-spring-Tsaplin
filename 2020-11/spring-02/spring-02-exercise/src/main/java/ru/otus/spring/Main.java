@@ -38,7 +38,7 @@ public class Main {
 
         // Вывод csv-файла
         Scanner scannerConsole = new Scanner(System.in);
-        MyCSVFile myFile = context.getBean(MyCSVFile.class);
+        IMyCSVFile myFile = context.getBean(IMyCSVFile.class);
         List<IQuestionLine> qList = myFile.readCSVFile();
 
         IQuestionLine qLine = context.getBean(QuestionLine.class);
@@ -61,7 +61,7 @@ public class Main {
     public static void testReadCSVFile()
     {
         System.out.println("Запуск юнит-теста testReadCSVFile");
-        MyCSVFile myFile = new MyCSVFile();
+        IMyCSVFile myFile = new MyCSVFile();
         try {
             List<IQuestionLine> qList = myFile.readCSVFile();
             System.out.println("Успешное прохождение юнит-теста testReadCSVFile.");

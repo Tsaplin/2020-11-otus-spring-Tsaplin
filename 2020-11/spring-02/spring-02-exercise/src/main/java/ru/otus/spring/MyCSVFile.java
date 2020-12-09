@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Scanner;
 
 @Service
-public class MyCSVFile {
+public class MyCSVFile implements IMyCSVFile {
     @Value("${questionsFile.name}")
     private String fileName; //"Questions.csv";
 
