@@ -1,7 +1,6 @@
 package ru.otus.spring;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Service;
 import ru.otus.spring.domain.IQuestionLine;
 import ru.otus.spring.domain.QuestionLine;
@@ -24,11 +23,7 @@ public class MyCSVFile implements IMyCSVFile {
     }
 
     public List<IQuestionLine> readCSVFile() throws IOException {
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Main.class);
-
-        // Получим имя файла из контекста
-        MyCSVFile myFile = context.getBean(MyCSVFile.class);
-        String csvfilename = myFile.fileName;
+        String csvfilename = this.fileName;
 
         // Начитаем содержимое файла в BufferedReader, а далее каждую строчку обработаем сканнером
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
