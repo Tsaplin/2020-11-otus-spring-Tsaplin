@@ -1,16 +1,11 @@
 package ru.otus.spring;
 
-import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.PropertySource;
-import ru.otus.spring.domain.IQuestionLine;
-import ru.otus.spring.domain.QuestionLine;
-import ru.otus.spring.domain.User;
+import ru.otus.spring.service.Questionnaire;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Scanner;
 
 @PropertySource("classpath:Config.properties")
 @ComponentScan
@@ -25,41 +20,8 @@ public class Main {
         // TODO: создайте здесь класс контекста
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Main.class);
 
-        // Ввод фамилии и имени пользователя
-        User user = context.getBean(User.class);
-        user.readUserByConsole();
-
-        // Вывод csv-файла
-        Scanner scannerConsole = new Scanner(System.in);
-        IMyCSVFile myFile = context.getBean(IMyCSVFile.class);
-        List<IQuestionLine> qList = myFile.readCSVFile();
-
-        IQuestionLine qLine = context.getBean(QuestionLine.class);
-        qLine.prepareCorrectAnswers(qList);
-
-        for (int i=0; i < qList.size(); i++) {
-            qLine = qList.get(i);
-            System.out.print(qLine.getQuestionText());
-            qLine.setAnswerText(scannerConsole.nextLine());
-        }
-        qLine.checkAnswers(qList);
-        qLine.showTestingResult(qList);
-
-        // Запуск юнит-теста
-        testReadCSVFile();
-
+        Questionnaire anketaOprosnik = context.getBean(Questionnaire.class);
+        anketaOprosnik.QuestionnaireExec();
     }
 
-    @Test
-    public static void testReadCSVFile()
-    {
-        System.out.println("Запуск юнит-теста testReadCSVFile");
-        IMyCSVFile myFile = new MyCSVFile();
-        try {
-            List<IQuestionLine> qList = myFile.readCSVFile();
-            System.out.println("Успешное прохождение юнит-теста testReadCSVFile.");
-        } catch (Exception e) {
-            System.out.println("Ошибка юнит-теста testReadCSVFile. " + e.getMessage());
-        }
-    }
 }
