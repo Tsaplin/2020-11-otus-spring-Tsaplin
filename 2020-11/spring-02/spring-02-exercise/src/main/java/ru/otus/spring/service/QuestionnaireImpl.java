@@ -1,5 +1,6 @@
 package ru.otus.spring.service;
 
+import lombok.RequiredArgsConstructor;
 import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Service;
@@ -15,17 +16,20 @@ import java.util.Scanner;
 
 // Класс приложения анкетирования
 @Service
+@RequiredArgsConstructor
 public class QuestionnaireImpl implements Questionnaire {
+    private final User user;
+    private final IMyCSVFile myFile;
+    private IQuestionLine qLine;
 
+    @Override
     public void QuestionnaireExec() throws IOException {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Main.class);
         // Ввод фамилии и имени пользователя
-        User user = context.getBean(User.class);
         user.readUserByConsole();
 
         // Вывод csv-файла
         Scanner scannerConsole = new Scanner(System.in);
-        IMyCSVFile myFile = context.getBean(IMyCSVFile.class);
         List<IQuestionLine> qList = myFile.readCSVFile();
 
         IQuestionLine qLine = context.getBean(QuestionLine.class);
