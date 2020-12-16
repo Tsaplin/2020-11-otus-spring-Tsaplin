@@ -1,6 +1,4 @@
-package ru.otus.spring;
-
-import ru.otus.spring.domain.IQuestionLine;
+package ru.otus.spring.service;
 
 import java.io.IOException;
 import java.util.List;

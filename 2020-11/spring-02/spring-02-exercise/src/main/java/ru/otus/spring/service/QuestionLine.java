@@ -1,4 +1,4 @@
-package ru.otus.spring.domain;
+package ru.otus.spring.service;
 
 import org.springframework.stereotype.Service;
 

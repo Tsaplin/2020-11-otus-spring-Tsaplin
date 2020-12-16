@@ -4,10 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Service;
-import ru.otus.spring.IMyCSVFile;
 import ru.otus.spring.Main;
-import ru.otus.spring.domain.IQuestionLine;
-import ru.otus.spring.domain.QuestionLine;
 import ru.otus.spring.domain.User;
 
 import java.io.IOException;
@@ -26,7 +23,7 @@ public class QuestionnaireImpl implements Questionnaire {
     public void QuestionnaireExec() throws IOException {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Main.class);
         // Ввод фамилии и имени пользователя
-        user.readUserByConsole();
+        User userData = user.readUserByConsole();
 
         // Вывод csv-файла
         Scanner scannerConsole = new Scanner(System.in);
