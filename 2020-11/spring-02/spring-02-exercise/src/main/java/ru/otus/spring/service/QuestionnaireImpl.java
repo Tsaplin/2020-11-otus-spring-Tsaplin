@@ -43,6 +43,7 @@ public class QuestionnaireImpl implements Questionnaire {
     }
 
     // Метод подготовки правильных ответов
+    @Override
     public void prepareCorrectAnswers(List<IQuestionLine> qList) {
         for (int i = 0; i < qList.size(); i++) {
             IQuestionLine qLine = qList.get(i);
@@ -61,6 +62,7 @@ public class QuestionnaireImpl implements Questionnaire {
     }
 
     // Метод проверки ответов на правильность
+    @Override
     public void checkAnswers(List<IQuestionLine> qList) {
         for (int i = 0; i < qList.size(); i++) {
             IQuestionLine qLine = qList.get(i);
@@ -75,6 +77,7 @@ public class QuestionnaireImpl implements Questionnaire {
     }
 
     // Метод вывода рез-та тестирования
+    @Override
     public void showTestingResult(List<IQuestionLine> qList, User user) {
         boolean isWrongAnswerExist = false;
 
