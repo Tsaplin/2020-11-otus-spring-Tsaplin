@@ -1,10 +1,7 @@
 package ru.otus.spring.service;
 
 import lombok.RequiredArgsConstructor;
-import org.junit.Test;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Service;
-import ru.otus.spring.Main;
 import ru.otus.spring.domain.User;
 
 import java.io.IOException;
@@ -37,9 +34,6 @@ public class QuestionnaireImpl implements Questionnaire {
         }
         checkAnswers(qList);
         showTestingResult(qList, userData);
-
-        // Запуск юнит-теста
-        testReadCSVFile();
     }
 
     // Метод подготовки правильных ответов
@@ -95,21 +89,6 @@ public class QuestionnaireImpl implements Questionnaire {
         }
         else {
             System.out.println("Тестирование студента " + user.getSurName() + " " + user.getName() + " успешно пройдено.");
-        }
-    }
-
-    @Test
-    public static void testReadCSVFile()
-    {
-        System.out.println("Запуск юнит-теста testReadCSVFile");
-
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Main.class);
-        IMyCSVFile myFile = context.getBean(IMyCSVFile.class);
-        try {
-            List<IQuestionLine> qList = myFile.readCSVFile();
-            System.out.println("Успешное прохождение юнит-теста testReadCSVFile.");
-        } catch (Exception e) {
-            System.out.println("Ошибка юнит-теста testReadCSVFile. " + e.getMessage());
         }
     }
 
