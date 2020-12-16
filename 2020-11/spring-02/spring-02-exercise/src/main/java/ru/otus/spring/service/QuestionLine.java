@@ -1,8 +1,8 @@
 package ru.otus.spring.service;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 public class QuestionLine implements IQuestionLine {
     private String qText;               // текст вопроса
     private String answerText;          // текст ответа
