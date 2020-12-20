@@ -1,8 +1,10 @@
 package ru.otus.spring.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.shell.Availability;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
+import org.springframework.shell.standard.ShellMethodAvailability;
 import ru.otus.spring.domain.User;
 
 import java.io.IOException;
@@ -19,6 +21,7 @@ public class QuestionnaireImpl implements Questionnaire {
 
     @Override
     @ShellMethod(value = "Anketirovanie:", key = {"e", "exec"})
+    @ShellMethodAvailability(value = "isUserEntered")
     public void QuestionnaireExec() throws IOException {
 
         // Вывод csv-файла
@@ -34,6 +37,10 @@ public class QuestionnaireImpl implements Questionnaire {
         }
         checkAnswers(qList);
         showTestingResult(qList, user);
+    }
+
+    private Availability isUserEntered() {
+        return (user.getSurName() == null) ? Availability.unavailable("Сначала введите имя и фамилию при помощи команд Shell.") : Availability.available();
     }
 
     // Метод подготовки правильных ответов
