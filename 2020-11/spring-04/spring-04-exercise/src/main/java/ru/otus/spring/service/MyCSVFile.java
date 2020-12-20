@@ -13,8 +13,9 @@ import java.util.Scanner;
 
 @Service
 public class MyCSVFile implements IMyCSVFile {
+
     @Value("${questionsFile.name}")
-    private String fileName; //"Questions.csv";
+    private String fileName;
 
     @Override
     public void setFileName(String fileName) {
