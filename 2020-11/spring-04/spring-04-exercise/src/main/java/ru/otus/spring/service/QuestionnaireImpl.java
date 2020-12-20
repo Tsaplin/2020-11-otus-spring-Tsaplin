@@ -1,7 +1,8 @@
 package ru.otus.spring.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.shell.standard.ShellComponent;
+import org.springframework.shell.standard.ShellMethod;
 import ru.otus.spring.domain.User;
 
 import java.io.IOException;
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.Scanner;
 
 // Класс приложения анкетирования
-@Service
+@ShellComponent
 @RequiredArgsConstructor
 public class QuestionnaireImpl implements Questionnaire {
     private final User user;
@@ -17,9 +18,8 @@ public class QuestionnaireImpl implements Questionnaire {
     private IQuestionLine qLine;
 
     @Override
+    @ShellMethod(value = "Anketirovanie:", key = {"e", "exec"})
     public void QuestionnaireExec() throws IOException {
-        // Ввод фамилии и имени пользователя
-        User userData = user.readUserByConsole();
 
         // Вывод csv-файла
         Scanner scannerConsole = new Scanner(System.in);
@@ -33,7 +33,7 @@ public class QuestionnaireImpl implements Questionnaire {
             qLine.setAnswerText(scannerConsole.nextLine());
         }
         checkAnswers(qList);
-        showTestingResult(qList, userData);
+        showTestingResult(qList, user);
     }
 
     // Метод подготовки правильных ответов

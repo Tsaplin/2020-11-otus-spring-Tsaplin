@@ -23,12 +23,6 @@ public class User {
         this.surName = surName;
     }
 
-    public User readUserByConsole() {
-        String SS = "";
-        User user = new User();
-        return user;
-    }
-
     @ShellMethod(value = "Enter your surname, please:", key = {"s", "surname"})
     public String userSurname(String surname) {
         this.surName = surname;
