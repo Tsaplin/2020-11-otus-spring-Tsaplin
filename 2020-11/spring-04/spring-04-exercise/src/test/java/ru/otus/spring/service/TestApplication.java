@@ -24,7 +24,7 @@ public class TestApplication {
     AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Main.class);
 
     @Autowired
-    private IMyCSVFile myFile;
+    private MyCSVFile myFile;
 
     @Test
     @DisplayName("Запуск юнит-теста shouldSuccessfullyReadCSVFileTest")

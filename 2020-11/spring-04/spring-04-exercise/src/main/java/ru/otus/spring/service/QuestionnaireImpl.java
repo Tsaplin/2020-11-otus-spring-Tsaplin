@@ -16,7 +16,7 @@ import java.util.Scanner;
 @RequiredArgsConstructor
 public class QuestionnaireImpl implements Questionnaire {
     private final User user;
-    private final IMyCSVFile myFile;
+    private final MyCSVFile myFile;
     private IQuestionLine qLine;
 
     @Override
