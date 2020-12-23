@@ -79,7 +79,7 @@ public class QuestionnaireImpl implements Questionnaire {
 
     // Метод вывода рез-та тестирования
     @Override
-    public void showTestingResult(List<IQuestionLine> qList, User user) {
+    public boolean showTestingResult(List<IQuestionLine> qList, User user) {
         boolean isWrongAnswerExist = false;
 
         for (int i = 0; i < qList.size(); i++) {
@@ -97,6 +97,8 @@ public class QuestionnaireImpl implements Questionnaire {
         else {
             System.out.println("Тестирование студента " + user.getSurName() + " " + user.getName() + " успешно пройдено.");
         }
+
+        return !isWrongAnswerExist;
     }
 
 }

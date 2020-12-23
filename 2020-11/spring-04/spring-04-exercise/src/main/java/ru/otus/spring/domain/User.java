@@ -18,11 +18,6 @@ public class User {
         return this.surName;
     }
 
-    public void setUser(String name, String surName) {
-        this.name = name;
-        this.surName = surName;
-    }
-
     @ShellMethod(value = "Enter your surname, please:", key = {"s", "surname"})
     public String userSurname(String surname) {
         this.surName = surname;
