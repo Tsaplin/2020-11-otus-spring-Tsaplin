@@ -2,11 +2,14 @@ package ru.otus.spring.dao;
 
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
+import org.springframework.shell.standard.ShellComponent;
+import org.springframework.shell.standard.ShellMethod;
 import org.springframework.stereotype.Repository;
 import ru.otus.spring.domain.Book;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +36,18 @@ public class BookJDBC implements BookDao {
         params.put("bookName", book.getName());
         namedParameterJdbcOperations.update(
                 "insert into tBook (BookID, AuthorID, GenreID, `Name`) values (:bookId, :authorId, :genreId, :bookName)",
+                params);
+    }
+
+    @Override
+    public void update(Book book) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("bookId", book.getBookId());
+        params.put("authorId", book.getAuthorId());
+        params.put("genreId", book.getGenreId());
+        params.put("bookName", book.getName());
+        namedParameterJdbcOperations.update(
+                "update tBook set AuthorID = isnull(:authorId, AuthorID), GenreID = isnull(:genreId, GenreID), `Name` = isnull(:bookName, `Name`) where BookID = :bookId",
                 params);
     }
 
