@@ -28,27 +28,45 @@ public class BookJDBC implements BookDao {
     }
 
     @Override
-    public void insert(Book book) {
-        Map<String, Object> params = new HashMap<>();
-        params.put("bookId", book.getBookId());
-        params.put("authorId", book.getAuthorId());
-        params.put("genreId", book.getGenreId());
-        params.put("bookName", book.getName());
-        namedParameterJdbcOperations.update(
-                "insert into tBook (BookID, AuthorID, GenreID, `Name`) values (:bookId, :authorId, :genreId, :bookName)",
-                params);
+    public boolean insert(Book book) {
+        boolean result = false;
+        try {
+            Map<String, Object> params = new HashMap<>();
+            params.put("bookId", book.getBookId());
+            params.put("authorId", book.getAuthorId());
+            params.put("genreId", book.getGenreId());
+            params.put("bookName", book.getName());
+            namedParameterJdbcOperations.update(
+                    "insert into tBook (BookID, AuthorID, GenreID, `Name`) values (:bookId, :authorId, :genreId, :bookName)",
+                    params);
+
+            result = true;
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
     }
 
     @Override
-    public void update(Book book) {
-        Map<String, Object> params = new HashMap<>();
-        params.put("bookId", book.getBookId());
-        params.put("authorId", book.getAuthorId());
-        params.put("genreId", book.getGenreId());
-        params.put("bookName", book.getName());
-        namedParameterJdbcOperations.update(
-                "update tBook set AuthorID = isnull(:authorId, AuthorID), GenreID = isnull(:genreId, GenreID), `Name` = isnull(:bookName, `Name`) where BookID = :bookId",
-                params);
+    public boolean update(Book book) {
+        boolean result = false;
+        try {
+            Map<String, Object> params = new HashMap<>();
+            params.put("bookId", book.getBookId());
+            params.put("authorId", book.getAuthorId());
+            params.put("genreId", book.getGenreId());
+            params.put("bookName", book.getName());
+            namedParameterJdbcOperations.update(
+                    "update tBook set AuthorID = isnull(:authorId, AuthorID), GenreID = isnull(:genreId, GenreID), `Name` = isnull(:bookName, `Name`) where BookID = :bookId",
+                    params);
+
+            result = true;
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
     }
 
     @Override
@@ -59,12 +77,21 @@ public class BookJDBC implements BookDao {
     }
 
     @Override
-    public void deleteById(long bookId) {
-        Map<String, Object> params = new HashMap<>();
-        params.put("bookId", bookId);
-        namedParameterJdbcOperations.update(
-                "delete from tBook where BookID = :bookId", params
-        );
+    public boolean deleteById(long bookId) {
+        boolean result = false;
+        try {
+            Map<String, Object> params = new HashMap<>();
+            params.put("bookId", bookId);
+            namedParameterJdbcOperations.update(
+                    "delete from tBook where BookID = :bookId", params
+            );
+
+            result = true;
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
     }
 
     private static class BookMapper implements RowMapper<Book> {

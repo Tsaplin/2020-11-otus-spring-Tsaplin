@@ -5,9 +5,9 @@ import ru.otus.spring.domain.Book;
 import java.util.List;
 
 public interface BookDao {
-    void insert(Book book);
-    void update(Book book);
+    boolean insert(Book book);
+    boolean update(Book book);
     List<Book> getAll();
-    void deleteById(long bookId);
+    boolean deleteById(long bookId);
     int count();
 }
