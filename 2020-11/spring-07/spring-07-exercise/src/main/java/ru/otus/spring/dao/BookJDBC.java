@@ -28,6 +28,16 @@ public class BookJDBC implements BookDao {
     }
 
     @Override
+    public boolean checkById(long bookId) {
+        int exist = 0;
+
+        exist = namedParameterJdbcOperations.getJdbcOperations().queryForObject(
+                "select count(1) from tBook where BookID = ?", new Object[] {bookId}, Integer.class);
+
+        return (exist == 1);
+    }
+
+    @Override
     public boolean insert(Book book) {
         boolean result = false;
         try {

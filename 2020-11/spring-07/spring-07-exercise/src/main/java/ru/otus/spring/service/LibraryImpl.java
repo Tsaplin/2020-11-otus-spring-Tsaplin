@@ -14,37 +14,59 @@ import java.util.List;
 public class LibraryImpl {
 
     private final BookDao bookDao;
+    private final String BOOK_NOT_EXIST_MESSAGE = "Книга не существует в базе данных.";
 
     @ShellMethod(value = "Add a new book in format:ins bookId authorId genreId bookName", key = {"ins", "insert"})
-    public void bookInsert(long bookId, long authorId, long genreId, String bookName) {
+    public boolean bookInsert(long bookId, long authorId, long genreId, String bookName) {
+        boolean result = false;
         Book b = new Book(bookId, authorId, genreId, bookName);
         try {
-            bookDao.insert(b);
+            result = bookDao.insert(b);
             System.out.println("Книга успешно добавлена.");
         }catch (Exception e) {
             e.printStackTrace();
         }
+
+        return result;
     }
 
     @ShellMethod(value = "Modify the selected book in format:upd bookId authorId genreId bookName", key = {"upd", "update"})
-    public void bookUpdate(long bookId, @ShellOption(defaultValue = "-1") long authorId, @ShellOption(defaultValue = "-1") long genreId, @ShellOption(defaultValue = ShellOption.NULL) String bookName) {
+    public boolean bookUpdate(long bookId, @ShellOption(defaultValue = "-1") long authorId, @ShellOption(defaultValue = "-1") long genreId, @ShellOption(defaultValue = ShellOption.NULL) String bookName) {
+        boolean result = false;
         Book b = new Book(bookId, authorId, genreId, bookName);
         try {
-            bookDao.update(b);
-            System.out.println("Книга успешно изменена.");
+            result = bookDao.checkById(bookId);
+            if (result) {
+               result = bookDao.update(b);
+               System.out.println("Книга успешно изменена.");
+            }
+            else {
+                System.out.println(BOOK_NOT_EXIST_MESSAGE);
+            }
         }catch (Exception e) {
             e.printStackTrace();
         }
+
+        return result;
     }
 
     @ShellMethod(value = "Delete the selected book in format:del bookId", key = {"del", "delete"})
-    public void bookDelete(long bookId) {
+    public boolean bookDelete(long bookId) {
+        boolean result = false;
         try {
-            bookDao.deleteById(bookId);
-            System.out.println("Книга успешно удалена.");
+            result = bookDao.checkById(bookId);
+            if (result) {
+                result = bookDao.deleteById(bookId);
+                System.out.println("Книга успешно удалена.");
+            }
+            else {
+                System.out.println(BOOK_NOT_EXIST_MESSAGE);
+            }
         }catch (Exception e) {
             e.printStackTrace();
         }
+
+        return result;
     }
 
     @ShellMethod(value = "Show all the books in the library", key = {"show"})

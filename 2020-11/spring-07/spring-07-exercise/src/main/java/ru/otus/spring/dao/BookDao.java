@@ -10,4 +10,5 @@ public interface BookDao {
     List<Book> getAll();
     boolean deleteById(long bookId);
     int count();
+    boolean checkById(long bookId);
 }

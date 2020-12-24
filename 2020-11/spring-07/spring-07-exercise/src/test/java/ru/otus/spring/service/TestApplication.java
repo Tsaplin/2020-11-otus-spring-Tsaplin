@@ -52,8 +52,9 @@ public class TestApplication {
         Book book = new Book(bookId, 1, 2, "Книга юнит-теста updateTest");
         bookDao.insert(book);
         Book book2 = new Book(bookId, 2, 3, "Книга юнит-теста updateTest модифицированная");
-
-        res = bookDao.update(book2);
+        if (bookDao.checkById(bookId)) {
+            res = bookDao.update(book2);
+        }
         actual = (res) ? 1 : 0;
 
         assertEquals(1, actual);
@@ -69,8 +70,9 @@ public class TestApplication {
 
         Book book = new Book(bookId, 2, 3, "Книга юнит-теста deleteTest");
         bookDao.insert(book);
-
-        res = bookDao.deleteById(bookId);
+        if (bookDao.checkById(bookId)) {
+            res = bookDao.deleteById(bookId);
+        }
         actual = (res) ? 1 : 0;
 
         assertEquals(1, actual);
