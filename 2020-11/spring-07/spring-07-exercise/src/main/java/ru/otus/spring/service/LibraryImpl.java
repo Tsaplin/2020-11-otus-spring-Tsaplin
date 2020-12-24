@@ -12,6 +12,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.springframework.shell.standard.ShellOption.NONE;
+import static org.springframework.shell.standard.ShellOption.NULL;
+
 // Класс запуска приложения "библиотека книг"
 @ShellComponent
 @RequiredArgsConstructor
@@ -37,7 +40,7 @@ public class LibraryImpl {
     }
 
     @ShellMethod(value = "Modify the selected book in format:upd bookId authorId genreId bookName", key = {"upd", "update"})
-    public void bookUpdate(long bookId, @ShellOption(defaultValue = ShellOption.NULL) long authorId, @ShellOption(defaultValue = ShellOption.NULL) long genreId, @ShellOption(defaultValue = ShellOption.NULL) String bookName) {
+    public void bookUpdate(long bookId, @ShellOption(defaultValue = "-1") long authorId, @ShellOption(defaultValue = "-1") long genreId, @ShellOption(defaultValue = ShellOption.NULL) String bookName) {
         Book b = new Book(bookId, authorId, genreId, bookName);
         try {
             bookDao.update(b);

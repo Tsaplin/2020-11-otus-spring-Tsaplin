@@ -58,7 +58,7 @@ public class BookJDBC implements BookDao {
             params.put("genreId", book.getGenreId());
             params.put("bookName", book.getName());
             namedParameterJdbcOperations.update(
-                    "update tBook set AuthorID = isnull(:authorId, AuthorID), GenreID = isnull(:genreId, GenreID), `Name` = isnull(:bookName, `Name`) where BookID = :bookId",
+                    "update tBook set AuthorID = isnull(nullif(:authorId, -1), AuthorID), GenreID = isnull(nullif(:genreId, -1), GenreID), `Name` = isnull(:bookName, `Name`) where BookID = :bookId",
                     params);
 
             result = true;
