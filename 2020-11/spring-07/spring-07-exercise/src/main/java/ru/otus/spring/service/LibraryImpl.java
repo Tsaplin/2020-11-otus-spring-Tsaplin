@@ -3,30 +3,17 @@ package ru.otus.spring.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
-import org.springframework.shell.standard.ShellMethodAvailability;
 import org.springframework.shell.standard.ShellOption;
 import ru.otus.spring.dao.BookDao;
 import ru.otus.spring.domain.Book;
-
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
-import static org.springframework.shell.standard.ShellOption.NONE;
-import static org.springframework.shell.standard.ShellOption.NULL;
-
-// Класс запуска приложения "библиотека книг"
+// Класс работы с приложением "Библиотека книг"
 @ShellComponent
 @RequiredArgsConstructor
 public class LibraryImpl {
 
     private final BookDao bookDao;
-
-    @ShellMethod(value = "Library:", key = {"l", "library"})
-    @ShellMethodAvailability(value = "isUserEntered")
-    public void LibraryExec() throws IOException {
-
-    }
 
     @ShellMethod(value = "Add a new book in format:ins bookId authorId genreId bookName", key = {"ins", "insert"})
     public void bookInsert(long bookId, long authorId, long genreId, String bookName) {
