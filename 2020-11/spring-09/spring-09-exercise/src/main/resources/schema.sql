@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS tBookComment;
 DROP TABLE IF EXISTS tBook;
 DROP TABLE IF EXISTS tAuthors;
 DROP TABLE IF EXISTS tGenre;
@@ -29,4 +30,10 @@ FOREIGN KEY (GenreID) REFERENCES tGenre (GenreID)
 
 DROP INDEX IF EXISTS XPKtBook;
 create unique index XPKtBook on tBook (BookID);
-
+------
+CREATE TABLE tBookComment(
+BookCommentID numeric(15,0) PRIMARY KEY,
+BookID numeric(15,0),
+Comment VARCHAR(255),
+FOREIGN KEY (BookID) REFERENCES tBook (BookID)
+);
