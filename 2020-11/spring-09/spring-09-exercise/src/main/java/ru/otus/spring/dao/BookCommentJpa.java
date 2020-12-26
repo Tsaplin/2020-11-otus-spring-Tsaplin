@@ -2,21 +2,24 @@ package ru.otus.spring.dao;
 
 import ru.otus.spring.domain.BookComment;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BookCommentJpa implements BookCommentDao {
+    @PersistenceContext
+    private EntityManager em;
+
     @Override
-    public boolean insert(BookComment bc) {
-        boolean result = false;
-        try {
-
-            result = true;
-        }catch (Exception e) {
-            e.printStackTrace();
+    public BookComment save(BookComment bc) {
+        if (bc.getBookCommentId() <= 0) {
+            em.persist(bc);
+            return bc;
         }
-
-        return result;
+        else {
+            return em.merge(bc);
+        }
     }
 
     @Override
