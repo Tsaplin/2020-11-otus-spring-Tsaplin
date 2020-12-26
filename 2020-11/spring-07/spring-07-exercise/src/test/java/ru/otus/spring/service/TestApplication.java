@@ -13,6 +13,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ru.otus.spring.Main;
 import ru.otus.spring.dao.BookDao;
 import ru.otus.spring.domain.Book;
+import ru.otus.spring.dto.BookDto;
 
 import java.util.List;
 
@@ -89,9 +90,9 @@ public class TestApplication {
         Book book = new Book(bookId, 1, 1, "Книга юнит-теста getAllTest");
         bookDao.insert(book);
 
-        List<Book> lb = bookDao.getAll();
+        List<BookDto> lb = bookDao.getAll();
         for (int i = 0; i < lb.size(); i++) {
-            Book b = lb.get(i);
+            BookDto b = lb.get(i);
             if (b.getBookId() == bookId) {
                 actual = 1;
                 break;

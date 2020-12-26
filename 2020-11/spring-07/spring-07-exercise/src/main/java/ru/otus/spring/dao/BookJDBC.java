@@ -2,14 +2,12 @@ package ru.otus.spring.dao;
 
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
-import org.springframework.shell.standard.ShellComponent;
-import org.springframework.shell.standard.ShellMethod;
 import org.springframework.stereotype.Repository;
 import ru.otus.spring.domain.Book;
+import ru.otus.spring.dto.BookDto;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -80,10 +78,10 @@ public class BookJDBC implements BookDao {
     }
 
     @Override
-    public List<Book> getAll() {
+    public List<BookDto> getAll() {
         return namedParameterJdbcOperations.query(
-                "select BookID, AuthorID, GenreID, `Name` from tBook",
-                new BookMapper());
+                "select b.BookID, b.Name as bookName, b.AuthorID, a.FIO, b.GenreID, g.Name as genreName from tBook b, tAuthors a, tGenre g where b.AuthorID = a.AuthorID and b.GenreID = g.GenreID",
+                new BookDtoMapper());
     }
 
     @Override
@@ -114,4 +112,19 @@ public class BookJDBC implements BookDao {
             return new Book(bookId, authorId, genreId, bookName);
         }
     }
+
+    private static class BookDtoMapper implements RowMapper<BookDto> {
+        @Override
+        public BookDto mapRow(ResultSet resultSet, int i) throws SQLException {
+            long bookId = resultSet.getLong("BookID");
+            String bookName = resultSet.getString("bookName");
+            long authorId = resultSet.getLong("AuthorID");
+            String authorFIO = resultSet.getString("FIO");
+            long genreId = resultSet.getLong("GenreID");
+            String genreName = resultSet.getString("genreName");
+
+            return new BookDto(bookId, bookName, authorId, authorFIO, genreId, genreName);
+        }
+    }
+
 }

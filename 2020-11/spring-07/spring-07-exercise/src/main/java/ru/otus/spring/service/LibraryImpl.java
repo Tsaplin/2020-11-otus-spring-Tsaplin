@@ -6,6 +6,8 @@ import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 import ru.otus.spring.dao.BookDao;
 import ru.otus.spring.domain.Book;
+import ru.otus.spring.dto.BookDto;
+
 import java.util.List;
 
 // Класс работы с приложением "Библиотека книг"
@@ -72,8 +74,8 @@ public class LibraryImpl {
     @ShellMethod(value = "Show all the books in the library", key = {"show"})
     public void showAllBooks() {
         try {
-            List<Book> lb = bookDao.getAll();
-            System.out.println(lb.toString());
+            List<BookDto> lb = bookDao.getAll();
+            lb.forEach(System.out::println);
         }catch (Exception e) {
             e.printStackTrace();
         }
