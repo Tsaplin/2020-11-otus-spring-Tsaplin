@@ -6,10 +6,10 @@ import ru.otus.spring.dto.BookDto;
 import java.util.List;
 
 public interface BookDao {
-    boolean insert(Book book);
-    boolean update(Book book);
-    List<BookDto> getAll();
-    boolean deleteById(long bookId);
+   // boolean insert(Book book);
+   // boolean update(Book book);
+   // List<BookDto> getAll();
+   // boolean deleteById(long bookId);
     int count();
-    boolean checkById(long bookId);
+   // boolean checkById(long bookId);
 }

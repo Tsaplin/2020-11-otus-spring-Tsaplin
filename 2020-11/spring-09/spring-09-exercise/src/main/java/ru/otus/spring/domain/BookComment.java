@@ -1,13 +1,28 @@
 package ru.otus.spring.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
+import javax.persistence.*;
+
 @Data
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "tBookComment")
 public class BookComment {
-    private final long bookCommentId;
-    private final long bookId;
-    private final String comment;
+    @Id
+    @Column(name = "BookCommentID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long bookCommentId;
+
+    @ManyToOne
+    @JoinColumn(name = "BookID", referencedColumnName = "BookID")
+    private Book book;
+
+    @Column(name = "Comment")
+    private String comment;
 }
 

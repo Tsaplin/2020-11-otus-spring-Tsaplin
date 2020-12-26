@@ -21,9 +21,9 @@ public class LibraryImpl {
     @ShellMethod(value = "Add a new book in format:ins bookId authorId genreId bookName", key = {"ins", "insert"})
     public boolean bookInsert(long bookId, long authorId, long genreId, String bookName) {
         boolean result = false;
-        Book b = new Book(bookId, authorId, genreId, bookName);
+        //Book b = new Book(bookId, authorId, genreId, bookName);
         try {
-            result = bookDao.insert(b);
+           // result = bookDao.insert(b);
             System.out.println("Книга успешно добавлена.");
         }catch (Exception e) {
             e.printStackTrace();
@@ -35,11 +35,11 @@ public class LibraryImpl {
     @ShellMethod(value = "Modify the selected book in format:upd bookId authorId genreId bookName", key = {"upd", "update"})
     public boolean bookUpdate(long bookId, @ShellOption(defaultValue = "-1") long authorId, @ShellOption(defaultValue = "-1") long genreId, @ShellOption(defaultValue = ShellOption.NULL) String bookName) {
         boolean result = false;
-        Book b = new Book(bookId, authorId, genreId, bookName);
+        //Book b = new Book(bookId, authorId, genreId, bookName);
         try {
-            result = bookDao.checkById(bookId);
+           // result = bookDao.checkById(bookId);
             if (result) {
-               result = bookDao.update(b);
+              // result = bookDao.update(b);
                System.out.println("Книга успешно изменена.");
             }
             else {
@@ -56,9 +56,9 @@ public class LibraryImpl {
     public boolean bookDelete(long bookId) {
         boolean result = false;
         try {
-            result = bookDao.checkById(bookId);
+           // result = bookDao.checkById(bookId);
             if (result) {
-                result = bookDao.deleteById(bookId);
+               // result = bookDao.deleteById(bookId);
                 System.out.println("Книга успешно удалена.");
             }
             else {
@@ -74,8 +74,8 @@ public class LibraryImpl {
     @ShellMethod(value = "Show all the books in the library", key = {"show"})
     public void showAllBooks() {
         try {
-            List<BookDto> lb = bookDao.getAll();
-            lb.forEach(System.out::println);
+           // List<BookDto> lb = bookDao.getAll();
+           // lb.forEach(System.out::println);
         }catch (Exception e) {
             e.printStackTrace();
         }

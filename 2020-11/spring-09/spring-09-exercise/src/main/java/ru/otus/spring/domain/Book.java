@@ -1,13 +1,29 @@
 package ru.otus.spring.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
+import javax.persistence.*;
 
 @Data
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "tBook")
 public class Book {
-   private final long bookId;
-   private final long authorId;
-   private final long genreId;
-   private final String name;
+   @Id
+   @Column(name = "BookID")
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   private long bookId;
+
+   @ManyToOne
+   @JoinColumn(name = "AuthorID", referencedColumnName = "AuthorID")
+   private Author author;
+
+   @ManyToOne
+   @JoinColumn(name = "GenreID", referencedColumnName = "GenreID")
+   private Genre genre;
+
+   @Column(name = "Name")
+   private String name;
 }

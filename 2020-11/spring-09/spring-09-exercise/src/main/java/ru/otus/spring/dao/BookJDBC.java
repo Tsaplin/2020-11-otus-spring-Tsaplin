@@ -24,7 +24,7 @@ public class BookJDBC implements BookDao {
     public int count() {
         return namedParameterJdbcOperations.getJdbcOperations().queryForObject("select count(*) from tBook", Integer.class);
     }
-
+/*
     @Override
     public boolean checkById(long bookId) {
         int exist = 0;
@@ -126,5 +126,5 @@ public class BookJDBC implements BookDao {
             return new BookDto(bookId, bookName, authorId, authorFIO, genreId, genreName);
         }
     }
-
+*/
 }
