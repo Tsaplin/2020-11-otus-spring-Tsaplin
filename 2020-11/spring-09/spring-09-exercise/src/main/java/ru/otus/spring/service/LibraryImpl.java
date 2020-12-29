@@ -13,7 +13,7 @@ import java.util.List;
 // Класс работы с приложением "Библиотека книг"
 @ShellComponent
 @RequiredArgsConstructor
-public class LibraryImpl {
+public class LibraryImpl implements Library {
 
     private final BookDao bookDao;
     private final AuthorDao authorDao;

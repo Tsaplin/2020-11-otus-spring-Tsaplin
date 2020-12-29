@@ -27,21 +27,21 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class TestApplication {
     AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Main.class);
     BookDao bookDao = context.getBean(BookDao.class);
-/*
+    Library library = context.getBean(Library.class);
+
     @Test
     @DisplayName("Запуск юнит-теста insertTest")
     public void insertTest()
     {
         boolean res = false;
         int actual = 0;
-        Book book = new Book(1, 1, 2, "Книга юнит-теста insertTest");
 
-        res = bookDao.insert(book);
+        res = library.bookInsert(1, 1, "Книга юнит-теста insertTest");
         actual = (res) ? 1 : 0;
 
         assertEquals(1, actual);
     }
-
+/*
     @Test
     @DisplayName("Запуск юнит-теста updateTest")
     public void updateTest()
@@ -78,17 +78,17 @@ public class TestApplication {
 
         assertEquals(1, actual);
     }
-
+*/
     @Test
     @DisplayName("Запуск юнит-теста getAllTest")
     public void getAllTest()
     {
         boolean res = false;
         int actual = 0;
-        long bookId = 3;
+        long bookId = 1;
 
-        Book book = new Book(bookId, 1, 1, "Книга юнит-теста getAllTest");
-        bookDao.insert(book);
+       // Book book = new Book(bookId, 1, 1, "Книга юнит-теста getAllTest");
+        library.bookInsert(1, 1, "Книга юнит-теста getAllTest");
 
         List<BookDto> lb = bookDao.getAll();
         for (int i = 0; i < lb.size(); i++) {
@@ -100,5 +100,5 @@ public class TestApplication {
         }
         assertEquals(1, actual);
     }
-*/
+
 }
