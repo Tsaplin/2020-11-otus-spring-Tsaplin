@@ -5,8 +5,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.Import;
 import org.springframework.shell.jline.InteractiveShellApplicationRunner;
 import org.springframework.shell.jline.ScriptShellApplicationRunner;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -20,14 +22,25 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("Запуск юнит-тестов")
+@DataJpaTest
+@Import({BookDao.class, Library.class})
+/*
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(properties = {
         InteractiveShellApplicationRunner.SPRING_SHELL_INTERACTIVE_ENABLED + "=false",
         ScriptShellApplicationRunner.SPRING_SHELL_SCRIPT_ENABLED + "=false"})
+
+*/
 public class TestApplication {
-    AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Main.class);
-    BookDao bookDao = context.getBean(BookDao.class);
-    Library library = context.getBean(Library.class);
+   // AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Main.class);
+   // BookDao bookDao = context.getBean(BookDao.class);
+   // Library library = context.getBean(Library.class);
+
+    @Autowired
+    private Library library;
+
+    @Autowired
+    private BookDao bookDao;
 
     @Test
     @DisplayName("Запуск юнит-теста insertTest")
@@ -41,7 +54,7 @@ public class TestApplication {
 
         assertEquals(1, actual);
     }
-/*
+
     @Test
     @DisplayName("Запуск юнит-теста updateTest")
     public void updateTest()
@@ -50,11 +63,9 @@ public class TestApplication {
         int actual = 0;
         long bookId = 1;
 
-        Book book = new Book(bookId, 1, 2, "Книга юнит-теста updateTest");
-        bookDao.insert(book);
-        Book book2 = new Book(bookId, 2, 3, "Книга юнит-теста updateTest модифицированная");
-        if (bookDao.checkById(bookId)) {
-            res = bookDao.update(book2);
+        res = library.bookInsert(1, 2, "Книга юнит-теста updateTest");
+        if (1==1 /*bookDao.checkById(bookId)*/) {
+            res = library.bookUpdate(bookId, 2, 3, "Книга юнит-теста updateTest модифицированная");
         }
         actual = (res) ? 1 : 0;
 
@@ -67,18 +78,17 @@ public class TestApplication {
     {
         boolean res = false;
         int actual = 0;
-        long bookId = 2;
+        long bookId = 1;
 
-        Book book = new Book(bookId, 2, 3, "Книга юнит-теста deleteTest");
-        bookDao.insert(book);
-        if (bookDao.checkById(bookId)) {
-            res = bookDao.deleteById(bookId);
+        res = library.bookInsert(2, 3, "Книга юнит-теста deleteTest");
+        if (1==1 /*bookDao.checkById(bookId)*/) {
+            res = library.bookDelete(bookId);
         }
         actual = (res) ? 1 : 0;
 
         assertEquals(1, actual);
     }
-*/
+
     @Test
     @DisplayName("Запуск юнит-теста getAllTest")
     public void getAllTest()
