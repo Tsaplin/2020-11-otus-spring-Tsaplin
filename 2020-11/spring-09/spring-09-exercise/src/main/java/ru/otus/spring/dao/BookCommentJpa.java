@@ -1,5 +1,7 @@
 package ru.otus.spring.dao;
 
+import lombok.val;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.spring.domain.BookComment;
@@ -16,6 +18,9 @@ import java.util.List;
 public class BookCommentJpa implements BookCommentDao {
     @PersistenceContext
     private EntityManager em;
+
+    @Autowired
+    private BookDao bd;
 
     @Override
     public BookComment save(BookComment bc) {
@@ -42,6 +47,17 @@ public class BookCommentJpa implements BookCommentDao {
         query.setParameter("bookCommentId", bookCommentId);
         query.executeUpdate();
     }
+
+    @Override
+    public void deleteByBook(long bookId) {
+        val optionalBook = bd.findById(bookId);
+        Query query = em.createQuery("delete " +
+                                        "from BookComment bc " +
+                                        "where bc.book = :book");
+        query.setParameter("book", optionalBook.get());
+        query.executeUpdate();
+    }
+
 
     @Override
     public void updateNameById(long bookCommentId, String comment) {

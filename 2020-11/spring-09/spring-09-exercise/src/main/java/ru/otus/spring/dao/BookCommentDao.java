@@ -9,4 +9,5 @@ public interface BookCommentDao {
     void updateNameById(long bookCommentId, String comment);
     List<BookComment> getAll();
     void deleteById(long bookCommentId);
+    void deleteByBook(long bookId);
 }

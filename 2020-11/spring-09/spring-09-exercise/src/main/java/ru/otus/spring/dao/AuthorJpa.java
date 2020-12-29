@@ -1,21 +1,24 @@
-package ru.otus.spring.domain;
+package ru.otus.spring.dao;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import ru.otus.spring.dao.AuthorDao;
+import ru.otus.spring.domain.Author;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.Optional;
 
+
 @Transactional
 @Repository
-public class GenreJpa implements GenreDao {
+public class AuthorJpa implements AuthorDao {
     @PersistenceContext
     private EntityManager em;
 
     @Override
-    public Optional<Genre> findById(long genreId) {
-        return Optional.ofNullable(em.find(Genre.class, genreId));
+    public Optional<Author> findById(long authorId) {
+        return Optional.ofNullable(em.find(Author.class, authorId));
     }
 
 }

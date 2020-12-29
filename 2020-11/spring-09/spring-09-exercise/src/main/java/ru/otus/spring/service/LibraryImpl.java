@@ -4,7 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
+import ru.otus.spring.dao.AuthorDao;
+import ru.otus.spring.dao.BookCommentDao;
 import ru.otus.spring.dao.BookDao;
+import ru.otus.spring.dao.GenreDao;
 import ru.otus.spring.domain.*;
 import ru.otus.spring.dto.BookDto;
 
@@ -16,6 +19,7 @@ import java.util.List;
 public class LibraryImpl implements Library {
 
     private final BookDao bookDao;
+    private final BookCommentDao bookCommentDao;
     private final AuthorDao authorDao;
     private final GenreDao genreDao;
     private final String BOOK_NOT_EXIST_MESSAGE = "Книга не существует в базе данных.";
@@ -67,6 +71,7 @@ public class LibraryImpl implements Library {
         boolean result = false;
         try {
            // result = bookDao.checkById(bookId);
+            bookCommentDao.deleteByBook(bookId);
             if (/*result*/1==1) {
                 bookDao.deleteById(bookId);
                 result = true;

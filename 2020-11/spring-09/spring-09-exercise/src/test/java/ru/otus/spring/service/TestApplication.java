@@ -7,6 +7,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Import;
 import org.springframework.shell.jline.InteractiveShellApplicationRunner;
@@ -23,7 +24,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("Запуск юнит-тестов")
 @DataJpaTest
-@Import({BookDao.class, Library.class})
 /*
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(properties = {
@@ -32,14 +32,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 */
 public class TestApplication {
-   // AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Main.class);
-   // BookDao bookDao = context.getBean(BookDao.class);
-   // Library library = context.getBean(Library.class);
-
-    @Autowired
+    @MockBean
     private Library library;
 
-    @Autowired
+    @MockBean
     private BookDao bookDao;
 
     @Test
