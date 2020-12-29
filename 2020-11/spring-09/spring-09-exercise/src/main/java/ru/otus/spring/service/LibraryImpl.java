@@ -5,7 +5,7 @@ import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 import ru.otus.spring.dao.BookDao;
-import ru.otus.spring.domain.Book;
+import ru.otus.spring.domain.*;
 import ru.otus.spring.dto.BookDto;
 
 import java.util.List;
@@ -16,14 +16,20 @@ import java.util.List;
 public class LibraryImpl {
 
     private final BookDao bookDao;
+    private final AuthorDao authorDao;
+    private final GenreDao genreDao;
     private final String BOOK_NOT_EXIST_MESSAGE = "Книга не существует в базе данных.";
 
-    @ShellMethod(value = "Add a new book in format:ins bookId authorId genreId bookName", key = {"ins", "insert"})
-    public boolean bookInsert(long bookId, long authorId, long genreId, String bookName) {
+    @ShellMethod(value = "Add a new book in format:ins authorId genreId bookName", key = {"ins", "insert"})
+    public boolean bookInsert(long authorId, long genreId, String bookName) {
         boolean result = false;
-        //Book b = new Book(bookId, authorId, genreId, bookName);
+
+        Author author = authorDao.findById(authorId).get();
+        Genre genre = genreDao.findById(genreId).get();
+        Book b = new Book(0, author, genre, bookName);
         try {
-           // result = bookDao.insert(b);
+            bookDao.save(b);
+            result = true;
             System.out.println("Книга успешно добавлена.");
         }catch (Exception e) {
             e.printStackTrace();
@@ -35,11 +41,15 @@ public class LibraryImpl {
     @ShellMethod(value = "Modify the selected book in format:upd bookId authorId genreId bookName", key = {"upd", "update"})
     public boolean bookUpdate(long bookId, @ShellOption(defaultValue = "-1") long authorId, @ShellOption(defaultValue = "-1") long genreId, @ShellOption(defaultValue = ShellOption.NULL) String bookName) {
         boolean result = false;
-        //Book b = new Book(bookId, authorId, genreId, bookName);
+
+        Author author = authorDao.findById(authorId).get();
+        Genre genre = genreDao.findById(genreId).get();
+        Book b = new Book(bookId, author, genre, bookName);
         try {
            // result = bookDao.checkById(bookId);
-            if (result) {
-              // result = bookDao.update(b);
+            if (/*result*/ 1 == 1) {
+               bookDao.save(b);
+               result = true;
                System.out.println("Книга успешно изменена.");
             }
             else {
@@ -57,8 +67,9 @@ public class LibraryImpl {
         boolean result = false;
         try {
            // result = bookDao.checkById(bookId);
-            if (result) {
-               // result = bookDao.deleteById(bookId);
+            if (/*result*/1==1) {
+                bookDao.deleteById(bookId);
+                result = true;
                 System.out.println("Книга успешно удалена.");
             }
             else {
