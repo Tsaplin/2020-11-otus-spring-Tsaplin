@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface BookCommentDao {
     BookComment save(BookComment bc);
-    boolean update(BookComment bc);
+    void updateNameById(long bookCommentId, String comment);
     List<BookComment> getAll();
-    boolean deleteById(long bookCommentId);
+    void deleteById(long bookCommentId);
 }

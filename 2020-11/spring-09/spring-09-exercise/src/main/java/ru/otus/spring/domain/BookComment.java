@@ -11,10 +11,10 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "tBookComment")
+@Table(name = "tbookcomment")
 public class BookComment {
     @Id
-    @Column(name = "BookCommentID")
+    @Column(name = "bookcommentID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long bookCommentId;
 

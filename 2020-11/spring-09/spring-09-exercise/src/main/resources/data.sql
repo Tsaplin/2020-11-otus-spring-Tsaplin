@@ -5,3 +5,6 @@ insert into tAuthors (AuthorID, `FIO`) values (3, 'Михаил Хазин');
 insert into tGenre (GenreID, `Name`) values (1, 'Детские сказки');
 insert into tGenre (GenreID, `Name`) values (2, 'Экономика');
 insert into tGenre (GenreID, `Name`) values (3, 'Фантастика');
+
+insert into tBook (BookID, AuthorID, GenreID, `Name`) values (1, 2, 2, 'Тестовая книга для комментариев');
+insert into tBookComment (BookCommentID, BookID, Comment) values (101, 1, 'Комментариий для Тестовая книгаs');

@@ -4,12 +4,14 @@ import ru.otus.spring.domain.Book;
 import ru.otus.spring.dto.BookDto;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BookDao {
-   // boolean insert(Book book);
+    Book save(Book book);
    // boolean update(Book book);
    // List<BookDto> getAll();
-   // boolean deleteById(long bookId);
+    void deleteById(long bookId);
     int count();
-   // boolean checkById(long bookId);
+    Optional<Book> findById(long bookId);
+    // boolean checkById(long bookId);
 }

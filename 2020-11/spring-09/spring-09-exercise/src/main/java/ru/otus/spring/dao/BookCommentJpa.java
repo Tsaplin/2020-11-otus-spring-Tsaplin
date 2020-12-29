@@ -1,12 +1,18 @@
 package ru.otus.spring.dao;
 
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.otus.spring.domain.BookComment;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.List;
 
+@Transactional
+@Repository
 public class BookCommentJpa implements BookCommentDao {
     @PersistenceContext
     private EntityManager em;
@@ -23,35 +29,27 @@ public class BookCommentJpa implements BookCommentDao {
     }
 
     @Override
-    public boolean update(BookComment bc) {
-        boolean result = false;
-        try {
-
-            result = true;
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return result;
-    }
-
-    @Override
     public List<BookComment> getAll() {
-        ArrayList<BookComment> res = new ArrayList<BookComment>();
-        return res;
+        TypedQuery<BookComment> query = em.createQuery("select bc from BookComment bc", BookComment.class);
+        return query.getResultList();
     }
 
     @Override
-    public boolean deleteById(long bookCommentId) {
-        boolean result = false;
-        try {
-
-            result = true;
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return result;
+    public void deleteById(long bookCommentId) {
+        Query query = em.createQuery("delete " +
+                                        "from BookComment bc " +
+                                        "where bc.bookCommentId = :bookCommentId");
+        query.setParameter("bookCommentId", bookCommentId);
+        query.executeUpdate();
     }
 
+    @Override
+    public void updateNameById(long bookCommentId, String comment) {
+        Query query = em.createQuery("update BookComment bc " +
+                                        "set bc.comment = :comment " +
+                                        "where bc.bookCommentId = :bookCommentId");
+        query.setParameter("comment", comment);
+        query.setParameter("bookCommentId", bookCommentId);
+        query.executeUpdate();
+    }
 }
