@@ -85,8 +85,8 @@ public class LibraryImpl {
     @ShellMethod(value = "Show all the books in the library", key = {"show"})
     public void showAllBooks() {
         try {
-           // List<BookDto> lb = bookDao.getAll();
-           // lb.forEach(System.out::println);
+            List<BookDto> lb = bookDao.getAll();
+            lb.forEach(System.out::println);
         }catch (Exception e) {
             e.printStackTrace();
         }

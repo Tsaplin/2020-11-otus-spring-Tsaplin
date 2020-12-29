@@ -57,18 +57,11 @@ public class BookJpa implements BookDao {
         }
     }
 
-/*
     @Override
     public List<BookDto> getAll() {
-        TypedQuery<BookComment> query = em.createQuery("select bc from BookComment bc", BookComment.class);
+        Query query = em.createQuery("select new ru.otus.spring.dto.BookDto ( b.bookId, b.name, a.authorId, a.FIO, g.genreId, g.Name) from Book b join b.author a join b.genre g", BookDto.class);
         return query.getResultList();
-
-        return namedParameterJdbcOperations.query(
-                "select b.BookID, b.Name as bookName, b.AuthorID, a.FIO, b.GenreID, g.Name as genreName from tBook b, tAuthors a, tGenre g where b.AuthorID = a.AuthorID and b.GenreID = g.GenreID",
-                new BookDtoMapper());
     }
-
-*/
 
     @Override
     public void deleteById(long bookId) {
