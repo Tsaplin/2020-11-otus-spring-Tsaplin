@@ -1,6 +1,7 @@
 package ru.otus.spring.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.val;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
@@ -50,8 +51,8 @@ public class LibraryImpl implements Library {
         Genre genre = genreDao.findById(genreId).get();
         Book b = new Book(bookId, author, genre, bookName);
         try {
-           // result = bookDao.checkById(bookId);
-            if (/*result*/ 1 == 1) {
+            val optionalBook = bookDao.findById(bookId);
+            if (optionalBook.isPresent()) {
                bookDao.save(b);
                result = true;
                System.out.println("Книга успешно изменена.");
@@ -70,9 +71,9 @@ public class LibraryImpl implements Library {
     public boolean bookDelete(long bookId) {
         boolean result = false;
         try {
-           // result = bookDao.checkById(bookId);
-            bookCommentDao.deleteByBook(bookId);
-            if (/*result*/1==1) {
+            val optionalBook = bookDao.findById(bookId);
+            if (optionalBook.isPresent()) {
+                bookCommentDao.deleteByBook(bookId);
                 bookDao.deleteById(bookId);
                 result = true;
                 System.out.println("Книга успешно удалена.");
