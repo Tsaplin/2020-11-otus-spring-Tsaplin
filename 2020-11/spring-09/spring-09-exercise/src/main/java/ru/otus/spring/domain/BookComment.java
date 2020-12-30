@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 
@@ -18,7 +21,9 @@ public class BookComment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long bookCommentId;
 
-    @ManyToOne
+    @Fetch(FetchMode.SELECT)
+    @BatchSize(size = 20)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "BookID", referencedColumnName = "BookID")
     private Book book;
 
