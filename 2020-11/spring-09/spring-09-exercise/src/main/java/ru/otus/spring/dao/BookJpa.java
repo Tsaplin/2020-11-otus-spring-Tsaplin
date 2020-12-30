@@ -25,12 +25,14 @@ public class BookJpa implements BookDao {
     @PersistenceContext
     private EntityManager em;
 
+    @Transactional(readOnly = true)
     @Override
     public int count() {
         TypedQuery<Book> query = em.createQuery("select b from Book b", Book.class);
         return query.getResultList().size();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Optional<Book> findById(long bookId) {
         return Optional.ofNullable(em.find(Book.class, bookId));
@@ -46,6 +48,7 @@ public class BookJpa implements BookDao {
         return (exist == 1);
     }
 */
+    @Transactional(readOnly = false)
     @Override
     public Book save(Book book) {
         if (book.getBookId() <= 0) {
@@ -57,12 +60,14 @@ public class BookJpa implements BookDao {
         }
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<BookDto> getAll() {
         Query query = em.createQuery("select new ru.otus.spring.dto.BookDto ( b.bookId, b.name, a.authorId, a.FIO, g.genreId, g.Name) from Book b join b.author a join b.genre g", BookDto.class);
         return query.getResultList();
     }
 
+    @Transactional(readOnly = false)
     @Override
     public void deleteById(long bookId) {
         Query query = em.createQuery("delete " +

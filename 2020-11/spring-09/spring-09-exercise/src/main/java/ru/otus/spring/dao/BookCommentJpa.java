@@ -22,6 +22,7 @@ public class BookCommentJpa implements BookCommentDao {
     @Autowired
     private BookDao bd;
 
+    @Transactional(readOnly = false)
     @Override
     public BookComment save(BookComment bc) {
         if (bc.getBookCommentId() <= 0) {
@@ -33,12 +34,14 @@ public class BookCommentJpa implements BookCommentDao {
         }
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<BookComment> getAll() {
         TypedQuery<BookComment> query = em.createQuery("select bc from BookComment bc", BookComment.class);
         return query.getResultList();
     }
 
+    @Transactional(readOnly = false)
     @Override
     public void deleteById(long bookCommentId) {
         Query query = em.createQuery("delete " +
@@ -48,6 +51,7 @@ public class BookCommentJpa implements BookCommentDao {
         query.executeUpdate();
     }
 
+    @Transactional(readOnly = false)
     @Override
     public void deleteByBook(long bookId) {
         val optionalBook = bd.findById(bookId);
@@ -59,6 +63,7 @@ public class BookCommentJpa implements BookCommentDao {
     }
 
 
+    @Transactional(readOnly = false)
     @Override
     public void updateNameById(long bookCommentId, String comment) {
         Query query = em.createQuery("update BookComment bc " +

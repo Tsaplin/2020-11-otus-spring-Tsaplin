@@ -17,6 +17,7 @@ public class AuthorJpa implements AuthorDao {
     private EntityManager em;
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<Author> findById(long authorId) {
         return Optional.ofNullable(em.find(Author.class, authorId));
     }

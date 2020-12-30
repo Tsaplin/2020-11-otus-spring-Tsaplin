@@ -14,6 +14,7 @@ public class GenreJpa implements GenreDao {
     @PersistenceContext
     private EntityManager em;
 
+    @Transactional(readOnly = true)
     @Override
     public Optional<Genre> findById(long genreId) {
         return Optional.ofNullable(em.find(Genre.class, genreId));
