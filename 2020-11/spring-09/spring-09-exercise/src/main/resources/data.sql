@@ -7,4 +7,4 @@ insert into tGenre (GenreID, `Name`) values (2, 'Экономика');
 insert into tGenre (GenreID, `Name`) values (3, 'Фантастика');
 
 insert into tBook (BookID, AuthorID, GenreID, `Name`) values (1, 2, 2, 'Тестовая книга для комментариев');
-insert into tBookComment (BookCommentID, BookID, Comment) values (101, 1, 'Комментариий для Тестовая книгаs');
+insert into tBookComment (BookCommentID, BookID, Comment) values (101, 1, 'Комментариий для Тестовая книга');

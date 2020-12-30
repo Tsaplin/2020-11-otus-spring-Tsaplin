@@ -1,21 +1,12 @@
 package ru.otus.spring.service;
 
-import lombok.RequiredArgsConstructor;
+import lombok.val;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Import;
-import org.springframework.shell.jline.InteractiveShellApplicationRunner;
-import org.springframework.shell.jline.ScriptShellApplicationRunner;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import ru.otus.spring.Main;
 import ru.otus.spring.dao.*;
-import ru.otus.spring.domain.Book;
 import ru.otus.spring.dto.BookDto;
 
 import java.util.List;
@@ -25,13 +16,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @DisplayName("Запуск юнит-тестов")
 @DataJpaTest
 @Import({LibraryImpl.class, BookJpa.class, BookCommentJpa.class, AuthorJpa.class, GenreJpa.class})
-/*
-@ExtendWith(SpringExtension.class)
-@SpringBootTest(properties = {
-        InteractiveShellApplicationRunner.SPRING_SHELL_INTERACTIVE_ENABLED + "=false",
-        ScriptShellApplicationRunner.SPRING_SHELL_SCRIPT_ENABLED + "=false"})
-
-*/
 public class TestApplication {
     @Autowired
     BookCommentDao bookCommentDao;
@@ -65,14 +49,18 @@ public class TestApplication {
     {
         boolean res = false;
         int actual = 0;
-        long bookId = 1;
+        long bookId = 0;
+        String bookName = "Книга юнит-теста updateTest";
 
-        res = library.bookInsert(1, 2, "Книга юнит-теста updateTest");
-        if (1==1 /*bookDao.checkById(bookId)*/) {
+        library.bookInsert(1, 2, bookName);
+        val optionalBook = bookDao.findByName(bookName);
+
+        if (optionalBook.isPresent()) {
+            bookId = optionalBook.get().getBookId();
             res = library.bookUpdate(bookId, 2, 3, "Книга юнит-теста updateTest модифицированная");
         }
-        actual = (res) ? 1 : 0;
 
+        actual = (res) ? 1 : 0;
         assertEquals(1, actual);
     }
 
@@ -82,14 +70,18 @@ public class TestApplication {
     {
         boolean res = false;
         int actual = 0;
-        long bookId = 1;
+        long bookId = 0;
+        String bookName = "Книга юнит-теста deleteTest";
 
-        res = library.bookInsert(2, 3, "Книга юнит-теста deleteTest");
-        if (1==1 /*bookDao.checkById(bookId)*/) {
+        library.bookInsert(2, 3, bookName);
+        val optionalBook = bookDao.findByName(bookName);
+
+        if (optionalBook.isPresent()) {
+            bookId = optionalBook.get().getBookId();
             res = library.bookDelete(bookId);
         }
-        actual = (res) ? 1 : 0;
 
+        actual = (res) ? 1 : 0;
         assertEquals(1, actual);
     }
 
@@ -99,15 +91,14 @@ public class TestApplication {
     {
         boolean res = false;
         int actual = 0;
-        long bookId = 1;
+        String bookName = "Книга юнит-теста getAllTest";
 
-       // Book book = new Book(bookId, 1, 1, "Книга юнит-теста getAllTest");
-        library.bookInsert(1, 1, "Книга юнит-теста getAllTest");
+        library.bookInsert(1, 1, bookName);
 
         List<BookDto> lb = bookDao.getAll();
         for (int i = 0; i < lb.size(); i++) {
             BookDto b = lb.get(i);
-            if (b.getBookId() == bookId) {
+            if (b.getBookName().equals(bookName)) {
                 actual = 1;
                 break;
             }

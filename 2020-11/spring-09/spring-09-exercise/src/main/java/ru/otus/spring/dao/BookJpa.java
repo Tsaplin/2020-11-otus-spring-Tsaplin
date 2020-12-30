@@ -31,6 +31,18 @@ public class BookJpa implements BookDao {
         return Optional.ofNullable(em.find(Book.class, bookId));
     }
 
+    @Transactional(readOnly = true)
+    @Override
+    public Optional<Book> findByName(String bookName) {
+        TypedQuery<Book> query = em.createQuery("select b from Book b where b.name = :bookName", Book.class);
+        query.setParameter("bookName", bookName);
+        try {
+            return Optional.ofNullable(query.getSingleResult());
+        } catch (Exception e) {
+            return Optional.ofNullable(null);
+        }
+    }
+
     @Transactional(readOnly = false)
     @Override
     public Book save(Book book) {

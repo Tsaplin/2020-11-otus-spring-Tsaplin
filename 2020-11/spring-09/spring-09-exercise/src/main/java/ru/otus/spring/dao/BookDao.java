@@ -12,4 +12,5 @@ public interface BookDao {
     void deleteById(long bookId);
     int count();
     Optional<Book> findById(long bookId);
+    Optional<Book> findByName(String bookName);
 }
