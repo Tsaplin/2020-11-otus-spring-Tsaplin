@@ -14,7 +14,7 @@ import org.springframework.shell.jline.InteractiveShellApplicationRunner;
 import org.springframework.shell.jline.ScriptShellApplicationRunner;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ru.otus.spring.Main;
-import ru.otus.spring.dao.BookDao;
+import ru.otus.spring.dao.*;
 import ru.otus.spring.domain.Book;
 import ru.otus.spring.dto.BookDto;
 
@@ -24,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("Запуск юнит-тестов")
 @DataJpaTest
+@Import({LibraryImpl.class, BookJpa.class, BookCommentJpa.class, AuthorJpa.class, GenreJpa.class})
 /*
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(properties = {
@@ -32,10 +33,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 */
 public class TestApplication {
-    @MockBean
+    @Autowired
+    BookCommentDao bookCommentDao;
+    @Autowired
+    AuthorDao authorDao;
+    @Autowired
+    GenreDao genreDao;
+
+    @Autowired
     private Library library;
 
-    @MockBean
+    @Autowired
     private BookDao bookDao;
 
     @Test
