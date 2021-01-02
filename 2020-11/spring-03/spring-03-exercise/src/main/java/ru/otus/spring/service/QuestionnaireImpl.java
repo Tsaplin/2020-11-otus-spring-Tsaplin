@@ -12,7 +12,6 @@ import java.util.Scanner;
 @RequiredArgsConstructor
 @Service
 public class QuestionnaireImpl implements Questionnaire {
-    //private final User user;
     private final MyCSVFile myFile;
     private IQuestionLine qLine;
 

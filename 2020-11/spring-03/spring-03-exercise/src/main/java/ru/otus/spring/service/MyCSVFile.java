@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 public interface MyCSVFile {
-    void setFileName(String fileName);
+    void setFileName();
     List<IQuestionLine> readCSVFile() throws IOException;
 
 }

@@ -1,7 +1,8 @@
 package ru.otus.spring.service;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.otus.spring.config.ApplicationProps;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,17 +15,24 @@ import java.util.Scanner;
 @Service
 public class MyCSVFileImpl implements MyCSVFile {
 
-    @Value("${questionsFile.name}")
     private String fileName;
+    @Autowired
+    private ApplicationProps props;
 
     @Override
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
+    public void setFileName() {
+        if (props.getLocale().toString().equals("en_RU")) {
+            this.fileName = "QuestionsEn.csv";
+        }
+        else {
+            this.fileName = "QuestionsRu.csv";
+        }
     }
 
     @Override
     public List<IQuestionLine> readCSVFile() throws IOException {
-        String csvfilename = this.fileName;
+        setFileName();
+        String csvfilename = fileName;
 
         // Начитаем содержимое файла в BufferedReader, а далее каждую строчку обработаем сканнером
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
