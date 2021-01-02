@@ -1,6 +1,8 @@
 package ru.otus.spring.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.var;
+import org.springframework.context.MessageSource;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.stereotype.Service;
 import ru.otus.spring.config.ApplicationProps;
 
@@ -16,17 +18,25 @@ import java.util.Scanner;
 public class MyCSVFileImpl implements MyCSVFile {
 
     private String fileName;
-    @Autowired
-    private ApplicationProps props;
+    private final ApplicationProps props;
+    private final MessageSource messageSource;
+
+    public MyCSVFileImpl(ApplicationProps props, MessageSource messageSource) {
+        this.props = props;
+        this.messageSource = messageSource();
+    }
+
+    @Override
+    public MessageSource messageSource() {
+        var ms = new ReloadableResourceBundleMessageSource();
+        ms.setBasename("classpath:/i18n/bundle");
+        ms.setDefaultEncoding("UTF-8");
+        return ms;
+    }
 
     @Override
     public void setFileName() {
-        if (props.getLocale().toString().equals("en_RU")) {
-            this.fileName = "QuestionsEn.csv";
-        }
-        else {
-            this.fileName = "QuestionsRu.csv";
-        }
+        this.fileName = messageSource.getMessage("question.filename", null, props.getLocale());
     }
 
     @Override
