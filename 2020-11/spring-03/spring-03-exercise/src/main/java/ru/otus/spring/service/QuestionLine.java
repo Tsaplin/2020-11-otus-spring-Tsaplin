@@ -1,18 +1,10 @@
 package ru.otus.spring.service;
 
-import org.springframework.stereotype.Component;
-
-@Component
 public class QuestionLine implements IQuestionLine {
     private String qText;               // текст вопроса
     private String answerText;          // текст ответа
     private String correctAnswerText;   // текст правильного ответа
     private boolean isAnswerCorrect;    // признак, является ли данный ответ правильным
-
-    // конструктор
-    public QuestionLine() {
-
-    }
 
     public void setQtext(String text) {
         this.qText = text;

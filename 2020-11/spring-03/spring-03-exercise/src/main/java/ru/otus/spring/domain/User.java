@@ -9,11 +9,6 @@ public class User {
     private String name;
     private String surName;
 
-    public void setUser(String name, String surName) {
-        this.name = name;
-        this.surName = surName;
-    }
-
     public String getName() {
         return this.name;
     }
@@ -22,6 +17,21 @@ public class User {
         return this.surName;
     }
 
+    public void setUser(String name, String surName) {
+        this.name = name;
+        this.surName = surName;
+    }
+/*
+    public String userSurname(String surname) {
+        this.surName = surname;
+        return String.format("You entered surname: %s", surname);
+    }
+
+    public String userName(String name) {
+        this.name = name;
+        return String.format("You entered name: %s", name);
+    }
+*/
     public User readUserByConsole() {
         Scanner scannerConsole = new Scanner(System.in);
 

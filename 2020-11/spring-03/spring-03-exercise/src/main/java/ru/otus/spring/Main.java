@@ -1,27 +1,24 @@
 package ru.otus.spring;
 
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
+import lombok.var;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.PropertySource;
 import ru.otus.spring.service.Questionnaire;
+import ru.otus.spring.service.QuestionnaireImpl;
 
 import java.io.IOException;
 
 @PropertySource("classpath:Config.properties")
-@ComponentScan
+@SpringBootApplication
 public class Main {
 
-    // Не потребовался на Java 1.8
-    //public static PropertySourcesPlaceholderConfigurer propertyConfig() {
-    //    return new PropertySourcesPlaceholderConfigurer();
-    //}
-
     public static void main(String[] args) throws IOException  {
-        // TODO: создайте здесь класс контекста
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Main.class);
+        var context = SpringApplication.run(Main.class, args);
 
-        Questionnaire anketaOprosnik = context.getBean(Questionnaire.class);
+        Questionnaire anketaOprosnik = context.getBean(QuestionnaireImpl.class);
         anketaOprosnik.QuestionnaireExec();
+
     }
 
 }

@@ -9,17 +9,32 @@ import java.util.List;
 import java.util.Scanner;
 
 // Класс приложения анкетирования
-@Service
 @RequiredArgsConstructor
+@Service
 public class QuestionnaireImpl implements Questionnaire {
-    private final User user;
-    private final IMyCSVFile myFile;
+    //private final User user;
+    private final MyCSVFile myFile;
     private IQuestionLine qLine;
+
+    //@Override
+    public User readUserByConsole() {
+        Scanner scannerConsole = new Scanner(System.in);
+
+        // Ввод фамилии и имени пользователя
+        System.out.print("Введите вашу фамилию: ");
+        String userSurname = scannerConsole.nextLine();
+        System.out.print("Введите ваше имя: ");
+        String userName = scannerConsole.nextLine();
+        User user = new User();
+        user.setUser(userName, userSurname);
+
+        return user;
+    }
 
     @Override
     public void QuestionnaireExec() throws IOException {
         // Ввод фамилии и имени пользователя
-        User userData = user.readUserByConsole();
+        User userData = readUserByConsole();
 
         // Вывод csv-файла
         Scanner scannerConsole = new Scanner(System.in);
@@ -72,7 +87,7 @@ public class QuestionnaireImpl implements Questionnaire {
 
     // Метод вывода рез-та тестирования
     @Override
-    public void showTestingResult(List<IQuestionLine> qList, User user) {
+    public boolean showTestingResult(List<IQuestionLine> qList, User user) {
         boolean isWrongAnswerExist = false;
 
         for (int i = 0; i < qList.size(); i++) {
@@ -90,6 +105,8 @@ public class QuestionnaireImpl implements Questionnaire {
         else {
             System.out.println("Тестирование студента " + user.getSurName() + " " + user.getName() + " успешно пройдено.");
         }
+
+        return !isWrongAnswerExist;
     }
 
 }

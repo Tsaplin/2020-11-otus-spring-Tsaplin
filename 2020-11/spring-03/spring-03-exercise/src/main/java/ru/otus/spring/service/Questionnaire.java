@@ -15,5 +15,5 @@ public interface Questionnaire {
     void checkAnswers(List<IQuestionLine> qList);
 
     // Метод вывода рез-та тестирования
-    void showTestingResult(List<IQuestionLine> qList, User user);
+    boolean showTestingResult(List<IQuestionLine> qList, User user);
 }
