@@ -7,7 +7,7 @@ import java.util.Locale;
 
 @Component
 @ConfigurationProperties(prefix = "application")
-public class ApplicationProps {
+public class ApplicationProperties {
     private Locale locale;
 
     public Locale getLocale() {

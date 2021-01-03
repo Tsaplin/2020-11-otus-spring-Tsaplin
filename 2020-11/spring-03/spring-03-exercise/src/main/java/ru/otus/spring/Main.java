@@ -9,7 +9,6 @@ import ru.otus.spring.service.QuestionnaireImpl;
 import java.io.IOException;
 
 @SpringBootApplication
-//@EnableConfigurationProperties(ApplicationProps.class)
 public class Main {
 
     public static void main(String[] args) throws IOException  {

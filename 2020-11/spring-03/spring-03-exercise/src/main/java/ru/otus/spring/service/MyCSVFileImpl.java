@@ -1,10 +1,8 @@
 package ru.otus.spring.service;
 
-import lombok.var;
 import org.springframework.context.MessageSource;
-import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.stereotype.Service;
-import ru.otus.spring.config.ApplicationProps;
+import ru.otus.spring.config.ApplicationProperties;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,20 +16,12 @@ import java.util.Scanner;
 public class MyCSVFileImpl implements MyCSVFile {
 
     private String fileName;
-    private final ApplicationProps props;
+    private final ApplicationProperties props;
     private final MessageSource messageSource;
 
-    public MyCSVFileImpl(ApplicationProps props, MessageSource messageSource) {
+    public MyCSVFileImpl(ApplicationProperties props, MessageSource messageSource) {
         this.props = props;
-        this.messageSource = messageSource();
-    }
-
-    @Override
-    public MessageSource messageSource() {
-        var ms = new ReloadableResourceBundleMessageSource();
-        ms.setBasename("classpath:/i18n/bundle");
-        ms.setDefaultEncoding("UTF-8");
-        return ms;
+        this.messageSource = messageSource;
     }
 
     @Override
@@ -42,11 +32,10 @@ public class MyCSVFileImpl implements MyCSVFile {
     @Override
     public List<IQuestionLine> readCSVFile() throws IOException {
         setFileName();
-        String csvfilename = fileName;
 
         // Начитаем содержимое файла в BufferedReader, а далее каждую строчку обработаем сканнером
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
-        InputStream resourceStream = loader.getResourceAsStream(csvfilename);
+        InputStream resourceStream = loader.getResourceAsStream(fileName);
         BufferedReader reader = new BufferedReader(new InputStreamReader(resourceStream));
 
         String line = null;
