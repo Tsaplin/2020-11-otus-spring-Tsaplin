@@ -8,7 +8,6 @@ import ru.otus.spring.domain.BookComment;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
@@ -25,7 +24,7 @@ public class BookViewImpl implements BookView {
 
     @Transactional(readOnly = true)
     @Override
-    public List<BookComment> getByBook(Book book) {
+    public List<BookComment> getCommentsByBook(Book book) {
         Query query = em.createQuery("select bc from BookComment bc where bc.book = :book");
         query.setParameter("book", book);
         return query.getResultList();

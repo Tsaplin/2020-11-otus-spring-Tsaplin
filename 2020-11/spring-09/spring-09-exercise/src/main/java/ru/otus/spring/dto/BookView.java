@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface BookView {
     List<BookDto> getAll();
-    List<BookComment> getByBook(Book book);
+    List<BookComment> getCommentsByBook(Book book);
 }

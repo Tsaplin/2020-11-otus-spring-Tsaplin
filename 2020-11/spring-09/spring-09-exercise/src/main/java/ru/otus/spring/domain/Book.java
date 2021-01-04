@@ -22,13 +22,13 @@ public class Book {
 
    @Fetch(FetchMode.SELECT)
    @BatchSize(size = 10)
-   @ManyToOne(fetch = FetchType.LAZY)
+   @ManyToOne(fetch = FetchType.EAGER)
    @JoinColumn(name = "AuthorID", referencedColumnName = "AuthorID")
    private Author author;
 
    @Fetch(FetchMode.SELECT)
    @BatchSize(size = 10)
-   @ManyToOne(fetch = FetchType.LAZY)
+   @ManyToOne(fetch = FetchType.EAGER)
    @JoinColumn(name = "GenreID", referencedColumnName = "GenreID")
    private Genre genre;
 
