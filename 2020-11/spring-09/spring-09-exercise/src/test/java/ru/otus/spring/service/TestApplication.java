@@ -42,7 +42,12 @@ public class TestApplication {
         boolean res = false;
         int actual = 0;
 
-        res = library.bookInsert(1, 1, "Книга юнит-теста insertTest");
+        try {
+            res = library.bookInsert(1, 1, "Книга юнит-теста insertTest");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         actual = (res) ? 1 : 0;
 
         assertEquals(1, actual);
@@ -57,12 +62,21 @@ public class TestApplication {
         long bookId = 0;
         String bookName = "Книга юнит-теста updateTest";
 
-        library.bookInsert(1, 2, bookName);
+        try {
+            res = library.bookInsert(1, 2, bookName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         val optionalBook = bookDao.findByName(bookName);
 
         if (optionalBook.isPresent()) {
             bookId = optionalBook.get().getBookId();
-            res = library.bookUpdate(bookId, 2, 3, "Книга юнит-теста updateTest модифицированная");
+            try {
+                res = library.bookUpdate(bookId, 2, 3, "Книга юнит-теста updateTest модифицированная");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         actual = (res) ? 1 : 0;
@@ -78,12 +92,21 @@ public class TestApplication {
         long bookId = 0;
         String bookName = "Книга юнит-теста deleteTest";
 
-        library.bookInsert(2, 3, bookName);
+        try {
+            res = library.bookInsert(2, 3, bookName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         val optionalBook = bookDao.findByName(bookName);
 
         if (optionalBook.isPresent()) {
             bookId = optionalBook.get().getBookId();
-            res = library.bookDelete(bookId);
+            try {
+                res = library.bookDelete(bookId);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         actual = (res) ? 1 : 0;
@@ -98,7 +121,11 @@ public class TestApplication {
         int actual = 0;
         String bookName = "Книга юнит-теста getAllTest";
 
-        library.bookInsert(1, 1, bookName);
+        try {
+            res = library.bookInsert(1, 1, bookName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         List<BookDto> lb = bookView.getAll();
         for (int i = 0; i < lb.size(); i++) {
