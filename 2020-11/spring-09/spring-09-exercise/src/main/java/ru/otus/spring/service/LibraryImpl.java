@@ -73,7 +73,7 @@ public class LibraryImpl implements Library {
         try {
             val optionalBook = bookDao.findById(bookId);
             if (optionalBook.isPresent()) {
-                bookCommentDao.deleteByBook(bookId);
+                bookCommentDao.deleteByBook(optionalBook.get());
                 bookDao.deleteById(bookId);
                 result = true;
                 System.out.println("Книга успешно удалена.");

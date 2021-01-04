@@ -1,5 +1,6 @@
 package ru.otus.spring.dao;
 
+import ru.otus.spring.domain.Book;
 import ru.otus.spring.domain.BookComment;
 
 import java.util.List;
@@ -11,5 +12,5 @@ public interface BookCommentDao {
     Optional<BookComment> findById(long bookCommentId);
     List<BookComment> getAll();
     void deleteById(long bookCommentId);
-    void deleteByBook(long bookId);
+    void deleteByBook(Book book);
 }

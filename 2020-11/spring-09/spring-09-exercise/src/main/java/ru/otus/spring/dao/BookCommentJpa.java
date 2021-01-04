@@ -4,6 +4,7 @@ import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import ru.otus.spring.domain.Book;
 import ru.otus.spring.domain.BookComment;
 
 import javax.persistence.EntityManager;
@@ -56,12 +57,11 @@ public class BookCommentJpa implements BookCommentDao {
 
     @Transactional(readOnly = false)
     @Override
-    public void deleteByBook(long bookId) {
-        val optionalBook = bd.findById(bookId);
+    public void deleteByBook(Book book) {
         Query query = em.createQuery("delete " +
                                         "from BookComment bc " +
                                         "where bc.book = :book");
-        query.setParameter("book", optionalBook.get());
+        query.setParameter("book", book);
         query.executeUpdate();
     }
 
