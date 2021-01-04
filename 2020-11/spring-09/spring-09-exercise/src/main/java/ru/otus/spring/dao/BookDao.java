@@ -8,7 +8,6 @@ import java.util.Optional;
 
 public interface BookDao {
     Book save(Book book);
-    List<BookDto> getAll();
     void deleteById(long bookId);
     int count();
     Optional<Book> findById(long bookId);

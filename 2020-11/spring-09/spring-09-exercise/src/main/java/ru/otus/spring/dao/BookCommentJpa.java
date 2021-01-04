@@ -65,15 +65,4 @@ public class BookCommentJpa implements BookCommentDao {
         query.executeUpdate();
     }
 
-
-    @Transactional(readOnly = false)
-    @Override
-    public void updateNameById(long bookCommentId, String comment) {
-        Query query = em.createQuery("update BookComment bc " +
-                                        "set bc.comment = :comment " +
-                                        "where bc.bookCommentId = :bookCommentId");
-        query.setParameter("comment", comment);
-        query.setParameter("bookCommentId", bookCommentId);
-        query.executeUpdate();
-    }
 }

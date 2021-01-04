@@ -11,6 +11,7 @@ import ru.otus.spring.dao.BookDao;
 import ru.otus.spring.dao.GenreDao;
 import ru.otus.spring.domain.*;
 import ru.otus.spring.dto.BookDto;
+import ru.otus.spring.dto.BookView;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ import java.util.List;
 public class LibraryImpl implements Library {
 
     private final BookDao bookDao;
+    private final BookView bookView;
     private final BookCommentDao bookCommentDao;
     private final AuthorDao authorDao;
     private final GenreDao genreDao;
@@ -91,7 +93,7 @@ public class LibraryImpl implements Library {
     @ShellMethod(value = "Show all the books in the library", key = {"show"})
     public void showAllBooks() {
         try {
-            List<BookDto> lb = bookDao.getAll();
+            List<BookDto> lb = bookView.getAll();
             lb.forEach(System.out::println);
         }catch (Exception e) {
             e.printStackTrace();

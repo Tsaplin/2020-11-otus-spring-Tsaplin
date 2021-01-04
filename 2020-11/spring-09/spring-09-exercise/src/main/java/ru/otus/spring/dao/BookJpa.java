@@ -54,13 +54,6 @@ public class BookJpa implements BookDao {
         }
     }
 
-    @Transactional(readOnly = true)
-    @Override
-    public List<BookDto> getAll() {
-        Query query = em.createQuery("select new ru.otus.spring.dto.BookDto ( b.bookId, b.name, a.authorId, a.FIO, g.genreId, g.Name) from Book b join b.author a join b.genre g", BookDto.class);
-        return query.getResultList();
-    }
-
     @Transactional(readOnly = false)
     @Override
     public void deleteById(long bookId) {

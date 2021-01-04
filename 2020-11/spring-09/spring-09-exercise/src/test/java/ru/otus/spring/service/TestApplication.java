@@ -8,6 +8,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import ru.otus.spring.dao.*;
 import ru.otus.spring.dto.BookDto;
+import ru.otus.spring.dto.BookView;
+import ru.otus.spring.dto.BookViewImpl;
 
 import java.util.List;
 
@@ -15,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("Запуск юнит-тестов")
 @DataJpaTest
-@Import({LibraryImpl.class, BookJpa.class, BookCommentJpa.class, AuthorJpa.class, GenreJpa.class})
+@Import({LibraryImpl.class, BookJpa.class, BookCommentJpa.class, AuthorJpa.class, GenreJpa.class, BookViewImpl.class})
 public class TestApplication {
     @Autowired
     BookCommentDao bookCommentDao;
@@ -29,6 +31,9 @@ public class TestApplication {
 
     @Autowired
     private BookDao bookDao;
+
+    @Autowired
+    private BookView bookView;
 
     @Test
     @DisplayName("Запуск юнит-теста insertTest")
@@ -95,7 +100,7 @@ public class TestApplication {
 
         library.bookInsert(1, 1, bookName);
 
-        List<BookDto> lb = bookDao.getAll();
+        List<BookDto> lb = bookView.getAll();
         for (int i = 0; i < lb.size(); i++) {
             BookDto b = lb.get(i);
             if (b.getBookName().equals(bookName)) {
