@@ -45,7 +45,7 @@ public class LibraryImpl implements Library {
             result = true;
             logger.info("Книга успешно добавлена.");
         }catch (Exception e) {
-            logger.error(e.getStackTrace());
+            logger.error(e.getMessage());
             throw new Exception(e);
         }
 
@@ -70,7 +70,7 @@ public class LibraryImpl implements Library {
                logger.error(BOOK_NOT_EXIST_MESSAGE);
             }
         }catch (Exception e) {
-            logger.error(e.getStackTrace());
+            logger.error(e.getMessage());
             throw new Exception(e);
         }
 
@@ -92,7 +92,7 @@ public class LibraryImpl implements Library {
                 logger.info(BOOK_NOT_EXIST_MESSAGE);
             }
         }catch (Exception e) {
-            logger.error(e.getStackTrace());
+            logger.error(e.getMessage());
             throw new Exception(e);
         }
 
@@ -105,7 +105,7 @@ public class LibraryImpl implements Library {
             List<BookDto> lb = bookView.getAll();
             lb.forEach(logger::info);
         }catch (Exception e) {
-            logger.error(e.getStackTrace());
+            logger.error(e.getMessage());
             throw new Exception(e);
         }
     }
