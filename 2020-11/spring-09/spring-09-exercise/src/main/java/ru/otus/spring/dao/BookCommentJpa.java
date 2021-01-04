@@ -12,6 +12,7 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class BookCommentJpa implements BookCommentDao {
@@ -40,14 +41,17 @@ public class BookCommentJpa implements BookCommentDao {
         return query.getResultList();
     }
 
+    @Transactional(readOnly = true)
+    @Override
+    public Optional<BookComment> findById(long bookCommentId) {
+        return Optional.ofNullable(em.find(BookComment.class, bookCommentId));
+    }
+
     @Transactional(readOnly = false)
     @Override
     public void deleteById(long bookCommentId) {
-        Query query = em.createQuery("delete " +
-                                        "from BookComment bc " +
-                                        "where bc.bookCommentId = :bookCommentId");
-        query.setParameter("bookCommentId", bookCommentId);
-        query.executeUpdate();
+        BookComment bc = em.find(BookComment.class, bookCommentId);
+        em.remove(bc);
     }
 
     @Transactional(readOnly = false)
