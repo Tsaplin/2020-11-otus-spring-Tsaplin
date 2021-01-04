@@ -9,8 +9,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.Optional;
 
-
-@Transactional
 @Repository
 public class AuthorJpa implements AuthorDao {
     @PersistenceContext

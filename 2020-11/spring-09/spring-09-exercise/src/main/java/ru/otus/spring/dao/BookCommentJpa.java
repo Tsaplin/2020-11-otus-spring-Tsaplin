@@ -13,7 +13,6 @@ import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.List;
 
-@Transactional
 @Repository
 public class BookCommentJpa implements BookCommentDao {
     @PersistenceContext
