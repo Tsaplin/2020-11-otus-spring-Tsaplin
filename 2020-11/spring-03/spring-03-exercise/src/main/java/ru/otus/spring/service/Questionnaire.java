@@ -6,14 +6,14 @@ import java.io.IOException;
 import java.util.List;
 
 public interface Questionnaire {
-    void QuestionnaireExec() throws IOException;
+    void questionnaireExec() throws IOException;
 
     // Метод подготовки правильных ответов
-    void prepareCorrectAnswers(List<IQuestionLine> qList);
+    void prepareCorrectAnswers(List<QuestionLine> qList);
 
     // Метод проверки ответов на правильность
-    void checkAnswers(List<IQuestionLine> qList);
+    void checkAnswers(List<QuestionLine> qList);
 
     // Метод вывода рез-та тестирования
-    boolean showTestingResult(List<IQuestionLine> qList, User user);
+    boolean showTestingResult(List<QuestionLine> qList, User user);
 }

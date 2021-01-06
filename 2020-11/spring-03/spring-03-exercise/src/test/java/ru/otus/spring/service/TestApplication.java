@@ -6,9 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import ru.otus.spring.Main;
 import ru.otus.spring.domain.User;
 
 import java.util.ArrayList;
@@ -20,16 +18,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class TestApplication {
-    AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Main.class);
-
     @Autowired
-    private MyCSVFile myFile;
+    private MyCSVFileReader myFile;
 
     @Autowired
     private Questionnaire questionnaire;
 
     @MockBean
-    private IQuestionLine qLine;
+    private QuestionLine qLine;
 
     @Test
     @DisplayName("Запуск юнит-теста shouldFail_QuestionnaireTest. Тестируются неверные ответы. Тест проходит, если ответы неверны.")
@@ -41,9 +37,9 @@ public class TestApplication {
         User user = new User();
         user.setUser("Petr", "Ivanov");
 
-        List<IQuestionLine> qList = new ArrayList<IQuestionLine>();
+        List<QuestionLine> qList = new ArrayList<QuestionLine>();
         for (int i=0; i < 5; i++) {
-            IQuestionLine qLine = new QuestionLine();
+            QuestionLine qLine = new QuestionLineImpl();
             qLine.setAnswerText("no");
             qList.add(qLine);
         }
@@ -62,7 +58,7 @@ public class TestApplication {
         int actual = 0;
 
         try {
-            List<IQuestionLine> qList = myFile.readCSVFile();
+            List<QuestionLine> qList = myFile.readCSVFile();
             if (!qList.isEmpty()) {
                 System.out.println("Успешное прохождение теста shouldSuccessfullyReadCSVFileTest.");
                 actual = 1;

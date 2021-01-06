@@ -15,7 +15,7 @@ public class Main {
         var context = SpringApplication.run(Main.class, args);
 
         Questionnaire anketaOprosnik = context.getBean(QuestionnaireImpl.class);
-        anketaOprosnik.QuestionnaireExec();
+        anketaOprosnik.questionnaireExec();
 
     }
 

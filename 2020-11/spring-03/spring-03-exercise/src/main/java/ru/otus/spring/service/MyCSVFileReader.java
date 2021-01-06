@@ -3,7 +3,7 @@ package ru.otus.spring.service;
 import java.io.IOException;
 import java.util.List;
 
-public interface MyCSVFile {
+public interface MyCSVFileReader {
     void setFileName();
-    List<IQuestionLine> readCSVFile() throws IOException;
+    List<QuestionLine> readCSVFile() throws IOException;
 }

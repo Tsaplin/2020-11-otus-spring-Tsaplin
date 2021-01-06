@@ -13,13 +13,13 @@ import java.util.List;
 import java.util.Scanner;
 
 @Service
-public class MyCSVFileImpl implements MyCSVFile {
+public class MyCSVFileReaderImpl implements MyCSVFileReader {
 
     private String fileName;
     private final ApplicationProperties props;
     private final MessageSource messageSource;
 
-    public MyCSVFileImpl(ApplicationProperties props, MessageSource messageSource) {
+    public MyCSVFileReaderImpl(ApplicationProperties props, MessageSource messageSource) {
         this.props = props;
         this.messageSource = messageSource;
     }
@@ -30,7 +30,7 @@ public class MyCSVFileImpl implements MyCSVFile {
     }
 
     @Override
-    public List<IQuestionLine> readCSVFile() throws IOException {
+    public List<QuestionLine> readCSVFile() throws IOException {
         setFileName();
 
         // Начитаем содержимое файла в BufferedReader, а далее каждую строчку обработаем сканнером
@@ -41,7 +41,7 @@ public class MyCSVFileImpl implements MyCSVFile {
         String line = null;
         Scanner scanner = null;
         int index = 0;
-        List<IQuestionLine> qList = new ArrayList<IQuestionLine>();
+        List<QuestionLine> qList = new ArrayList<QuestionLine>();
 
         while ((line = reader.readLine()) != null) {
             QuestionLine qLine = null;
@@ -50,7 +50,7 @@ public class MyCSVFileImpl implements MyCSVFile {
             while (scanner.hasNext()) {
                 String data = scanner.next();
                 if (index == 0) {
-                    qLine = new QuestionLine();
+                    qLine = new QuestionLineImpl();
                     qLine.setQtext(data);
                 }
                 else

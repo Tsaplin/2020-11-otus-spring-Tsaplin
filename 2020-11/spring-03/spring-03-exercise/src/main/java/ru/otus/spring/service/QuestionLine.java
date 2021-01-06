@@ -1,42 +1,16 @@
 package ru.otus.spring.service;
 
-public class QuestionLine implements IQuestionLine {
-    private String qText;               // текст вопроса
-    private String answerText;          // текст ответа
-    private String correctAnswerText;   // текст правильного ответа
-    private boolean isAnswerCorrect;    // признак, является ли данный ответ правильным
+public interface QuestionLine {
+    String getQuestionText();
+    void setQtext(String text);
 
-    public void setQtext(String text) {
-        this.qText = text;
-    }
+    boolean getAnswerCorrect();
+    void setAnswerCorrect(boolean bool);
 
-    public void setAnswerText(String answerText) {
-        this.answerText = answerText;
-    }
+    public String getAnswerText();
+    void setAnswerText(String text);
 
-    public void setCorrectAnswerText(String text) {
-        this.correctAnswerText = text;
-    }
-
-    public String getCorrectAnswerText() {
-        return correctAnswerText;
-    }
-
-    public void setAnswerCorrect(boolean bool) {
-        this.isAnswerCorrect = bool;
-    }
-
-    public String getQuestionText() {
-        return qText;
-    }
-
-    public String getAnswerText() {
-        return answerText;
-    }
-
-    public boolean getAnswerCorrect() {
-        return isAnswerCorrect;
-    }
-
+    public String getCorrectAnswerText();
+    void setCorrectAnswerText(String text);
 
 }

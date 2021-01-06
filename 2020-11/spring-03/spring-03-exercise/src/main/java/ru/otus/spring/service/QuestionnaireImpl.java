@@ -12,11 +12,10 @@ import java.util.Scanner;
 @RequiredArgsConstructor
 @Service
 public class QuestionnaireImpl implements Questionnaire {
-    private final MyCSVFile myFile;
-    private IQuestionLine qLine;
+    private final MyCSVFileReader myFile;
+    private QuestionLine qLine;
 
-    //@Override
-    public User readUserByConsole() {
+    private User readUserByConsole() {
         Scanner scannerConsole = new Scanner(System.in);
 
         // Ввод фамилии и имени пользователя
@@ -31,13 +30,13 @@ public class QuestionnaireImpl implements Questionnaire {
     }
 
     @Override
-    public void QuestionnaireExec() throws IOException {
+    public void questionnaireExec() throws IOException {
         // Ввод фамилии и имени пользователя
         User userData = readUserByConsole();
 
         // Вывод csv-файла
         Scanner scannerConsole = new Scanner(System.in);
-        List<IQuestionLine> qList = myFile.readCSVFile();
+        List<QuestionLine> qList = myFile.readCSVFile();
 
         prepareCorrectAnswers(qList);
 
@@ -52,9 +51,9 @@ public class QuestionnaireImpl implements Questionnaire {
 
     // Метод подготовки правильных ответов
     @Override
-    public void prepareCorrectAnswers(List<IQuestionLine> qList) {
+    public void prepareCorrectAnswers(List<QuestionLine> qList) {
         for (int i = 0; i < qList.size(); i++) {
-            IQuestionLine qLine = qList.get(i);
+            QuestionLine qLine = qList.get(i);
             String correctAnswerText = "";
             if (i == 0) {correctAnswerText = "spring";}
             else if (i == 1) {correctAnswerText = "y";}
@@ -71,9 +70,9 @@ public class QuestionnaireImpl implements Questionnaire {
 
     // Метод проверки ответов на правильность
     @Override
-    public void checkAnswers(List<IQuestionLine> qList) {
+    public void checkAnswers(List<QuestionLine> qList) {
         for (int i = 0; i < qList.size(); i++) {
-            IQuestionLine qLine = qList.get(i);
+            QuestionLine qLine = qList.get(i);
 
             if (qLine.getAnswerText().equals(qLine.getCorrectAnswerText())) {
                 qLine.setAnswerCorrect(true);
@@ -86,11 +85,11 @@ public class QuestionnaireImpl implements Questionnaire {
 
     // Метод вывода рез-та тестирования
     @Override
-    public boolean showTestingResult(List<IQuestionLine> qList, User user) {
+    public boolean showTestingResult(List<QuestionLine> qList, User user) {
         boolean isWrongAnswerExist = false;
 
         for (int i = 0; i < qList.size(); i++) {
-            IQuestionLine qLine = qList.get(i);
+            QuestionLine qLine = qList.get(i);
 
             if (!qLine.getAnswerCorrect()) {
                 isWrongAnswerExist = true;
