@@ -12,8 +12,9 @@ import java.util.Scanner;
 @RequiredArgsConstructor
 @Service
 public class QuestionnaireImpl implements Questionnaire {
-    private final MyCSVFileReader myFile;
+    private final MyCSVFileReader myFileReader;
     private QuestionLine qLine;
+    private final SourceFile sourceFile;
 
     private User readUserByConsole() {
         Scanner scannerConsole = new Scanner(System.in);
@@ -36,7 +37,7 @@ public class QuestionnaireImpl implements Questionnaire {
 
         // Вывод csv-файла
         Scanner scannerConsole = new Scanner(System.in);
-        List<QuestionLine> qList = myFile.readCSVFile();
+        List<QuestionLine> qList = myFileReader.readCSVFile(sourceFile.getFileName());
 
         prepareCorrectAnswers(qList);
 

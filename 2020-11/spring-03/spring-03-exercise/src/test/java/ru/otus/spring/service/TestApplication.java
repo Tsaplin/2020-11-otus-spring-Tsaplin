@@ -19,10 +19,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 public class TestApplication {
     @Autowired
-    private MyCSVFileReader myFile;
+    private MyCSVFileReader myFileReader;
 
     @Autowired
     private Questionnaire questionnaire;
+
+    @Autowired
+    private SourceFile sourceFile;
 
     @MockBean
     private QuestionLine qLine;
@@ -58,7 +61,7 @@ public class TestApplication {
         int actual = 0;
 
         try {
-            List<QuestionLine> qList = myFile.readCSVFile();
+            List<QuestionLine> qList = myFileReader.readCSVFile(sourceFile.getFileName());
             if (!qList.isEmpty()) {
                 System.out.println("Успешное прохождение теста shouldSuccessfullyReadCSVFileTest.");
                 actual = 1;

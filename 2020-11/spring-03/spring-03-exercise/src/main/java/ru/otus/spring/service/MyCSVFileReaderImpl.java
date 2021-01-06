@@ -1,8 +1,6 @@
 package ru.otus.spring.service;
 
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
-import ru.otus.spring.config.ApplicationProperties;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,25 +12,8 @@ import java.util.Scanner;
 
 @Service
 public class MyCSVFileReaderImpl implements MyCSVFileReader {
-
-    private String fileName;
-    private final ApplicationProperties props;
-    private final MessageSource messageSource;
-
-    public MyCSVFileReaderImpl(ApplicationProperties props, MessageSource messageSource) {
-        this.props = props;
-        this.messageSource = messageSource;
-    }
-
     @Override
-    public void setFileName() {
-        this.fileName = messageSource.getMessage("question.filename", null, props.getLocale());
-    }
-
-    @Override
-    public List<QuestionLine> readCSVFile() throws IOException {
-        setFileName();
-
+    public List<QuestionLine> readCSVFile(String fileName) throws IOException {
         // Начитаем содержимое файла в BufferedReader, а далее каждую строчку обработаем сканнером
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
         InputStream resourceStream = loader.getResourceAsStream(fileName);

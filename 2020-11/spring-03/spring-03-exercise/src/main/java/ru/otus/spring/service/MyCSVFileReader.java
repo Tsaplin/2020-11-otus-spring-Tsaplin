@@ -4,6 +4,5 @@ import java.io.IOException;
 import java.util.List;
 
 public interface MyCSVFileReader {
-    void setFileName();
-    List<QuestionLine> readCSVFile() throws IOException;
+    List<QuestionLine> readCSVFile(String fileName) throws IOException;
 }
