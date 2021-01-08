@@ -3,7 +3,6 @@ package ru.otus.spring.dto;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.spring.domain.Book;
-import ru.otus.spring.domain.BookComment;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -24,8 +23,8 @@ public class BookViewImpl implements BookView {
 
     @Transactional(readOnly = true)
     @Override
-    public List<BookComment> getCommentsByBook(Book book) {
-        Query query = em.createQuery("select bc from BookComment bc where bc.book = :book");
+    public List<BookCommentView> getCommentsByBook(Book book) {
+        Query query = em.createQuery("select new ru.otus.spring.dto.BookCommentView (bc.bookCommentId, bc.comment) from BookComment bc where bc.book = :book");
         query.setParameter("book", book);
         return query.getResultList();
     }

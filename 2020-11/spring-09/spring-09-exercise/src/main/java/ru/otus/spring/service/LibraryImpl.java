@@ -13,8 +13,8 @@ import ru.otus.spring.dao.BookDao;
 import ru.otus.spring.dao.GenreDao;
 import ru.otus.spring.domain.Author;
 import ru.otus.spring.domain.Book;
-import ru.otus.spring.domain.BookComment;
 import ru.otus.spring.domain.Genre;
+import ru.otus.spring.dto.BookCommentView;
 import ru.otus.spring.dto.BookDto;
 import ru.otus.spring.dto.BookView;
 
@@ -116,7 +116,7 @@ public class LibraryImpl implements Library {
         try {
             val optionalBook = bookDao.findById(bookId);
             if (optionalBook.isPresent()) {
-                List<BookComment> lbc = bookView.getCommentsByBook(optionalBook.get());
+                List<BookCommentView> lbc = bookView.getCommentsByBook(optionalBook.get());
                 System.out.println("Комментарии книги bookId=" + String.valueOf(bookId));
                 lbc.forEach(System.out::println);
             } else {
