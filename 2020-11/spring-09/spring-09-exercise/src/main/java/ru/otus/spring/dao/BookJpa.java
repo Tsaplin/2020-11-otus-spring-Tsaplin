@@ -3,13 +3,10 @@ package ru.otus.spring.dao;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.spring.domain.Book;
-import ru.otus.spring.dto.BookDto;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -57,11 +54,8 @@ public class BookJpa implements BookDao {
     @Transactional(readOnly = false)
     @Override
     public void deleteById(long bookId) {
-        Query query = em.createQuery("delete " +
-                                        "from Book b " +
-                                        "where b.bookId = :bookId");
-        query.setParameter("bookId", bookId);
-        query.executeUpdate();
+        Book b = em.find(Book.class, bookId);
+        em.remove(b);
     }
 
 }
