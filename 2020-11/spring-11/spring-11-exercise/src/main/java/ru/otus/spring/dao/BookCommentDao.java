@@ -1,6 +1,7 @@
 package ru.otus.spring.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.otus.spring.domain.Book;
 import ru.otus.spring.domain.BookComment;
 
@@ -12,5 +13,7 @@ public interface BookCommentDao extends JpaRepository<BookComment, Long> {
     Optional<BookComment> findById(long bookCommentId);
     List<BookComment> findAll();
     void deleteById(long bookCommentId);
-    void deleteAllByBook(Book book); // !!! No EntityManager with actual transaction available for current thread
+
+    @Transactional
+    void deleteAllByBook(Book book);
 }
