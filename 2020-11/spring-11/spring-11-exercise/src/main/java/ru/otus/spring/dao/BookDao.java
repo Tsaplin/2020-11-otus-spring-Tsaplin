@@ -1,15 +1,14 @@
 package ru.otus.spring.dao;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import ru.otus.spring.domain.Book;
-import ru.otus.spring.dto.BookDto;
 
-import java.util.List;
 import java.util.Optional;
 
-public interface BookDao {
+public interface BookDao extends JpaRepository<Book, Long> {
     Book save(Book book);
     void deleteById(long bookId);
-    int count();
+    long count();
     Optional<Book> findById(long bookId);
-    Optional<Book> findByName(String bookName);
+    Optional<Book> findFirstByNameEquals(String bookName);
 }

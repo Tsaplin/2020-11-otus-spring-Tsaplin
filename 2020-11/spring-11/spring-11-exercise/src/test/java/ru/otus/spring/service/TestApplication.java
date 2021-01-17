@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("Запуск юнит-тестов")
 @DataJpaTest
-@Import({LibraryImpl.class, BookJpa.class, BookCommentJpa.class, AuthorJpa.class, GenreJpa.class, BookViewImpl.class})
+@Import({LibraryImpl.class, BookViewImpl.class})
 public class TestApplication {
     @Autowired
     BookCommentDao bookCommentDao;
@@ -68,7 +68,7 @@ public class TestApplication {
             e.printStackTrace();
         }
 
-        val optionalBook = bookDao.findByName(bookName);
+        val optionalBook = bookDao.findFirstByNameEquals(bookName);
 
         if (optionalBook.isPresent()) {
             bookId = optionalBook.get().getBookId();
@@ -98,7 +98,7 @@ public class TestApplication {
             e.printStackTrace();
         }
 
-        val optionalBook = bookDao.findByName(bookName);
+        val optionalBook = bookDao.findFirstByNameEquals(bookName);
 
         if (optionalBook.isPresent()) {
             bookId = optionalBook.get().getBookId();
