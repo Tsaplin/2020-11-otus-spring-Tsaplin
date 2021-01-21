@@ -22,7 +22,7 @@ public class BookComment {
 
     @Fetch(FetchMode.SELECT)
     @BatchSize(size = 20)
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "BookID", referencedColumnName = "BookID")
     private Book book;
 
