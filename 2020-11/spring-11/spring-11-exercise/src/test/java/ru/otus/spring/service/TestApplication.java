@@ -6,10 +6,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
-import ru.otus.spring.dao.*;
-import ru.otus.spring.dto.BookDto;
-import ru.otus.spring.dto.BookView;
-import ru.otus.spring.dto.BookViewImpl;
+import ru.otus.spring.dao.AuthorDao;
+import ru.otus.spring.dao.BookCommentDao;
+import ru.otus.spring.dao.BookDao;
+import ru.otus.spring.dao.GenreDao;
+import ru.otus.spring.domain.Book;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("Запуск юнит-тестов")
 @DataJpaTest
-@Import({LibraryImpl.class, BookViewImpl.class})
+@Import({LibraryImpl.class})
 public class TestApplication {
     @Autowired
     BookCommentDao bookCommentDao;
@@ -31,9 +32,6 @@ public class TestApplication {
 
     @Autowired
     private BookDao bookDao;
-
-    @Autowired
-    private BookView bookView;
 
     @Test
     @DisplayName("Запуск юнит-теста insertTest")
@@ -127,10 +125,10 @@ public class TestApplication {
             e.printStackTrace();
         }
 
-        List<BookDto> lb = bookView.getAll();
+        List<Book> lb = bookDao.findBooksByAuthorNotNullAndGenreNotNull();
         for (int i = 0; i < lb.size(); i++) {
-            BookDto b = lb.get(i);
-            if (b.getBookName().equals(bookName)) {
+            Book b = lb.get(i);
+            if (b.getName().equals(bookName)) {
                 actual = 1;
                 break;
             }

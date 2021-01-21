@@ -13,10 +13,8 @@ import ru.otus.spring.dao.BookDao;
 import ru.otus.spring.dao.GenreDao;
 import ru.otus.spring.domain.Author;
 import ru.otus.spring.domain.Book;
+import ru.otus.spring.domain.BookComment;
 import ru.otus.spring.domain.Genre;
-import ru.otus.spring.dto.BookCommentView;
-import ru.otus.spring.dto.BookDto;
-import ru.otus.spring.dto.BookView;
 
 import java.util.List;
 
@@ -26,7 +24,6 @@ import java.util.List;
 public class LibraryImpl implements Library {
 
     private final BookDao bookDao;
-    private final BookView bookView;
     private final BookCommentDao bookCommentDao;
     private final AuthorDao authorDao;
     private final GenreDao genreDao;
@@ -103,7 +100,7 @@ public class LibraryImpl implements Library {
     @ShellMethod(value = "Show all the books in the library", key = {"show"})
     public void showAllBooks() throws Exception {
         try {
-            List<BookDto> lb = bookView.getAll();
+            List<Book> lb = bookDao.findBooksByAuthorNotNullAndGenreNotNull();
             lb.forEach(logger::info);
         }catch (Exception e) {
             logger.error(e.getMessage());
@@ -116,7 +113,7 @@ public class LibraryImpl implements Library {
         try {
             val optionalBook = bookDao.findById(bookId);
             if (optionalBook.isPresent()) {
-                List<BookCommentView> lbc = bookView.getCommentsByBook(optionalBook.get());
+                List<BookComment> lbc = bookCommentDao.findAllByBook(optionalBook.get());
                 System.out.println("Комментарии книги bookId=" + String.valueOf(bookId));
                 lbc.forEach(System.out::println);
             } else {
