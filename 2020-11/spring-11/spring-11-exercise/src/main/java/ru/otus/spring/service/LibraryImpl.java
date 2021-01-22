@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
+import org.springframework.transaction.annotation.Transactional;
 import ru.otus.spring.dao.AuthorDao;
 import ru.otus.spring.dao.BookCommentDao;
 import ru.otus.spring.dao.BookDao;
@@ -109,6 +110,7 @@ public class LibraryImpl implements Library {
     }
 
     @ShellMethod(value = "Show comments of selected book in format:comments bookId", key = {"comments"})
+    @Transactional
     public void showCoomentsByBook(long bookId) throws Exception {
         try {
             val optionalBook = bookDao.findById(bookId);
