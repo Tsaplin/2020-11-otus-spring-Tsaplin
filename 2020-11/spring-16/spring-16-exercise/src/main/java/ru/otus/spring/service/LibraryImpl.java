@@ -4,9 +4,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.shell.standard.ShellComponent;
-import org.springframework.shell.standard.ShellMethod;
-import org.springframework.shell.standard.ShellOption;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.spring.dao.AuthorDao;
 import ru.otus.spring.dao.BookCommentDao;
@@ -20,7 +17,6 @@ import ru.otus.spring.domain.Genre;
 import java.util.List;
 
 // Класс работы с приложением "Библиотека книг"
-@ShellComponent
 @RequiredArgsConstructor
 public class LibraryImpl implements Library {
 
@@ -32,7 +28,6 @@ public class LibraryImpl implements Library {
 
     private static Logger logger = LogManager.getLogger();
 
-    @ShellMethod(value = "Add a new book in format:ins authorId genreId bookName", key = {"ins", "insert"})
     public boolean bookInsert(long authorId, long genreId, String bookName) throws Exception {
         boolean result = false;
 
@@ -51,8 +46,7 @@ public class LibraryImpl implements Library {
         return result;
     }
 
-    @ShellMethod(value = "Modify the selected book in format:upd bookId authorId genreId bookName", key = {"upd", "update"})
-    public boolean bookUpdate(long bookId, @ShellOption(defaultValue = "-1") long authorId, @ShellOption(defaultValue = "-1") long genreId, @ShellOption(defaultValue = ShellOption.NULL) String bookName) throws Exception {
+    public boolean bookUpdate(long bookId, long authorId, long genreId, String bookName) throws Exception {
         boolean result = false;
 
         Author author = authorDao.findById(authorId).get();
@@ -76,7 +70,6 @@ public class LibraryImpl implements Library {
         return result;
     }
 
-    @ShellMethod(value = "Delete the selected book in format:del bookId", key = {"del", "delete"})
     public boolean bookDelete(long bookId) throws Exception {
         boolean result = false;
         try {
@@ -98,7 +91,6 @@ public class LibraryImpl implements Library {
         return result;
     }
 
-    @ShellMethod(value = "Show all the books in the library", key = {"show"})
     public void showAllBooks() throws Exception {
         try {
             List<Book> lb = bookDao.findBooksByAuthorNotNullAndGenreNotNull();
@@ -109,7 +101,6 @@ public class LibraryImpl implements Library {
         }
     }
 
-    @ShellMethod(value = "Show comments of selected book in format:comments bookId", key = {"comments"})
     @Transactional
     public void showCoomentsByBook(long bookId) throws Exception {
         try {
