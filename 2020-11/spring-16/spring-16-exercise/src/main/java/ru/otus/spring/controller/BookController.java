@@ -23,20 +23,22 @@ public class BookController {
         this.bookDao = bookDao;
     }
 
-    @GetMapping("/book/find")
+    @GetMapping("/editBook")
     public String bookFind(@RequestParam("bookId") long bookId, Model model) {
-        Optional<Book> book = bookDao.findById(bookId); //.orElseThrow(NotFoundException::new);
-        model.addAttribute("book", book);
+        Optional<Book> book = bookDao.findById(bookId);
+        if (book.isPresent()) {
+            model.addAttribute("book", book.get());
+        }
         return "editBook";
     }
 
-    @PostMapping("/book/save")
+    @PostMapping("/editBook")
     public String bookSave(
             Book book,
             Model model
     ) {
         Book saved = bookDao.save(book);
-        model.addAttribute(saved);
+        model.addAttribute("book", saved);
         return "editBook";
     }
 
