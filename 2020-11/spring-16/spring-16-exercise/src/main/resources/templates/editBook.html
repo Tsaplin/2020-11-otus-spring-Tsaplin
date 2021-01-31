@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Edit person</title>
+    <title>Edit Book</title>
     <style type="text/css">
         body {
             padding: 50px;
@@ -25,7 +25,7 @@
 <body>
 
 <!-- Book edition -->
-<form id="edit-form" th:action="@{/book/edit(id=${book.bookId})}" th:method="post" action="edit.html">
+<form id="editBook-form" th:action="@{/book/find(bookId=${book.bookId})}" th:method="post" action="editBook.html">
     <h1>Book Info:</h1>
 
     <div class="row">
