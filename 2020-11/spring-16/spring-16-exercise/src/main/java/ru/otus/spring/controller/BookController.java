@@ -32,6 +32,8 @@ public class BookController {
         Optional<Book> book = bookDao.findById(bookId);
         if (book.isPresent()) {
             model.addAttribute("book", book.get());
+        } else {
+            model.addAttribute("book", new Book());
         }
         return "editBook";
     }
@@ -41,8 +43,9 @@ public class BookController {
             Book book,
             Model model
     ) {
-        Book saved = bookDao.save(book);
-       // library.bookUpdate()
+        Optional<Book> bookFull = bookDao.findById(book.getBookId());
+        bookFull.get().setName(book.getName());
+        Book saved = bookDao.save(bookFull.get());
         model.addAttribute("book", saved);
         return "editBook";
     }
