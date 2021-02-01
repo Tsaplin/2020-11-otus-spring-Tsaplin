@@ -30,7 +30,7 @@
 <body>
 
 <!-- Book edition -->
-<form id="editBook-form" th:action="@{/editBook(bookId=${book.bookId})}" th:method="post" action="editBook.html">
+<form id="deleteBook-form" th:action="@{/deleteBook(bookId=${book.bookId})}" th:method="post" action="deleteBook.html">
     <h1>Book Info:</h1>
 
     <div class="row">
@@ -44,7 +44,7 @@
     </div>
 
     <div class="row">
-        <button type="submit">Save</button>
+        <button type="submit">Delete</button>
     </div>
 
     <div class="row">
