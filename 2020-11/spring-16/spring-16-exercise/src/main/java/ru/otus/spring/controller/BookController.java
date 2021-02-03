@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.otus.spring.dao.BookDao;
+import ru.otus.spring.domain.Author;
 import ru.otus.spring.domain.Book;
+import ru.otus.spring.domain.Genre;
 import ru.otus.spring.service.Library;
 import ru.otus.spring.service.LibraryImpl;
 
@@ -26,6 +28,7 @@ import java.util.Optional;
 public class BookController {
     private final BookDao bookDao;
     private final Library library;
+    private final Book emptyBook = new Book(0, new Author(), new Genre(), "");
 
     @GetMapping("/editBook")
     public String bookFind(@RequestParam("bookId") long bookId, Model model) {
@@ -33,7 +36,7 @@ public class BookController {
         if (book.isPresent()) {
             model.addAttribute("book", book.get());
         } else {
-            model.addAttribute("book", new Book());
+            model.addAttribute("book", emptyBook);
         }
         return "editBook";
     }
@@ -66,7 +69,7 @@ public class BookController {
             e.printStackTrace();
         }
 
-        model.addAttribute("book", new Book());
+        model.addAttribute("book", emptyBook);
         return "deleteBook";
     }
 
