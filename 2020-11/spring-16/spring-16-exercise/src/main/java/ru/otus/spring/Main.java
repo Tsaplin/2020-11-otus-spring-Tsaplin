@@ -10,7 +10,6 @@ public class Main {
     public static void main(String[] args) throws Exception  {
         // ! Без запуска SpringApplication.run база данных вообще не создастся
         ApplicationContext context = SpringApplication.run(Main.class, args);
-       // Console.main(args);
     }
 
 }

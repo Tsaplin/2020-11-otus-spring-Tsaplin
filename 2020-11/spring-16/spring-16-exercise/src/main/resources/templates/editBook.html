@@ -9,8 +9,8 @@
         }
 
         label {
-            display: inline-block;
             width: 150px;
+            display: inline-block;
         }
 
         big_label {
@@ -32,7 +32,7 @@
 
 <!-- Book edition -->
 <form id="editBook-form" th:action="@{/editBook(bookId=${book.bookId})}" th:method="post" action="editBook.html">
-    <h1>Информация о книге:</h1>
+    <h1>Добавление и редактирование книги:</h1>
 
     <div class="row">
         <label for="id-input">ID книги:</label>
@@ -59,7 +59,8 @@
     </div>
 
     <div class="row">
-        <big_label for="holder-input">CopyRight: Tsaplin Sergey</big_label>
+        <big_label for="copyright-input">CopyRight: Tsaplin Sergey </big_label>
+        <a th:href="@{/deleteBook(bookId=${book.bookId})}">Next for Delete>>></a>
     </div>
 </form>
 
