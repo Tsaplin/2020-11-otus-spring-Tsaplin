@@ -46,7 +46,7 @@
 
     <div class="row">
         <label for="author-lookup">Автор:</label>
-        <select class="form-control" name="author-lookup" id="author-lookup">
+        <select class="form-control" name="author" id="author-lookup">
             <option th:value="${book.getAuthor().getAuthorId()}" th:text="${book.getAuthor().getFIO()}">Автор этой книги</option>
             <option th:each="author : ${authors}"
                     th:value="${author.getAuthorId()}"
@@ -57,7 +57,7 @@
 
     <div class="row">
         <label for="genre-lookup">Жанр:</label>
-        <select class="form-control" name="genre-lookup" id="genre-lookup">
+        <select class="form-control" name="genre" id="genre-lookup">
             <option th:value="${book.genre.getGenreId()}" th:text="${book.genre.getName()}">Жанр этой книги</option>
             <option th:each="genre : ${genres}"
                     th:value="${genre.getGenreId()}"
