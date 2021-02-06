@@ -45,13 +45,25 @@
     </div>
 
     <div class="row">
-        <label for="author-input">Автор:</label>
-        <input id="author-input" name="authorFio" type="text" readonly="readonly" th:value="${book.author.getFIO()}" value="Author"/>
+        <label for="author-lookup">Автор:</label>
+        <select class="form-control" name="author-lookup" id="author-lookup">
+            <option th:value="${book.getAuthor().getAuthorId()}" th:text="${book.getAuthor().getFIO()}">Автор этой книги</option>
+            <option th:each="author : ${authors}"
+                    th:value="${author.getAuthorId()}"
+                    th:text="${author.getFIO()}">
+            </option>
+        </select>
     </div>
 
     <div class="row">
-        <label for="genre-input">Жанр:</label>
-        <input id="genre-input" name="genreName" type="text" readonly="readonly" th:value="${book.genre.getName()}" value="Genre"/>
+        <label for="genre-lookup">Жанр:</label>
+        <select class="form-control" name="genre-lookup" id="genre-lookup">
+            <option th:value="${book.genre.getGenreId()}" th:text="${book.genre.getName()}">Жанр этой книги</option>
+            <option th:each="genre : ${genres}"
+                    th:value="${genre.getGenreId()}"
+                    th:text="${genre.getName()}">
+            </option>
+        </select>
     </div>
 
     <div class="row">

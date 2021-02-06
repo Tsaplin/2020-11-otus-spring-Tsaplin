@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.otus.spring.dao.AuthorDao;
 import ru.otus.spring.dao.BookDao;
+import ru.otus.spring.dao.GenreDao;
 import ru.otus.spring.domain.Author;
 import ru.otus.spring.domain.Book;
 import ru.otus.spring.domain.Genre;
@@ -27,6 +29,8 @@ import java.util.Optional;
 @Import({LibraryImpl.class})
 public class BookController {
     private final BookDao bookDao;
+    private final AuthorDao authorDao;
+    private final GenreDao genreDao;
     private final Library library;
     private final Book emptyBook = new Book(0, new Author(), new Genre(), "");
 
@@ -38,6 +42,9 @@ public class BookController {
         } else {
             model.addAttribute("book", emptyBook);
         }
+        model.addAttribute("authors", authorDao.findAll());
+        model.addAttribute("genres", genreDao.findAll());
+
         return "editBook";
     }
 
