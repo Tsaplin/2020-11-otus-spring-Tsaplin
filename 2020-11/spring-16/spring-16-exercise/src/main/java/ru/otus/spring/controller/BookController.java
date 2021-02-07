@@ -23,10 +23,10 @@ import java.util.Optional;
 public class BookController {
     private final Library library;
     private static Logger logger = LogManager.getLogger();
-    private final Book emptyBook = new Book(0, new Author(), new Genre(), "");
+    private final Book emptyBook = new Book(0, new Author(0, ""), new Genre(0, ""), "");
 
     @GetMapping("/insertBook")
-    public String bookFindForInsert(Model model) {
+    public String prepareForInsert(@RequestParam("bookId") long bookId, Model model) {
         model.addAttribute("authors", library.getAllAuthors());
         model.addAttribute("genres", library.getAllGenres());
         model.addAttribute("book", emptyBook);
@@ -44,6 +44,9 @@ public class BookController {
             logger.error(e.getMessage());
         }
         model.addAttribute("book", emptyBook);
+        model.addAttribute("authors", library.getAllAuthors());
+        model.addAttribute("genres", library.getAllGenres());
+
         return "insertBook";
     }
 
