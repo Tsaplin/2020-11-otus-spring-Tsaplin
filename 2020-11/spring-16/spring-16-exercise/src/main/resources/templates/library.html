@@ -13,6 +13,13 @@
             display: inline-block;
         }
 
+        label2 {
+            display: inline-block;
+            width: 250px;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
         input:read-only {
             background: lightgray;
         }
@@ -39,6 +46,36 @@
     <div class="row">
         <a th:href="@{/deleteBook(bookId=${book.bookId})}">Удаление книги</a>
     </div>
+
+    <div class="row">
+        <label2 for="book-list"></label2>
+    </div>
+
+    <div class="row">
+        <label2 for="book-list">Перечень книг</label2>
+    </div>
+
+    <table class="table table-striped table-primary">
+
+        <thead class="ttop">
+        <tr class="table-info">
+            <td><b>ID</b></td>
+            <td><b>Наименование книги</b> </td>
+            <td><b>Автор</b> </td>
+            <td><b>Жанр</b> </td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="bookElement, iStat : ${bookList}" th:style="${iStat.odd}? 'font-weight: normal;'">
+            </td><td th:text="${bookElement.getBookId()}">
+            <td width="20px" th:text="${bookElement.getName()}">
+            <td width="20px" th:text="${bookElement.getAuthor().getFIO()}">
+            <td width="20px" th:text="${bookElement.getGenre().getName()}">
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
 </form>
 
 </body>

@@ -29,18 +29,22 @@ public class LibraryImpl implements Library {
 
     private static Logger logger = LogManager.getLogger();
 
+    @Override
     public List<Genre> getAllGenres() {
         return genreDao.findAll();
     }
 
+    @Override
     public List<Author> getAllAuthors() {
         return authorDao.findAll();
     }
 
+    @Override
     public Optional<Book> bookShow(long bookId) {
         return bookDao.findById(bookId);
     }
 
+    @Override
     public boolean bookInsert(long authorId, long genreId, String bookName) throws Exception {
         boolean result = false;
 
@@ -59,6 +63,7 @@ public class LibraryImpl implements Library {
         return result;
     }
 
+    @Override
     public boolean bookUpdate(long bookId, long authorId, long genreId, String bookName) throws Exception {
         boolean result = false;
 
@@ -83,6 +88,7 @@ public class LibraryImpl implements Library {
         return result;
     }
 
+    @Override
     public boolean bookDelete(long bookId) throws Exception {
         boolean result = false;
         try {
@@ -104,16 +110,17 @@ public class LibraryImpl implements Library {
         return result;
     }
 
-    public void showAllBooks() throws Exception {
+    @Override
+    public List<Book> showAllBooks() throws Exception {
         try {
-            List<Book> lb = bookDao.findBooksByAuthorNotNullAndGenreNotNull();
-            lb.forEach(logger::info);
+            return bookDao.findBooksByAuthorNotNullAndGenreNotNull();
         }catch (Exception e) {
             logger.error(e.getMessage());
             throw new Exception(e);
         }
     }
 
+    @Override
     @Transactional
     public void showCoomentsByBook(long bookId) throws Exception {
         try {
