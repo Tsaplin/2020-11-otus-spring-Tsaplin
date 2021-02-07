@@ -31,7 +31,7 @@
 <body>
 
 <!-- Book insert -->
-<form id="insertBook-form" th:action="@{/insertBook(bookId=${book.bookId})}" th:method="post" action="insertBook.html">
+<form id="insertBook-form" th:action="@{/insertBook(bookId=0)}" th:method="post" action="insertBook.html">
     <h1>Добавление книги:</h1>
 
     <div class="row">
@@ -61,6 +61,11 @@
 
     <div class="row">
         <button type="submit">Добавить</button>
+    </div>
+
+    <div class="row">
+        <big_label for="copyright-input">CopyRight: Tsaplin Sergey </big_label>
+        <a th:href="@{/library(bookId=0)}">Back</a>
     </div>
 
 </form>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Library</title>
+    <style type="text/css">
+        body {
+            padding: 50px;
+        }
+
+        label {
+            width: 150px;
+            display: inline-block;
+        }
+
+        input:read-only {
+            background: lightgray;
+        }
+
+        .row {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Library -->
+<form id="library-form" th:action="@{/library(bookId=${book.bookId})}" th:method="post" action="library.html">
+    <h1>Библиотека</h1>
+
+    <div class="row">
+        <a th:href="@{/insertBook(bookId=0)}">Добавление книги</a>
+    </div>
+
+    <div class="row">
+        <a th:href="@{/editBook(bookId=1)}">Редактирование книги</a>
+    </div>
+
+    <div class="row">
+        <a th:href="@{/deleteBook(bookId=1)}">Удаление книги</a>
+    </div>
+</form>
+
+</body>
+</html>
