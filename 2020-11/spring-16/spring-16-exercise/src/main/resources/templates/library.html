@@ -29,15 +29,15 @@
     <h1>Библиотека</h1>
 
     <div class="row">
-        <a th:href="@{/insertBook(bookId=0)}">Добавление книги</a>
+        <a th:href="@{/insertBook(bookId=${book.bookId})}">Добавление книги</a>
     </div>
 
     <div class="row">
-        <a th:href="@{/editBook(bookId=1)}">Редактирование книги</a>
+        <a th:href="@{/editBook(bookId=${book.bookId})}">Редактирование книги</a>
     </div>
 
     <div class="row">
-        <a th:href="@{/deleteBook(bookId=1)}">Удаление книги</a>
+        <a th:href="@{/deleteBook(bookId=${book.bookId})}">Удаление книги</a>
     </div>
 </form>
 
