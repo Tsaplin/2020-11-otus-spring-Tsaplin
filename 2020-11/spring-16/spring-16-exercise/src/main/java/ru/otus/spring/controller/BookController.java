@@ -1,21 +1,14 @@
 package ru.otus.spring.controller;
 
-import javassist.NotFoundException;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.Import;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.otus.spring.dao.AuthorDao;
-import ru.otus.spring.dao.BookDao;
-import ru.otus.spring.dao.GenreDao;
 import ru.otus.spring.domain.Author;
 import ru.otus.spring.domain.Book;
 import ru.otus.spring.domain.Genre;
@@ -28,35 +21,57 @@ import java.util.Optional;
 @AllArgsConstructor
 @Import({LibraryImpl.class})
 public class BookController {
-    private final BookDao bookDao;
-    private final AuthorDao authorDao;
-    private final GenreDao genreDao;
     private final Library library;
+    private static Logger logger = LogManager.getLogger();
     private final Book emptyBook = new Book(0, new Author(), new Genre(), "");
+
+    @GetMapping("/insertBook")
+    public String bookFindForInsert(Model model) {
+        model.addAttribute("authors", library.getAllAuthors());
+        model.addAttribute("genres", library.getAllGenres());
+        model.addAttribute("book", emptyBook);
+        return "insertBook";
+    }
+
+    @PostMapping("/insertBook")
+    public String bookInsert(
+            Book book,
+            Model model
+    ) {
+        try {
+            library.bookInsert(book.getAuthor().getAuthorId(), book.getGenre().getGenreId(), book.getName());
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+        model.addAttribute("book", emptyBook);
+        return "insertBook";
+    }
 
     @GetMapping("/editBook")
     public String bookFind(@RequestParam("bookId") long bookId, Model model) {
-        Optional<Book> book = bookDao.findById(bookId);
+        Optional<Book> book = library.bookShow(bookId);
         if (book.isPresent()) {
             model.addAttribute("book", book.get());
         } else {
             model.addAttribute("book", emptyBook);
         }
-        model.addAttribute("authors", authorDao.findAll());
-        model.addAttribute("genres", genreDao.findAll());
+        model.addAttribute("authors", library.getAllAuthors());
+        model.addAttribute("genres", library.getAllGenres());
 
         return "editBook";
     }
 
     @PostMapping("/editBook")
-    public String bookSave(
+    public String bookEdit(
             Book book,
             Model model
     ) {
-        Optional<Book> bookFull = bookDao.findById(book.getBookId());
-        bookFull.get().setName(book.getName());
-        Book saved = bookDao.save(bookFull.get());
-        model.addAttribute("book", saved);
+        try {
+            library.bookUpdate(book.getBookId(), book.getAuthor().getAuthorId(), book.getGenre().getGenreId(), book.getName());
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+        model.addAttribute("book", library.bookShow(book.getBookId()).get());
         return "editBook";
     }
 

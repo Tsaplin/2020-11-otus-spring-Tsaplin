@@ -15,6 +15,7 @@ import ru.otus.spring.domain.BookComment;
 import ru.otus.spring.domain.Genre;
 
 import java.util.List;
+import java.util.Optional;
 
 // Класс работы с приложением "Библиотека книг"
 @RequiredArgsConstructor
@@ -27,6 +28,18 @@ public class LibraryImpl implements Library {
     private final String BOOK_NOT_EXIST_MESSAGE = "Книга не существует в базе данных.";
 
     private static Logger logger = LogManager.getLogger();
+
+    public List<Genre> getAllGenres() {
+        return genreDao.findAll();
+    }
+
+    public List<Author> getAllAuthors() {
+        return authorDao.findAll();
+    }
+
+    public Optional<Book> bookShow(long bookId) {
+        return bookDao.findById(bookId);
+    }
 
     public boolean bookInsert(long authorId, long genreId, String bookName) throws Exception {
         boolean result = false;
