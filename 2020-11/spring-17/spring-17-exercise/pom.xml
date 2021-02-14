@@ -54,6 +54,11 @@
             <artifactId>h2</artifactId>
             <version>1.4.200</version>
         </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>jquery</artifactId>
+            <version>3.3.1</version>
+        </dependency>
         <!--Тестирование-->
         <dependency>
             <groupId>org.junit.jupiter</groupId>

@@ -15,8 +15,6 @@ import ru.otus.spring.domain.Genre;
 import ru.otus.spring.service.Library;
 import ru.otus.spring.service.LibraryImpl;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -30,16 +28,6 @@ public class BookController {
     @GetMapping("/library")
     public String libraryShow(@RequestParam(value = "bookId", defaultValue = "0") long bookId, Model model) {
         model.addAttribute("book", emptyBook);
-
-        List<Book> bookList = new ArrayList<>();
-        try {
-            bookList = library.showAllBooks();
-
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-        }
-        model.addAttribute("bookList", bookList);
-
         return "library";
     }
 

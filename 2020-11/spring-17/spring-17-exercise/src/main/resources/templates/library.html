@@ -28,6 +28,7 @@
             margin-top: 10px;
         }
     </style>
+    <script src="webjars/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
 
@@ -48,35 +49,40 @@
     </div>
 
     <div class="row">
-        <label2 for="book-list"></label2>
-    </div>
-
-    <div class="row">
         <label2 for="book-list">Перечень книг</label2>
     </div>
 
     <table border="1" class="table table-striped table-primary">
-
         <thead class="ttop">
         <tr class="table-info">
-            <td><b>ID</b></td>
-            <td><b>Наименование книги</b> </td>
+            <th>ID</th>
+            <th>Наименование книги</th>
             <td><b>Автор</b> </td>
             <td><b>Жанр</b> </td>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="bookElement, iStat : ${bookList}" th:style="${iStat.odd}? 'font-weight: normal;'">
-            </td><td th:text="${bookElement.getBookId()}">
-            <td width="20px" th:text="${bookElement.getName()}">
-            <td width="20px" th:text="${bookElement.getAuthor().getFIO()}">
-            <td width="20px" th:text="${bookElement.getGenre().getName()}">
-            </td>
-        </tr>
         </tbody>
     </table>
 
-</form>
+    <script>
+        $( document ).ready(function() {
+            $(function () {
+                $.get('/all-books').done(function (books) {
+                    Array.from(books).map(function (bookElement, i) {
+                        $('tbody').append(`
+                    <tr>
+                        <td>${bookElement.bookId}</td>
+                        <td>${bookElement.name}</td>
+                        <td>${bookElement.author.fio}</td>
+                        <td>${bookElement.genre.name}</td>
+                    </tr>
+                `)
+                    });
+                })
+            });
+        });
+    </script>
 
 </body>
 </html>
