@@ -15,5 +15,5 @@ public interface Library {
     boolean bookDelete(long bookId) throws Exception;
     boolean bookUpdate(long bookId, long authorId, long genreId, String bookName) throws Exception;
     void showCoomentsByBook(long bookId) throws Exception;
-    List<Book> showAllBooks() throws Exception;
+    List<Book> showAllBooks();
 }

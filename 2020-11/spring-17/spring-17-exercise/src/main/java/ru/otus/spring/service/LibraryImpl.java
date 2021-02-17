@@ -111,13 +111,8 @@ public class LibraryImpl implements Library {
     }
 
     @Override
-    public List<Book> showAllBooks() throws Exception {
-        try {
-            return bookDao.findBooksByAuthorNotNullAndGenreNotNull();
-        }catch (Exception e) {
-            logger.error(e.getMessage());
-            throw new Exception(e);
-        }
+    public List<Book> showAllBooks() {
+        return bookDao.findBooksByAuthorNotNullAndGenreNotNull();
     }
 
     @Override
