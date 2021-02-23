@@ -10,9 +10,9 @@ import java.util.Optional;
 public interface Library {
     List<Genre> getAllGenres();
     List<Author> getAllAuthors();
-    Optional<Book> bookShow(long bookId);
+    Optional<Book> bookShow(String bookId);
     boolean bookInsert(long authorId, long genreId, String bookName) throws Exception;
-    boolean bookDelete(long bookId) throws Exception;
-    boolean bookUpdate(long bookId, long authorId, long genreId, String bookName) throws Exception;
+    boolean bookDelete(String bookId) throws Exception;
+    boolean bookUpdate(String bookId, long authorId, long genreId, String bookName) throws Exception;
     List<Book> showAllBooks();
 }

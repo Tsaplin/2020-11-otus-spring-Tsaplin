@@ -63,7 +63,7 @@ public class TestApplication {
     {
         boolean res = false;
         int actual = 0;
-        long bookId = 0;
+        String bookId = "0";
         String bookName = "Книга юнит-теста updateTest";
 
         // Предзаполнение БД
@@ -97,7 +97,7 @@ public class TestApplication {
     {
         boolean res = false;
         int actual = 0;
-        long bookId = 0;
+        String bookId = "0";
         String bookName = "Книга юнит-теста deleteTest";
 
         // Предзаполнение БД

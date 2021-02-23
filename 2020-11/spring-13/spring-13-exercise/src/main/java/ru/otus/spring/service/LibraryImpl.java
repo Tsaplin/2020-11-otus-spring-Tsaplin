@@ -37,7 +37,7 @@ public class LibraryImpl implements Library {
     }
 
     @Override
-    public Optional<Book> bookShow(long bookId) {
+    public Optional<Book> bookShow(String bookId) {
         return bookDao.findById(bookId);
     }
 
@@ -47,7 +47,7 @@ public class LibraryImpl implements Library {
 
         Author author = authorDao.findById(authorId).get();
         Genre genre = genreDao.findById(genreId).get();
-        Book b = new Book(0, author, genre, bookName);
+        Book b = new Book("0", author, genre, bookName);
         try {
             bookDao.save(b);
             result = true;
@@ -61,7 +61,7 @@ public class LibraryImpl implements Library {
     }
 
     @Override
-    public boolean bookUpdate(long bookId, long authorId, long genreId, String bookName) throws Exception {
+    public boolean bookUpdate(String bookId, long authorId, long genreId, String bookName) throws Exception {
         boolean result = false;
 
         Author author = authorDao.findById(authorId).get();
@@ -86,7 +86,7 @@ public class LibraryImpl implements Library {
     }
 
     @Override
-    public boolean bookDelete(long bookId) throws Exception {
+    public boolean bookDelete(String bookId) throws Exception {
         boolean result = false;
         try {
             val optionalBook = bookDao.findById(bookId);

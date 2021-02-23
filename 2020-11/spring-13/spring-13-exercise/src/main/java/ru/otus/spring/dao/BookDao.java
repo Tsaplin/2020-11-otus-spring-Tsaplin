@@ -7,7 +7,7 @@ import ru.otus.spring.domain.Book;
 import java.util.List;
 import java.util.Optional;
 
-public interface BookDao extends MongoRepository<Book, Long> {
+public interface BookDao extends MongoRepository<Book, String> {
     @Transactional(readOnly = true)
     Optional<Book> findFirstByNameEquals(String bookName);
 

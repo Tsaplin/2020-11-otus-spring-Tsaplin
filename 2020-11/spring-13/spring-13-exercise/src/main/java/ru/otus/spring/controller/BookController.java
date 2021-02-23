@@ -23,16 +23,16 @@ import java.util.Optional;
 public class BookController {
     private final Library library;
     private static Logger logger = LogManager.getLogger();
-    private final Book emptyBook = new Book(0, new Author(0, ""), new Genre(0, ""), "");
+    private final Book emptyBook = new Book("0", new Author(0, ""), new Genre(0, ""), "");
 
     @GetMapping("/library")
-    public String libraryShow(@RequestParam(value = "bookId", defaultValue = "0") long bookId, Model model) {
+    public String libraryShow(@RequestParam(value = "bookId", defaultValue = "0") String bookId, Model model) {
         model.addAttribute("book", emptyBook);
         return "library";
     }
 
     @GetMapping("/insertBook")
-    public String prepareForInsert(@RequestParam(value = "bookId", defaultValue = "0") long bookId, Model model) {
+    public String prepareForInsert(@RequestParam(value = "bookId", defaultValue = "0") String bookId, Model model) {
         model.addAttribute("authors", library.getAllAuthors());
         model.addAttribute("genres", library.getAllGenres());
         model.addAttribute("book", emptyBook);
@@ -57,7 +57,7 @@ public class BookController {
     }
 
     @GetMapping("/editBook")
-    public String bookFind(@RequestParam("bookId") long bookId, Model model) {
+    public String bookFind(@RequestParam("bookId") String bookId, Model model) {
         Optional<Book> book = library.bookShow(bookId);
         if (book.isPresent()) {
             model.addAttribute("book", book.get());
@@ -85,7 +85,7 @@ public class BookController {
     }
 
     @GetMapping("/deleteBook")
-    public String bookFindForDelete(@RequestParam("bookId") long bookId, Model model) {
+    public String bookFindForDelete(@RequestParam("bookId") String bookId, Model model) {
         bookFind(bookId, model);
         return "deleteBook";
     }
