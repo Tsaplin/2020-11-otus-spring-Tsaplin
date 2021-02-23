@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import ru.otus.spring.dao.AuthorDao;
-import ru.otus.spring.dao.BookCommentDao;
 import ru.otus.spring.dao.BookDao;
 import ru.otus.spring.dao.GenreDao;
 import ru.otus.spring.domain.Book;
@@ -20,8 +19,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @DataJpaTest
 @Import({LibraryImpl.class})
 public class TestApplication {
-    @Autowired
-    BookCommentDao bookCommentDao;
     @Autowired
     AuthorDao authorDao;
     @Autowired

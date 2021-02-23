@@ -3,20 +3,19 @@ package ru.otus.spring.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "tgenre")
+@Document(collection = "tgenre")
 public class Genre {
     @Id
-    @Column(name = "GenreID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Field
     private long genreId;
 
-    @Column(name = "Name")
+    @Field
     private String Name;
 }
