@@ -1,17 +1,15 @@
 package ru.otus.spring.dao;
 
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import ru.otus.spring.domain.Book;
 
 import java.util.List;
 import java.util.Optional;
 
-@RequiredArgsConstructor
-@Component("CustomBookDaoImpl")
-public class CustomBookDaoImpl implements CustomBookDao {
-    private final BookDao bookDao;
+public class BookDaoImpl implements BookDaoCustom {
+    @Autowired
+    BookDao bookDao;
 
     @Override
     public Optional<Book> customFindById(String bookId) {

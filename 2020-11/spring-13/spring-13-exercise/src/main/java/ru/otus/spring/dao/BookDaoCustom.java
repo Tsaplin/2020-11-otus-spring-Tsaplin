@@ -4,6 +4,6 @@ import ru.otus.spring.domain.Book;
 
 import java.util.Optional;
 
-public interface CustomBookDao {
+public interface BookDaoCustom {
     Optional<Book> customFindById(String bookId);
 }
