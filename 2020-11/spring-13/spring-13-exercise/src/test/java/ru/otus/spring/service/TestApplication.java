@@ -5,16 +5,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.transaction.annotation.Transactional;
 import ru.otus.spring.dao.AuthorDao;
 import ru.otus.spring.dao.BookDao;
 import ru.otus.spring.dao.GenreDao;
-import ru.otus.spring.domain.Author;
 import ru.otus.spring.domain.Book;
-import ru.otus.spring.domain.Genre;
 import ru.otus.spring.mongock.changelog.DatabaseChangelog;
+import ru.otus.spring.mongock.changelog.DatabaseChangelogImpl;
 
 import java.util.List;
 
@@ -22,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("Запуск юнит-тестов")
 @DataMongoTest
-@Import({LibraryImpl.class})
+@Import({LibraryImpl.class, DatabaseChangelogImpl.class})
 public class TestApplication {
     @Autowired
     AuthorDao authorDao;
@@ -35,6 +32,9 @@ public class TestApplication {
     @Autowired
     private BookDao bookDao;
 
+    @Autowired
+    private DatabaseChangelog databaseChangelog;
+
     @Test
     @DisplayName("Запуск юнит-теста insertTest")
     public void insertTest()
@@ -43,8 +43,7 @@ public class TestApplication {
         int actual = 0;
 
        // Предзаполнение БД
-       DatabaseChangelog db_chlog = new DatabaseChangelog(bookDao, authorDao, genreDao, library);
-       db_chlog.dbPrepareData();
+       databaseChangelog.dbPrepareData();
 
         try {
             res = library.bookInsert(1, 1, "Книга юнит-теста insertTest");
@@ -67,8 +66,7 @@ public class TestApplication {
         String bookName = "Книга юнит-теста updateTest";
 
         // Предзаполнение БД
-        DatabaseChangelog db_chlog = new DatabaseChangelog(bookDao, authorDao, genreDao, library);
-        db_chlog.dbPrepareData();
+        databaseChangelog.dbPrepareData();
 
         try {
             res = library.bookInsert(1, 2, bookName);
@@ -101,8 +99,7 @@ public class TestApplication {
         String bookName = "Книга юнит-теста deleteTest";
 
         // Предзаполнение БД
-        DatabaseChangelog db_chlog = new DatabaseChangelog(bookDao, authorDao, genreDao, library);
-        db_chlog.dbPrepareData();
+        databaseChangelog.dbPrepareData();
 
         try {
             res = library.bookInsert(2, 3, bookName);
@@ -134,8 +131,7 @@ public class TestApplication {
         String bookName = "Книга юнит-теста getAllTest";
 
         // Предзаполнение БД
-        DatabaseChangelog db_chlog = new DatabaseChangelog(bookDao, authorDao, genreDao, library);
-        db_chlog.dbPrepareData();
+        databaseChangelog.dbPrepareData();
 
         try {
             res = library.bookInsert(1, 1, bookName);
