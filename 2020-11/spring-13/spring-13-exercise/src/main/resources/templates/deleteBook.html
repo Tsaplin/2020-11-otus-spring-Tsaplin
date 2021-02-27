@@ -31,12 +31,12 @@
 <body>
 
 <!-- Book edition -->
-<form id="deleteBook-form" th:action="@{/deleteBook(bookId=${book.bookId})}" th:method="post" action="deleteBook.html">
+<form id="deleteBook-form" th:action="@{/deleteBook(bookId=${book.id})}" th:method="post" action="deleteBook.html">
     <h1>Удаление книги:</h1>
 
     <div class="row">
         <label for="id-input">ID книги:</label>
-        <input id="id-input" type="text" readonly="readonly" th:value="${book.bookId}" value="1"/>
+        <input id="id-input" type="text" readonly="readonly" th:value="${book.id}" value="1"/>
     </div>
 
     <div class="row">
@@ -60,7 +60,7 @@
 
     <div class="row">
         <big_label for="copyright-input">CopyRight: Tsaplin Sergey </big_label>
-        <a th:href="@{/library(bookId=${book.bookId})}">Back</a>
+        <a th:href="@{/library(bookId=${book.id})}">Back</a>
     </div>
 
 </form>

@@ -1,7 +1,6 @@
 package ru.otus.spring.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import ru.otus.spring.domain.Book;
 
 import java.util.List;
@@ -13,9 +12,10 @@ public class BookDaoImpl implements BookDaoCustom {
 
     @Override
     public Optional<Book> customFindById(String bookId) {
+       // return bookDao.findById(bookId);
         List<Book> lb = bookDao.findAll();
         return lb.stream()
-                .filter(x -> x.getBookId().equals(bookId)).findFirst();
+                .filter(x -> x.getId().equals(bookId)).findFirst();
     }
 
 }

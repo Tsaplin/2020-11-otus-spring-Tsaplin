@@ -1,5 +1,6 @@
 package ru.otus.spring.mongock.changelog;
 
+import com.fasterxml.jackson.annotation.Nulls;
 import com.github.cloudyrock.mongock.ChangeLog;
 import com.github.cloudyrock.mongock.ChangeSet;
 import com.mongodb.client.MongoClients;
@@ -58,7 +59,7 @@ public class DatabaseChangelogImpl implements DatabaseChangelog {
 
     @ChangeSet(order = "004", id = "booksPrepare", author = "stsaplin")
     public void booksPrepare(BookDao bookDao, Library library) {
-        bookDao.save(new Book("1", library.getAllAuthors().get(0), library.getAllGenres().get(0), "Тестовая книга."));
+        bookDao.save(new Book(null, library.getAllAuthors().get(0), library.getAllGenres().get(0), "Тестовая книга."));
     }
 
 }

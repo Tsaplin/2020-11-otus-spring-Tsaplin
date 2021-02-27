@@ -77,7 +77,7 @@ public class TestApplication {
         val optionalBook = bookDao.findFirstByNameEquals(bookName);
 
         if (optionalBook.isPresent()) {
-            bookId = optionalBook.get().getBookId();
+            bookId = optionalBook.get().getId();
             try {
                 res = library.bookUpdate(bookId, 2, 3, "Книга юнит-теста updateTest модифицированная");
             } catch (Exception e) {
@@ -110,7 +110,7 @@ public class TestApplication {
         val optionalBook = bookDao.findFirstByNameEquals(bookName);
 
         if (optionalBook.isPresent()) {
-            bookId = optionalBook.get().getBookId();
+            bookId = optionalBook.get().getId();
             try {
                 res = library.bookDelete(bookId);
             } catch (Exception e) {

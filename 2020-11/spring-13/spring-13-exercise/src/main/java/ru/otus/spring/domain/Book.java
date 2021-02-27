@@ -15,7 +15,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 public class Book {
    @Id
    @Field
-   private String bookId;
+   private String id;
 
    @Field
    @DBRef

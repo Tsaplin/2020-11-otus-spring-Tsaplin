@@ -76,11 +76,11 @@ public class BookController {
             Model model
     ) {
         try {
-            library.bookUpdate(book.getBookId(), book.getAuthor().getAuthorId(), book.getGenre().getGenreId(), book.getName());
+            library.bookUpdate(book.getId(), book.getAuthor().getAuthorId(), book.getGenre().getGenreId(), book.getName());
         } catch (Exception e) {
             logger.error(e.getMessage());
         }
-        model.addAttribute("book", library.bookShow(book.getBookId()).get());
+        model.addAttribute("book", library.bookShow(book.getId()).get());
         return "editBook";
     }
 
@@ -95,7 +95,7 @@ public class BookController {
             Book book, Model model
     ) {
         try {
-            library.bookDelete(book.getBookId());
+            library.bookDelete(book.getId());
         } catch (Exception e) {
             e.printStackTrace();
         }

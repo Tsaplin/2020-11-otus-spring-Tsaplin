@@ -33,19 +33,19 @@
 <body>
 
 <!-- Library -->
-<form id="library-form" th:action="@{/library(bookId=${book.bookId})}" th:method="post" action="library.html">
+<form id="library-form" th:action="@{/library(bookId=${book.id})}" th:method="post" action="library.html">
     <h1>Библиотека</h1>
 
     <div class="row">
-        <a th:href="@{/insertBook(bookId=${book.bookId})}">Добавление книги</a>
+        <a th:href="@{/insertBook(bookId=${book.id})}">Добавление книги</a>
     </div>
 
     <div class="row">
-        <a th:href="@{/editBook(bookId=${book.bookId})}">Редактирование книги</a>
+        <a th:href="@{/editBook(bookId=${book.id})}">Редактирование книги</a>
     </div>
 
     <div class="row">
-        <a th:href="@{/deleteBook(bookId=${book.bookId})}">Удаление книги</a>
+        <a th:href="@{/deleteBook(bookId=${book.id})}">Удаление книги</a>
     </div>
 
     <div class="row">
@@ -72,7 +72,7 @@
                     Array.from(books).map(function (bookElement, i) {
                         $('tbody').append(`
                     <tr>
-                        <td>${bookElement.bookId}</td>
+                        <td>${bookElement.id}</td>
                         <td>${bookElement.name}</td>
                         <td>${bookElement.author.fio}</td>
                         <td>${bookElement.genre.name}</td>
