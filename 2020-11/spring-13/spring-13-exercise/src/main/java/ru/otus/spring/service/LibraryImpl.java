@@ -67,7 +67,6 @@ public class LibraryImpl implements Library {
         Genre genre = genreDao.findById(genreId).get();
         Book b = new Book(bookId, author, genre, bookName);
         try {
-            val optionalBookTest = bookDao.findById(bookId);
             val optionalBook = bookDao.customFindById(bookId);
             if (optionalBook.isPresent()) {
                 bookDao.save(b);

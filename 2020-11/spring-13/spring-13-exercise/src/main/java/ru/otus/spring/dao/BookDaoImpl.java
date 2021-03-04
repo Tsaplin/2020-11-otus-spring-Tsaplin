@@ -1,5 +1,8 @@
 package ru.otus.spring.dao;
 
+import lombok.val;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.otus.spring.domain.Book;
 
@@ -10,12 +13,18 @@ public class BookDaoImpl implements BookDaoCustom {
     @Autowired
     BookDao bookDao;
 
+    private static Logger logger = LogManager.getLogger();
+
     @Override
     public Optional<Book> customFindById(String bookId) {
-       // return bookDao.findById(bookId);
-        List<Book> lb = bookDao.findAll();
-        return lb.stream()
-                .filter(x -> x.getId().equals(bookId)).findFirst();
+        Optional<Book> optionalBook = null;
+        try {
+            optionalBook =  bookDao.findById(bookId);
+        } catch (Exception e) {
+            logger.info("Книга не найдена по идентификатору id=" + bookId);
+        }
+
+        return optionalBook;
     }
 
 }
