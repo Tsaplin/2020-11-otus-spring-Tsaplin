@@ -1,0 +1,7 @@
+#Local MongoDB config
+spring:
+  data:
+    mongodb:
+      database: user_db
+
+
