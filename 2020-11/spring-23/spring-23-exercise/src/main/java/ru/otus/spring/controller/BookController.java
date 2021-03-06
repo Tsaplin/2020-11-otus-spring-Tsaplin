@@ -25,6 +25,10 @@ public class BookController {
     private static Logger logger = LogManager.getLogger();
     private final Book emptyBook = new Book(0, new Author(0, ""), new Genre(0, ""), "");
 
+    @GetMapping("/error")
+    public String errorPage() {
+        return "error";
+    }
     @GetMapping("/library")
     public String libraryShow(@RequestParam(value = "bookId", defaultValue = "0") long bookId, Model model) {
         model.addAttribute("book", emptyBook);
