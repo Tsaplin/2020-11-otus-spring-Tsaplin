@@ -2,6 +2,7 @@ DROP TABLE IF EXISTS tBookComment;
 DROP TABLE IF EXISTS tBook;
 DROP TABLE IF EXISTS tAuthors;
 DROP TABLE IF EXISTS tGenre;
+DROP TABLE IF EXISTS tUsers;
 
 CREATE TABLE tAuthors(AuthorID numeric(15,0) PRIMARY KEY, FIO VARCHAR(255));
 
@@ -37,4 +38,13 @@ BookID numeric(15,0),
 Comment VARCHAR(255),
 FOREIGN KEY (BookID) REFERENCES tBook (BookID)
 );
+------
+CREATE TABLE tUsers(
+UserID numeric(15,0) GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+Login VARCHAR(30),
+Password VARCHAR(30),
+Role VARCHAR(30)
+);
 
+DROP INDEX IF EXISTS XPKtUsers;
+create unique index XPKtUsers on tUsers (UserID);

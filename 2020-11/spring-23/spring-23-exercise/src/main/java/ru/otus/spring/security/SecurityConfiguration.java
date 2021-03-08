@@ -8,9 +8,19 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import ru.otus.spring.dao.UserDao;
+import ru.otus.spring.domain.User;
+
+import java.util.List;
 
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+    private final UserDao userDao;
+
+    public SecurityConfiguration(UserDao userDao) {
+        this.userDao = userDao;
+    }
+
     @Override
     public void configure(WebSecurity web) {
         web.ignoring().antMatchers("/");
@@ -18,12 +28,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .authorizeRequests().antMatchers( "/library" ).permitAll()
-                .and()
-                .authorizeRequests().antMatchers("/deleteBook", "/editBook", "/insertBook").authenticated()
-                .and()
-                .formLogin();
+        http
+         .csrf().disable()
+         .authorizeRequests().antMatchers("/library").permitAll()
+         .and()
+         .authorizeRequests().antMatchers("/deleteBook", "/editBook", "/insertBook").authenticated()
+         .and()
+         .formLogin()
+         .and()
+         .rememberMe()
+         .key("MyAppSecret")
+         .tokenValiditySeconds(60);
     }
 
     @SuppressWarnings("deprecation")
@@ -37,4 +52,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         auth.inMemoryAuthentication()
                 .withUser( "admin" ).password( "password" ).roles( "ADMIN" );
     }
+
+
 }

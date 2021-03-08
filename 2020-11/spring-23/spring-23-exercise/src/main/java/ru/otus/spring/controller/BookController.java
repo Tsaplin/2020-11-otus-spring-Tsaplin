@@ -4,6 +4,10 @@ import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.Import;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ru.otus.spring.domain.Author;
 import ru.otus.spring.domain.Book;
 import ru.otus.spring.domain.Genre;
+import ru.otus.spring.domain.User;
 import ru.otus.spring.service.Library;
 import ru.otus.spring.service.LibraryImpl;
 
@@ -36,7 +41,16 @@ public class BookController {
     }
 
     @GetMapping("/insertBook")
-    public String prepareForInsert(@RequestParam(value = "bookId", defaultValue = "0") long bookId, Model model) {
+    public String prepareForInsert(@RequestParam(value = "bookId", defaultValue = "0") long bookId, Model model, User userForm) {
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        Authentication authentication = securityContext.getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+/*
+        if (!userForm.getPassword().equals(userDetails.getPassword())) {
+            model.addAttribute("passwordError", "Пароли не совпадают");
+            return "insertBook";
+        }
+*/
         model.addAttribute("authors", library.getAllAuthors());
         model.addAttribute("genres", library.getAllGenres());
         model.addAttribute("book", emptyBook);
