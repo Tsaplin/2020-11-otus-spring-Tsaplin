@@ -6,6 +6,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.otus.spring.dao.UserDao;
@@ -49,8 +53,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure( AuthenticationManagerBuilder auth ) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser( "admin" ).password( "password" ).roles( "ADMIN" );
+
+        List<User> userList = userDao.findAll();
+        for (int i=0; i < userList.size(); i++) {
+            User tmpUser = userList.get(i);
+            auth.inMemoryAuthentication()
+                    .withUser( tmpUser.getLogin() ).password( tmpUser.getPassword() ).roles( "ADMIN" ); // !!! РОЛИ НАСТРОИТЬ
+
+        }
     }
 
 

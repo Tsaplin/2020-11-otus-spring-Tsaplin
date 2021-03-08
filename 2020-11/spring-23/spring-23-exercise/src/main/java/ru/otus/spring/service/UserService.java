@@ -21,6 +21,15 @@ public class UserService implements UserDetailsService {
             throw new UsernameNotFoundException(login);
         }
 
-        return optUser.get();
+        UserDetails userDetails = new org.springframework.security.core.userdetails.User(
+                optUser.get().getLogin(),
+                optUser.get().getPassword(),//here you can put a clear text password
+                true,
+                true,
+                true,
+                true,
+                null);
+
+        return userDetails;
     }
 }
