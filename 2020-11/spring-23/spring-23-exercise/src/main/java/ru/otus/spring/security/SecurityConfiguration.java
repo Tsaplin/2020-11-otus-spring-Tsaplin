@@ -6,6 +6,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.otus.spring.dao.UserDao;
@@ -29,7 +30,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
+          // По умолчанию SecurityContext хранится в сессии. Эта часть вырубает и каждый запросом приходит
          .csrf().disable()
+         .sessionManagement()
+         .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+         .and()
          .authorizeRequests().antMatchers("/library").permitAll()
          .and()
          .authorizeRequests().antMatchers( "/editBook", "/insertBook").authenticated()
@@ -37,10 +42,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
          .authorizeRequests().antMatchers("/deleteBook").hasAnyRole("ADMIN_ROLE")
          .and()
          .formLogin()
+        // .and()
+        // .rememberMe()
+        // .key("MyAppSecret")
+        // .tokenValiditySeconds(30)
          .and()
-         .rememberMe()
-         .key("MyAppSecret")
-         .tokenValiditySeconds(15);
+         .logout().logoutUrl("/error");
+
     }
 
     @SuppressWarnings("deprecation")

@@ -41,16 +41,7 @@ public class BookController {
     }
 
     @GetMapping("/insertBook")
-    public String prepareForInsert(@RequestParam(value = "bookId", defaultValue = "0") long bookId, Model model, User userForm) {
-        SecurityContext securityContext = SecurityContextHolder.getContext();
-        Authentication authentication = securityContext.getAuthentication();
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-/*
-        if (!userForm.getPassword().equals(userDetails.getPassword())) {
-            model.addAttribute("passwordError", "Пароли не совпадают");
-            return "insertBook";
-        }
-*/
+    public String prepareForInsert(@RequestParam(value = "bookId", defaultValue = "0") long bookId, Model model) {
         model.addAttribute("authors", library.getAllAuthors());
         model.addAttribute("genres", library.getAllGenres());
         model.addAttribute("book", emptyBook);
