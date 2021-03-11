@@ -6,10 +6,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.otus.spring.dao.UserDao;
@@ -36,13 +32,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
          .csrf().disable()
          .authorizeRequests().antMatchers("/library").permitAll()
          .and()
-         .authorizeRequests().antMatchers("/deleteBook", "/editBook", "/insertBook").authenticated()
+         .authorizeRequests().antMatchers( "/editBook", "/insertBook").authenticated()
+         .and()
+         .authorizeRequests().antMatchers("/deleteBook").hasAnyRole("ADMIN_ROLE")
          .and()
          .formLogin()
          .and()
          .rememberMe()
          .key("MyAppSecret")
-         .tokenValiditySeconds(60);
+         .tokenValiditySeconds(15);
     }
 
     @SuppressWarnings("deprecation")
@@ -58,7 +56,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         for (int i=0; i < userList.size(); i++) {
             User tmpUser = userList.get(i);
             auth.inMemoryAuthentication()
-                    .withUser( tmpUser.getLogin() ).password( tmpUser.getPassword() ).roles( "ADMIN" ); // !!! РОЛИ НАСТРОИТЬ
+                    .withUser( tmpUser.getLogin() ).password( tmpUser.getPassword() ).roles( tmpUser.getRole() );
 
         }
     }
