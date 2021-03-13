@@ -24,6 +24,7 @@ import ru.otus.spring.service.LibraryImpl;
 
 import java.util.Optional;
 
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 @Controller
 @AllArgsConstructor
 @Import({LibraryImpl.class})
@@ -50,6 +51,7 @@ public class BookController {
         return "insertBook";
     }
 
+    @PreAuthorize("hasRole('ADMIN_ROLE')")
     @PostMapping("/insertBook")
     public String bookInsert(
             Book book,
@@ -81,6 +83,7 @@ public class BookController {
         return "editBook";
     }
 
+    @PreAuthorize("hasRole('ADMIN_ROLE')")
     @PostMapping("/editBook")
     public String bookEdit(
             Book book,
@@ -101,6 +104,7 @@ public class BookController {
         return "deleteBook";
     }
 
+    @PreAuthorize("hasRole('ADMIN_ROLE')")
     @PostMapping("/deleteBook")
     public String bookDelete(
             Book book, Model model
