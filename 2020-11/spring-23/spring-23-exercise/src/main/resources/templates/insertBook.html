@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Insert Book</title>
+    <style type="text/css">
+        body {
+            padding: 50px;
+        }
+
+        label {
+            width: 150px;
+            display: inline-block;
+        }
+
+        big_label {
+            display: inline-block;
+            width: 250px;
+            color: crimson;
+        }
+
+        input:read-only {
+            background: lightgray;
+        }
+
+        .row {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Book insert -->
+<form id="insertBook-form" th:action="@{/insertBook(bookId=0)}" th:method="post" action="insertBook.html">
+    <h1>Добавление книги:</h1>
+
+    <div class="row">
+        <label for="holder-input">Наименование книги:</label>
+        <input id="holder-input" name="name" type="text" value=""/>
+    </div>
+
+    <div class="row">
+        <label for="author-lookup">Автор:</label>
+        <select class="form-control" name="author" id="author-lookup">
+            <option th:each="author : ${authors}"
+                    th:value="${author.getAuthorId()}"
+                    th:text="${author.getFIO()}">
+            </option>
+        </select>
+    </div>
+
+    <div class="row">
+        <label for="genre-lookup">Жанр:</label>
+        <select class="form-control" name="genre" id="genre-lookup">
+            <option th:each="genre : ${genres}"
+                    th:value="${genre.getGenreId()}"
+                    th:text="${genre.getName()}">
+            </option>
+        </select>
+    </div>
+
+    <div class="row">
+        <button type="submit">Добавить</button>
+    </div>
+
+    <div class="row">
+        <big_label for="copyright-input">CopyRight: Tsaplin Sergey </big_label>
+        <a th:href="@{/library}">Back</a>
+    </div>
+
+</form>
+
+</body>
+</html>
