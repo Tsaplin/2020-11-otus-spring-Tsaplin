@@ -24,7 +24,6 @@ import ru.otus.spring.service.LibraryImpl;
 
 import java.util.Optional;
 
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 @Controller
 @AllArgsConstructor
 @Import({LibraryImpl.class})
