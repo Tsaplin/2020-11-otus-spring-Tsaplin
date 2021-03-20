@@ -10,6 +10,8 @@ import org.springframework.integration.channel.DirectChannel;
 import org.springframework.integration.dsl.IntegrationFlow;
 import ru.otus.spring.domain.ClientOrder;
 
+import java.util.ArrayList;
+
 @SpringBootApplication
 public class Main {
     @Bean
@@ -33,14 +35,23 @@ public class Main {
 
     public static void main(String[] args) throws Exception  {
         System.out.println("Hello world !");
+        ArrayList<ClientOrder> orders = new ArrayList<ClientOrder>();
+        orders.add(new ClientOrder("HG-182", "Anna Michailovna", 16));
+        orders.add(new ClientOrder("LP-273", "Igor Nikolaevich", 61));
+        orders.add(new ClientOrder("MU-122", "Fedor Petrovich", 17));
+        orders.add(new ClientOrder("Ds-461", "Ivanov Petr Nikiforovich", 27));
 
         ConfigurableApplicationContext ctx = SpringApplication.run(Main.class, args);
 
         DirectChannel outputChannel = ctx.getBean("outputChannel", DirectChannel.class);
 
         outputChannel.subscribe(x -> System.out.println(x));
-        ctx.getBean(I.class)
-                .process(new ClientOrder("Ds-461", "Ivanov Petr Nikiforovich", 27));
+        for (int i=0; i < orders.size(); i++) {
+            ClientOrder tmpOrder = orders.get(i);
+
+            ctx.getBean(I.class)
+                    .process(tmpOrder);
+        }
 
         ctx.close();
     }

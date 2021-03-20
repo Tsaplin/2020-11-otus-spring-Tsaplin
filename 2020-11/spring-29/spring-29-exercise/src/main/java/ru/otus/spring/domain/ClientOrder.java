@@ -4,13 +4,26 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 public class ClientOrder {
-    public String number;
-    public String clientFIO;
-    public int age;
+    private final String number;
+    private final String clientFIO;
+    private final int age;
 
     public ClientOrder(String number, String clientFIO, int age) {
         this.number = number;
         this.clientFIO = clientFIO;
         this.age = age;
     }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public String getClientFIO() {
+        return clientFIO;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
 }
