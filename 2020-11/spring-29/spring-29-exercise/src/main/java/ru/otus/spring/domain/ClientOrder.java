@@ -1,17 +1,17 @@
 package ru.otus.spring.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-
+// Клиентская заявка
 public class ClientOrder {
-    private final String number;
-    private final String clientFIO;
-    private final int age;
+    private final String number; // Номер заявки
+    private final String clientFIO; //ФИО клиента
+    private final int age; //возраст клиента
+    private String status; //статус заявки
 
-    public ClientOrder(String number, String clientFIO, int age) {
+    public ClientOrder(String number, String clientFIO, int age, String status) {
         this.number = number;
         this.clientFIO = clientFIO;
         this.age = age;
+        this.status = status;
     }
 
     public String getNumber() {
@@ -25,5 +25,14 @@ public class ClientOrder {
     public int getAge() {
         return age;
     }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
 
 }

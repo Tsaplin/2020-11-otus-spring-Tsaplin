@@ -28,18 +28,18 @@ public class Main {
     @Bean
     public IntegrationFlow orderFlow() {
         return flow -> flow
-                .handle("orderPrint", "process")
                 .handle("orderCheck", "process")
+                .handle("orderPrint", "process")
                 .channel("outputChannel");
     }
 
     public static void main(String[] args) throws Exception  {
         System.out.println("Hello world !");
         ArrayList<ClientOrder> orders = new ArrayList<ClientOrder>();
-        orders.add(new ClientOrder("HG-182", "Anna Michailovna", 16));
-        orders.add(new ClientOrder("LP-273", "Igor Nikolaevich", 61));
-        orders.add(new ClientOrder("MU-122", "Fedor Petrovich", 17));
-        orders.add(new ClientOrder("Ds-461", "Ivanov Petr Nikiforovich", 27));
+        orders.add(new ClientOrder("HG-182", "Anna Michailovna", 16, "unknown"));
+        orders.add(new ClientOrder("LP-273", "Igor Nikolaevich", 61, "unknown"));
+        orders.add(new ClientOrder("MU-122", "Fedor Petrovich", 17, "unknown"));
+        orders.add(new ClientOrder("Ds-461", "Ivanov Petr Nikiforovich", 27, "unknown"));
 
         ConfigurableApplicationContext ctx = SpringApplication.run(Main.class, args);
 
@@ -51,6 +51,7 @@ public class Main {
 
             ctx.getBean(I.class)
                     .process(tmpOrder);
+
         }
 
         ctx.close();

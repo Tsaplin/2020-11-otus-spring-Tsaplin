@@ -8,9 +8,11 @@ public class OrderCheck {
     public ClientOrder process(ClientOrder order) {
         if (order.getAge() < 18) {
             System.out.println("!!! Treatment is forbidden !");
+            order.setStatus("rejected");
         }
         else {
             System.out.println("!!! Successfull treatment of order.");
+            order.setStatus("accepted");
         }
         return order;
     }
