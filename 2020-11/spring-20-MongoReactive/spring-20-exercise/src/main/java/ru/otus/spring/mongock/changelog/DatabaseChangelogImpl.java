@@ -17,6 +17,7 @@ import ru.otus.spring.domain.Book;
 import ru.otus.spring.domain.Genre;
 import ru.otus.spring.service.Library;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -48,22 +49,30 @@ public class DatabaseChangelogImpl implements DatabaseChangelog {
 
     @ChangeSet(order = "002", id = "authorsPrepare", author = "stsaplin")
     public void authorsPrepare(AuthorDao authorDao) {
-        authorDao.save(new Author(1, "Эдуард Успенский"));
-        authorDao.save(new Author(2, "Александр Сергеевич Пушкин"));
-        authorDao.save(new Author(3, "Михаил Хазин"));
+        authorDao.saveAll(Arrays.asList(
+                new Author(1, "Эдуард Успенский"),
+                new Author(2, "Александр Сергеевич Пушкин"),
+                new Author(3, "Михаил Хазин")
+        )).subscribe(p -> System.out.println(p.getFIO()));
     }
 
     @ChangeSet(order = "003", id = "genresPrepare", author = "stsaplin")
     public void genresPrepare(GenreDao genreDao) {
-        genreDao.save(new Genre(1, "Детские сказки"));
-        genreDao.save(new Genre(2, "Экономика"));
-        genreDao.save(new Genre(3, "Фантастика"));
+        genreDao.saveAll(Arrays.asList(
+                new Genre(1, "Детские сказки"),
+                new Genre(2, "Экономика"),
+                new Genre(3, "Фантастика")
+                )).subscribe(p -> System.out.println(p.getName()));
     }
 
     @ChangeSet(order = "004", id = "booksPrepare", author = "stsaplin")
     public void booksPrepare(BookDao bookDao, Library library) {
-       // List<Author> a = library.getAllAuthors().collectList().block();
-       // bookDao.save(new Book(null, library.getAllAuthors().elementAt(0).block(), library.getAllGenres().elementAt(0).block(), "Тестовая книга."));
+        bookDao.save(new Book(
+                null,
+                library.getAllAuthors().blockFirst(),
+                library.getAllGenres().blockFirst(),
+                "Тестовая книга.")
+        ).subscribe(p -> System.out.println(p.getName()));
     }
 
 }

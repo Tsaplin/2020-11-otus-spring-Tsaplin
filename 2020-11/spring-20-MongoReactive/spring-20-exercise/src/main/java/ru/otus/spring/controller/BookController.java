@@ -13,8 +13,6 @@ import ru.otus.spring.domain.Genre;
 import ru.otus.spring.service.Library;
 import ru.otus.spring.service.LibraryImpl;
 
-import java.util.Optional;
-
 @RestController
 @AllArgsConstructor
 @Import({LibraryImpl.class})

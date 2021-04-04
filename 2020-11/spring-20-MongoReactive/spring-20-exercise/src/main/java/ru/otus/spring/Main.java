@@ -6,7 +6,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.web.reactive.config.EnableWebFlux;
 import ru.otus.spring.mongock.changelog.DatabaseChangelogImpl;
 
-@EnableWebFlux
+//@EnableWebFlux
 @SpringBootApplication
 public class Main {
     public static void main(String[] args) throws Exception  {
