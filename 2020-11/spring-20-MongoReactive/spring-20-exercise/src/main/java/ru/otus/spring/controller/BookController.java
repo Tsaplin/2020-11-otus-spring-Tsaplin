@@ -10,6 +10,7 @@ import reactor.core.publisher.Mono;
 import ru.otus.spring.domain.Author;
 import ru.otus.spring.domain.Book;
 import ru.otus.spring.domain.Genre;
+import ru.otus.spring.dto.BookDto;
 import ru.otus.spring.service.Library;
 import ru.otus.spring.service.LibraryImpl;
 
@@ -39,11 +40,11 @@ public class BookController {
 
     @PostMapping("/insertBook")
     public Mono<String> bookInsert(
-            @ModelAttribute Book book,
+            @ModelAttribute BookDto book,
             Model model
     ) {
         try {
-            library.bookInsert(book.getAuthor().getAuthorId(), book.getGenre().getGenreId(), book.getName());
+            library.bookInsert(book.getAuthorId(), book.getGenreId(), book.getName());
         } catch (Exception e) {
             logger.error(e.getMessage());
         }
@@ -59,7 +60,7 @@ public class BookController {
     public Mono<String> bookFind(@RequestParam("bookId") String bookId, Model model) {
         Mono<Book> book = library.bookShow(bookId);
         if (book != null) {
-            model.addAttribute("book", book.block());
+            model.addAttribute("book", book.subscribe());
         } else {
             model.addAttribute("book", emptyBook);
         }
@@ -71,15 +72,15 @@ public class BookController {
 
     @PostMapping("/editBook")
     public Mono<String> bookEdit(
-            @ModelAttribute Book book,
+            @ModelAttribute BookDto book,
             Model model
     ) {
         try {
-            library.bookUpdate(book.getId(), book.getAuthor().getAuthorId(), book.getGenre().getGenreId(), book.getName());
+            library.bookUpdate(book.getId(), book.getAuthorId(), book.getGenreId(), book.getName());
         } catch (Exception e) {
             logger.error(e.getMessage());
         }
-        model.addAttribute("book", library.bookShow(book.getId()).block());
+        model.addAttribute("book", library.bookShow(book.getId()).subscribe());
         return Mono.just("editBook");
     }
 
@@ -92,7 +93,7 @@ public class BookController {
 
     @PostMapping("/deleteBook")
     public Mono<String> bookDelete(
-            @ModelAttribute Book book, Model model
+            @ModelAttribute BookDto book, Model model
     ) {
         try {
             library.bookDelete(book.getId());
