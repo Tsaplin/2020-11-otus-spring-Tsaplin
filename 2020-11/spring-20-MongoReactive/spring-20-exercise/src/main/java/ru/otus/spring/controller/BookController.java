@@ -5,10 +5,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.Import;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 import ru.otus.spring.domain.Author;
 import ru.otus.spring.domain.Book;
@@ -26,12 +23,14 @@ public class BookController {
     private static Logger logger = LogManager.getLogger();
     private final Book emptyBook = new Book("0", new Author(0, ""), new Genre(0, ""), "");
 
+    @ModelAttribute
     @GetMapping("/library")
     public Mono<String> libraryShow(@RequestParam(value = "bookId", defaultValue = "0") String bookId, Model model) {
         model.addAttribute("book", emptyBook);
         return Mono.just("library");
     }
 
+    @ModelAttribute
     @GetMapping("/insertBook")
     public Mono<String> prepareForInsert(@RequestParam(value = "bookId", defaultValue = "0") String bookId, Model model) {
         model.addAttribute("authors", library.getAllAuthors());
@@ -42,7 +41,7 @@ public class BookController {
 
     @PostMapping("/insertBook")
     public Mono<String> bookInsert(
-            Book book,
+            @ModelAttribute Book book,
             Model model
     ) {
         try {
@@ -57,6 +56,7 @@ public class BookController {
         return Mono.just("insertBook");
     }
 
+    @ModelAttribute
     @GetMapping("/editBook")
     public Mono<String> bookFind(@RequestParam("bookId") String bookId, Model model) {
         Mono<Book> book = library.bookShow(bookId);
@@ -73,7 +73,7 @@ public class BookController {
 
     @PostMapping("/editBook")
     public Mono<String> bookEdit(
-            Book book,
+            @ModelAttribute Book book,
             Model model
     ) {
         try {
@@ -85,6 +85,7 @@ public class BookController {
         return Mono.just("editBook");
     }
 
+    @ModelAttribute
     @GetMapping("/deleteBook")
     public Mono<String> bookFindForDelete(@RequestParam("bookId") String bookId, Model model) {
         bookFind(bookId, model);
@@ -93,7 +94,7 @@ public class BookController {
 
     @PostMapping("/deleteBook")
     public Mono<String> bookDelete(
-            Book book, Model model
+            @ModelAttribute Book book, Model model
     ) {
         try {
             library.bookDelete(book.getId());

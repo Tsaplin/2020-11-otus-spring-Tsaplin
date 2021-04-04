@@ -7,6 +7,8 @@ import com.mongodb.reactivestreams.client.MongoDatabase;
 import lombok.RequiredArgsConstructor;
 import lombok.var;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import ru.otus.spring.dao.AuthorDao;
 import ru.otus.spring.dao.BookDao;
 import ru.otus.spring.dao.GenreDao;
@@ -14,6 +16,8 @@ import ru.otus.spring.domain.Author;
 import ru.otus.spring.domain.Book;
 import ru.otus.spring.domain.Genre;
 import ru.otus.spring.service.Library;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @ChangeLog
@@ -58,7 +62,8 @@ public class DatabaseChangelogImpl implements DatabaseChangelog {
 
     @ChangeSet(order = "004", id = "booksPrepare", author = "stsaplin")
     public void booksPrepare(BookDao bookDao, Library library) {
-        bookDao.save(new Book(null, library.getAllAuthors().elementAt(0).block(), library.getAllGenres().elementAt(0).block(), "Тестовая книга."));
+       // List<Author> a = library.getAllAuthors().collectList().block();
+       // bookDao.save(new Book(null, library.getAllAuthors().elementAt(0).block(), library.getAllGenres().elementAt(0).block(), "Тестовая книга."));
     }
 
 }
