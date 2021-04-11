@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.Import;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
@@ -14,7 +15,7 @@ import ru.otus.spring.dto.BookDto;
 import ru.otus.spring.service.Library;
 import ru.otus.spring.service.LibraryImpl;
 
-@RestController
+@Controller
 @AllArgsConstructor
 @Import({LibraryImpl.class})
 public class BookController {
