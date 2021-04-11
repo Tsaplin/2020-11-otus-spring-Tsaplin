@@ -72,7 +72,7 @@ public class DatabaseChangelogImpl implements DatabaseChangelog {
                 library.getAllAuthors().blockFirst(),
                 library.getAllGenres().blockFirst(),
                 "Тестовая книга.")
-        ).subscribe(p -> System.out.println(p.getName()));
+        ).subscribe(p -> System.out.println(p.getId() + " " + p.getName()));
     }
 
 }

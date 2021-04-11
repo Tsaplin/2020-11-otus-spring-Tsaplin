@@ -6,7 +6,10 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.Import;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import reactor.core.publisher.Mono;
 import ru.otus.spring.domain.Author;
 import ru.otus.spring.domain.Book;
@@ -15,6 +18,11 @@ import ru.otus.spring.dto.BookDto;
 import ru.otus.spring.service.Library;
 import ru.otus.spring.service.LibraryImpl;
 
+import javax.swing.tree.RowMapper;
+import javax.swing.tree.TreePath;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 @Controller
 @AllArgsConstructor
 @Import({LibraryImpl.class})
@@ -22,6 +30,22 @@ public class BookController {
     private final Library library;
     private static Logger logger = LogManager.getLogger();
     private final Book emptyBook = new Book("0", new Author(0, ""), new Genre(0, ""), "");
+
+    private static class BookMapper implements RowMapper {
+        //@Override
+        public Book mapRow(ResultSet resultSet, int i) throws SQLException {
+            String bookId = resultSet.getString("BookID");
+            Author author = (Author) resultSet.getObject("author");
+            Genre genre = (Genre) resultSet.getObject("genre");
+            String bookName = resultSet.getString("Name");
+            return new Book(bookId, author, genre, bookName);
+        }
+
+        @Override
+        public int[] getRowsForPaths(TreePath[] path) {
+            return new int[0];
+        }
+    }
 
     @ModelAttribute
     @GetMapping("/library")
@@ -61,13 +85,13 @@ public class BookController {
     public Mono<String> bookFind(@RequestParam("bookId") String bookId, Model model) {
         Mono<Book> book = library.bookShow(bookId);
         if (book != null) {
-            model.addAttribute("book", book.subscribe());
+            model.addAttribute("book", book.map(p -> new BookMapper()));
         } else {
             model.addAttribute("book", emptyBook);
         }
+
         model.addAttribute("authors", library.getAllAuthors());
         model.addAttribute("genres", library.getAllGenres());
-
         return Mono.just("editBook");
     }
 
