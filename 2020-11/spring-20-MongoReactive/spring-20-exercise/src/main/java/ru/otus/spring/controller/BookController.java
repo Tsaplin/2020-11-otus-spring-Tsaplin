@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import reactor.core.publisher.Mono;
+import ru.otus.spring.dao.AuthorDao;
+import ru.otus.spring.dao.BookDao;
+import ru.otus.spring.dao.GenreDao;
 import ru.otus.spring.domain.Author;
 import ru.otus.spring.domain.Book;
 import ru.otus.spring.domain.Genre;
@@ -28,6 +31,10 @@ import java.sql.SQLException;
 @Import({LibraryImpl.class})
 public class BookController {
     private final Library library;
+    private final BookDao bookDao;
+    private final AuthorDao authorDao;
+    private final GenreDao genreDao;
+
     private static Logger logger = LogManager.getLogger();
     private final Book emptyBook = new Book("0", new Author(0, ""), new Genre(0, ""), "");
 
@@ -69,7 +76,12 @@ public class BookController {
             Model model
     ) {
         try {
-            library.bookInsert(book.getAuthorId(), book.getGenreId(), book.getName());
+            Mono<Author> authorMono = authorDao.findById((long)1/*book.getAuthorId()*/);
+            Mono<Genre> genreMono = genreDao.findById((long)1/*book.getGenreId()*/);
+            Mono<Book> bookMono = Mono.zip(authorMono, genreMono)
+                    .flatMap(monoEntities -> Mono.just(new Book(null, monoEntities.getT1(), monoEntities.getT2(), book.getName())));
+            Mono.zip(bookMono, Mono.just(1))
+                    .flatMap(monoEntities -> bookDao.save(monoEntities.getT1()));
         } catch (Exception e) {
             logger.error(e.getMessage());
         }
@@ -85,7 +97,7 @@ public class BookController {
     public Mono<String> bookFind(@RequestParam("bookId") String bookId, Model model) {
         Mono<Book> book = library.bookShow(bookId);
         if (book != null) {
-            model.addAttribute("book", book.map(p -> new BookMapper()));
+            model.addAttribute("book", book);
         } else {
             model.addAttribute("book", emptyBook);
         }
@@ -101,18 +113,32 @@ public class BookController {
             Model model
     ) {
         try {
-            library.bookUpdate(book.getId(), book.getAuthorId(), book.getGenreId(), book.getName());
+            Mono<Author> authorMono = authorDao.findById(book.getAuthorId());
+            Mono<Genre> genreMono = genreDao.findById(book.getGenreId());
+            Mono<Book> bookMono = Mono.zip(authorMono, genreMono)
+                    .flatMap(monoEntities -> Mono.just(new Book(book.getId(), monoEntities.getT1(), monoEntities.getT2(), book.getName())));
+            Mono.zip(bookMono, Mono.just(1))
+                    .flatMap(monoEntities -> bookDao.save(monoEntities.getT1()));
         } catch (Exception e) {
             logger.error(e.getMessage());
         }
-        model.addAttribute("book", library.bookShow(book.getId()).subscribe());
+        model.addAttribute("book", library.bookShow(book.getId()));
         return Mono.just("editBook");
     }
 
     @ModelAttribute
     @GetMapping("/deleteBook")
     public Mono<String> bookFindForDelete(@RequestParam("bookId") String bookId, Model model) {
-        bookFind(bookId, model);
+        Mono<Book> book = library.bookShow(bookId);
+        if (book != null) {
+            model.addAttribute("book", book);
+        } else {
+            model.addAttribute("book", emptyBook);
+        }
+
+        model.addAttribute("authors", library.getAllAuthors());
+        model.addAttribute("genres", library.getAllGenres());
+
         return Mono.just("deleteBook");
     }
 
@@ -121,7 +147,7 @@ public class BookController {
             @ModelAttribute BookDto book, Model model
     ) {
         try {
-            library.bookDelete(book.getId());
+            bookDao.deleteById(book.getId());
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -19,11 +19,11 @@ public class Book {
    private String id;
 
    @Field
-   @DBRef
+  // @DBRef
    private Author author;
 
    @Field
-   @DBRef
+  // @DBRef
    private Genre genre;
 
    @Field
