@@ -21,7 +21,6 @@ import java.util.Optional;
 
 @Controller
 @AllArgsConstructor
-@Import({LibraryImpl.class})
 public class BookController {
     private final Library library;
     private static Logger logger = LogManager.getLogger();

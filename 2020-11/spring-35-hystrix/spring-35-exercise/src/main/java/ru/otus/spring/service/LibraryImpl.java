@@ -1,9 +1,12 @@
 package ru.otus.spring.service;
 
+//import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+//import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.spring.dao.AuthorDao;
 import ru.otus.spring.dao.BookCommentDao;
@@ -19,8 +22,8 @@ import java.util.Optional;
 
 // Класс работы с приложением "Библиотека книг"
 @RequiredArgsConstructor
+@Service("LibraryBean")
 public class LibraryImpl implements Library {
-
     private final BookDao bookDao;
     private final BookCommentDao bookCommentDao;
     private final AuthorDao authorDao;
@@ -110,9 +113,13 @@ public class LibraryImpl implements Library {
         return result;
     }
 
+//    @HystrixCommand(commandProperties= {
+//            @HystrixProperty(name="execution.isolation.thread.timeoutInMilliseconds", value="3000")
+//    })
     @Override
     public List<Book> showAllBooks() throws Exception {
         try {
+            //Thread.sleep(5000);
             return bookDao.findBooksByAuthorNotNullAndGenreNotNull();
         }catch (Exception e) {
             logger.error(e.getMessage());
@@ -137,5 +144,4 @@ public class LibraryImpl implements Library {
             throw new Exception(e);
         }
     }
-
 }

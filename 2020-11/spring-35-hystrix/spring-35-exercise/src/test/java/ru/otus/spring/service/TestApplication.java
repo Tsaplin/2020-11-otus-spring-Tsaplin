@@ -4,8 +4,10 @@ import lombok.val;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Lazy;
 import ru.otus.spring.dao.AuthorDao;
 import ru.otus.spring.dao.BookCommentDao;
 import ru.otus.spring.dao.BookDao;
@@ -20,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @DataJpaTest
 @Import({LibraryImpl.class})
 public class TestApplication {
+
     @Autowired
     BookCommentDao bookCommentDao;
     @Autowired
@@ -28,10 +31,11 @@ public class TestApplication {
     GenreDao genreDao;
 
     @Autowired
-    private Library library;
+    BookDao bookDao;
 
+    @Qualifier("LibraryBean")
     @Autowired
-    private BookDao bookDao;
+    Library library;
 
     @Test
     @DisplayName("Запуск юнит-теста insertTest")
