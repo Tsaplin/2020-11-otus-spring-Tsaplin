@@ -20,6 +20,7 @@ import ru.otus.spring.domain.Genre;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 // Класс работы с приложением "Библиотека книг"
 @RequiredArgsConstructor
@@ -120,12 +121,18 @@ public class LibraryImpl implements Library {
     @Override
     public List<Book> showAllBooks() throws Exception {
         try {
-            Thread.sleep(5000);
+            Thread.sleep(randomSleep());
             return bookDao.findBooksByAuthorNotNullAndGenreNotNull();
         }catch (Exception e) {
             logger.error(e.getMessage());
             throw new Exception(e);
         }
+    }
+
+    private int randomSleep() {
+        Random ran = new Random();
+        int sleepPeriodInMillis = ran.nextInt(6) * 1000;
+        return sleepPeriodInMillis;
     }
 
     public List<Book> showAllBooksFallBack() throws Exception {
