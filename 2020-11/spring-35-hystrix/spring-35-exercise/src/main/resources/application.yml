@@ -1,4 +1,9 @@
+#server:
+#  port: 8788
+
 spring:
+  application:
+    name: TsaplinLibrary
   datasource:
     url: jdbc:h2:mem:testdb
     initialization-mode: always
