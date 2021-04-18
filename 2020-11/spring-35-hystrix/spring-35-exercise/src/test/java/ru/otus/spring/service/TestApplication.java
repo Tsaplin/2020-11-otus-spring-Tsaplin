@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.Lazy;
 import ru.otus.spring.dao.AuthorDao;
 import ru.otus.spring.dao.BookCommentDao;
 import ru.otus.spring.dao.BookDao;

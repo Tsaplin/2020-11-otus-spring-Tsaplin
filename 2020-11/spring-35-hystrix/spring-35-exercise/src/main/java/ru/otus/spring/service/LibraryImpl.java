@@ -1,7 +1,7 @@
 package ru.otus.spring.service;
 
-//import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
-//import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.apache.logging.log4j.LogManager;
@@ -17,6 +17,7 @@ import ru.otus.spring.domain.Book;
 import ru.otus.spring.domain.BookComment;
 import ru.otus.spring.domain.Genre;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -113,14 +114,29 @@ public class LibraryImpl implements Library {
         return result;
     }
 
-//    @HystrixCommand(commandProperties= {
-//            @HystrixProperty(name="execution.isolation.thread.timeoutInMilliseconds", value="3000")
-//    })
+    @HystrixCommand(commandProperties= {
+            @HystrixProperty(name="execution.isolation.thread.timeoutInMilliseconds", value="3000")},
+            fallbackMethod = "showAllBooksFallBack")
     @Override
     public List<Book> showAllBooks() throws Exception {
         try {
-            //Thread.sleep(5000);
+            Thread.sleep(5000);
             return bookDao.findBooksByAuthorNotNullAndGenreNotNull();
+        }catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new Exception(e);
+        }
+    }
+
+    public List<Book> showAllBooksFallBack() throws Exception {
+        List<Book> listBookFallback = new ArrayList<Book>();
+        Author authorFallback = new Author(222, "Автор-заглушка");
+        Genre genreFallback = new Genre(333, "Жанр-заглушка");
+        Book bookFallback = new Book(111, authorFallback, genreFallback, "Книга-заглушка");
+        listBookFallback.add(bookFallback);
+
+        try {
+            return listBookFallback;
         }catch (Exception e) {
             logger.error(e.getMessage());
             throw new Exception(e);
