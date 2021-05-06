@@ -92,5 +92,6 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
+        <finalName>docker-spring-32</finalName>
     </build>
 </project>
